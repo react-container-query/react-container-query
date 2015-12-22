@@ -1,0 +1,45 @@
+{
+  "name": "react-container-query",
+  "version": "0.0.1",
+  "description": "Container Query for React Component",
+  "main": "./lib/index.js",
+  "jsnext:main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d6u/react-container-query.git"
+  },
+  "keywords": [
+    "reactjs",
+    "react",
+    "container",
+    "query"
+  ],
+  "author": "Daiwei Lu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d6u/react-container-query/issues"
+  },
+  "homepage": "https://github.com/d6u/react-container-query#readme",
+  "devDependencies": {
+    "babel-cli": "^6.3.15",
+    "babel-core": "^6.1.20",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-transform-decorators-legacy": "^1.2.0",
+    "babel-preset-es2015-loose": "^6.1.3",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "eslint": "^1.7.1",
+    "eslint-config-rackt": "1.1.0",
+    "eslint-plugin-react": "^3.6.3",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "webpack": "^1.11.0"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
