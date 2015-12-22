@@ -1,0 +1,11 @@
+.container {
+  padding: 20px;
+}
+
+.container.wide .box {
+  background-color: blue;
+}
+
+.container.narrow .box {
+  background-color: red;
+}

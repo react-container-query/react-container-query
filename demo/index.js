@@ -4,10 +4,18 @@ import apply from '../src';
 
 class MyComponent extends Component {
   render() {
-    return (<div>hello</div>);
+    console.log(this.props);
+    return (
+      <div className='container'><div className='box'>the box</div></div>
+    );
   }
 }
 
-const MyContainer = apply(MyComponent);
+const MyContainer = apply(MyComponent, {
+  wide: {
+    minWidth: '400px',
+  },
+  narrow: 'default'
+});
 
 ReactDOM.render(<MyContainer />, document.getElementById('app'));

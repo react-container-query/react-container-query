@@ -76,17 +76,27 @@
 	  }
 	
 	  MyComponent.prototype.render = function render() {
+	    console.log(this.props);
 	    return _react2.default.createElement(
 	      'div',
-	      null,
-	      'hello'
+	      { className: 'container' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'box' },
+	        'the box'
+	      )
 	    );
 	  };
 	
 	  return MyComponent;
 	})(_react.Component);
 	
-	var MyContainer = (0, _src2.default)(MyComponent);
+	var MyContainer = (0, _src2.default)(MyComponent, {
+	  wide: {
+	    minWidth: '400px'
+	  },
+	  narrow: 'default'
+	});
 	
 	_reactDom2.default.render(_react2.default.createElement(MyContainer, null), document.getElementById('app'));
 
@@ -19702,6 +19712,18 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	function takeNumber(str) {
+	  return parseInt(/(\d+)px$/i.exec(str)[1]);
+	}
+	
+	/**
+	 * Apply provided container query to target Component
+	 *
+	 * @param {Component}      ComposedComponent A react component
+	 * @param {ContainerQuery} queries           A dictionary of queries
+	 *
+	 * @return {Component} A new component
+	 */
 	function apply(ComposedComponent, queries) {
 	  return (function (_Component) {
 	    _inherits(_class, _Component);
@@ -19711,10 +19733,14 @@
 	
 	      var _this = _possibleConstructorReturn(this, _Component.call(this));
 	
+	      _this.state = {
+	        activeClasses: ''
+	      };
+	
 	      _this.__cq = {
 	        height: null,
 	        width: null,
-	        $id: null
+	        id: null
 	      };
 	      return _this;
 	    }
@@ -19725,22 +19751,79 @@
 	      var element = (0, _reactDom.findDOMNode)(this.refs.container);
 	      var computedStyles = getComputedStyle(element);
 	
-	      var callback = function callback() {
-	        _this2.__cq.width = computedStyles.getPropertyValue('width');
-	        _this2.__cq.height = computedStyles.getPropertyValue('height');
-	        _this2.__cq.$id = (0, _raf.requestAnimationFrame)(callback);
+	      var checkDimension = function checkDimension() {
+	        var width = computedStyles.getPropertyValue('width');
+	        var height = computedStyles.getPropertyValue('height');
+	        var changed = false;
+	
+	        if (_this2.__cq.width !== width) {
+	          changed = true;
+	        }
+	
+	        _this2.__cq.width = width;
+	        _this2.__cq.height = height;
+	
+	        if (changed) {
+	          _this2.updateClasses();
+	        }
+	
+	        _this2.__cq.id = (0, _raf.requestAnimationFrame)(checkDimension);
 	      };
 	
-	      callback();
+	      checkDimension();
 	    };
 	
 	    _class.prototype.componentWillUnmount = function componentWillUnmount() {
-	      (0, _raf.cancelAnimationFrame)(this.__cq.$id);
-	      this.__cq.$id = null;
+	      (0, _raf.cancelAnimationFrame)(this.__cq.id);
+	      this.__cq.id = null;
 	    };
 	
 	    _class.prototype.render = function render() {
-	      return _react2.default.createElement(ComposedComponent, { ref: 'container' });
+	      return _react2.default.createElement(ComposedComponent, {
+	        ref: 'container',
+	        className: this.state.activeClasses });
+	    };
+	
+	    _class.prototype.updateClasses = function updateClasses() {
+	      var classNames = [];
+	      var defaultClass = undefined;
+	
+	      for (var _iterator = Object.keys(queries), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	        var _ref;
+	
+	        if (_isArray) {
+	          if (_i >= _iterator.length) break;
+	          _ref = _iterator[_i++];
+	        } else {
+	          _i = _iterator.next();
+	          if (_i.done) break;
+	          _ref = _i.value;
+	        }
+	
+	        var className = _ref;
+	
+	        var rules = queries[className];
+	
+	        if (rules === 'default') {
+	          defaultClass = className;
+	          continue;
+	        }
+	
+	        var minWidth = rules.minWidth;
+	        var maxWidth = rules.maxWidth;
+	        var minHeight = rules.minHeight;
+	        var maxHeight = rules.maxHeight;
+	
+	        if (minWidth && takeNumber(minWidth) <= takeNumber(this.__cq.width)) {
+	          classNames.push(className);
+	        }
+	      }
+	
+	      if (classNames.length === 0 && defaultClass) {
+	        classNames.push(defaultClass);
+	      }
+	
+	      this.setState({ activeClasses: classNames.join(' ') });
 	    };
 	
 	    return _class;
