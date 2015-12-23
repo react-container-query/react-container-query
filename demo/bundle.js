@@ -82,7 +82,7 @@
 	  MyComponent.prototype.render = function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { ref: this.defineContainer, className: 'container' },
+	      { ref: this.defineContainer.bind(this), className: 'container' },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'box' },
@@ -96,17 +96,27 @@
 	
 	var query = {
 	  middle: {
-	    minWidth: '400px',
-	    maxWidth: '599px'
+	    minWidth: 400,
+	    maxWidth: 599
 	  },
 	  wide: {
-	    minWidth: '600px'
+	    minWidth: 600
 	  }
 	};
 	
 	(0, _reactMixin2.default)(MyComponent.prototype, (0, _src2.default)(query));
 	
-	_reactDom2.default.render(_react2.default.createElement(MyComponent, null), document.getElementById('app'));
+	var App = function App(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(MyComponent, null),
+	    _react2.default.createElement(MyComponent, null),
+	    _react2.default.createElement(MyComponent, null)
+	  );
+	};
+	
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -19708,92 +19718,86 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(158);
-	
 	var _raf = __webpack_require__(160);
 	
-	var _getComputedStyle = __webpack_require__(161);
+	var _containerQuery = __webpack_require__(165);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function takeNumber(str) {
-	  return parseInt(/(\d+)px$/i.exec(str)[1]);
-	}
-	
 	function createContainerQueryMixin(query) {
 	
-	  var size = { width: null, height: null };
-	  var rafId = null;
-	  var containerElement = null;
-	
-	  function updateClasses() {
-	    for (var _iterator = Object.keys(query), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-	      var _ref;
-	
-	      if (_isArray) {
-	        if (_i >= _iterator.length) break;
-	        _ref = _iterator[_i++];
-	      } else {
-	        _i = _iterator.next();
-	        if (_i.done) break;
-	        _ref = _i.value;
-	      }
-	
-	      var className = _ref;
-	
-	      var rules = query[className];
-	      var minWidth = rules.minWidth;
-	
-	      var valid = false;
-	
-	      if (minWidth && takeNumber(minWidth) <= takeNumber(size.width)) {
-	        valid = true;
-	        containerElement.classList.add(className);
-	      }
-	
-	      if (!valid) {
-	        containerElement.classList.remove(className);
-	      }
-	    }
-	  }
+	  var getClasses = (0, _containerQuery.parseQuery)(query);
 	
 	  return {
 	    defineContainer: function defineContainer(component) {
-	      containerElement = component;
+	      this._containerElement = component;
 	    },
 	    componentDidMount: function componentDidMount() {
-	      var computedStyles = (0, _getComputedStyle.getComputedStyle)(containerElement);
+	      var _this = this;
+	
+	      this._containerQueryClassMap = {};
+	      this._size = { width: null, height: null };
+	      this._rafId = null;
 	
 	      var checkDimension = function checkDimension() {
-	        var width = computedStyles.getPropertyValue('width');
-	        var height = computedStyles.getPropertyValue('height');
+	        var _containerElement = _this._containerElement;
+	        var width = _containerElement.clientWidth;
+	        var height = _containerElement.clientHeight;
 	
 	        var changed = false;
 	
-	        if (size.width !== width) {
+	        if (_this._size.width !== width) {
 	          changed = true;
 	        }
 	
-	        if (size.height !== height) {
+	        if (_this._size.height !== height) {
 	          changed = true;
 	        }
 	
-	        size.width = width;
-	        size.height = height;
+	        _this._size.width = width;
+	        _this._size.height = height;
 	
 	        if (changed) {
-	          updateClasses();
+	          _this._updateClasses();
 	        }
 	
-	        rafId = (0, _raf.requestAnimationFrame)(checkDimension);
+	        _this._rafId = (0, _raf.requestAnimationFrame)(checkDimension);
 	      };
 	
 	      checkDimension();
 	    },
 	    componentWillUnmount: function componentWillUnmount() {
-	      (0, _raf.cancelAnimationFrame)(rafId);
-	      rafId = null;
-	      containerElement = null;
+	      (0, _raf.cancelAnimationFrame)(this._rafId);
+	      this._rafId = null;
+	      this._containerElement = null;
+	    },
+	    _updateClasses: function _updateClasses() {
+	      var classMap = getClasses(this._size);
+	
+	      if ((0, _containerQuery.isClassMapEqual)(this._containerQueryClassMap, classMap)) {
+	        return;
+	      }
+	
+	      this._containerQueryClassMap = classMap;
+	
+	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQueryClassMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	        var _ref;
+	
+	        if (_isArray) {
+	          if (_i >= _iterator.length) break;
+	          _ref = _iterator[_i++];
+	        } else {
+	          _i = _iterator.next();
+	          if (_i.done) break;
+	          _ref = _i.value;
+	        }
+	
+	        var _ref2 = _ref;
+	        var className = _ref2[0];
+	        var isOn = _ref2[1];
+	
+	        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
+	      }
 	    }
 	  };
 	}
@@ -19811,17 +19815,7 @@
 	var cancelAnimationFrame = exports.cancelAnimationFrame = window.cancelAnimationFrame;
 
 /***/ },
-/* 161 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	// Put getComputedStyle polyfill here
-	
-	var getComputedStyle = exports.getComputedStyle = window.getComputedStyle;
-
-/***/ },
+/* 161 */,
 /* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20205,6 +20199,188 @@
 		return to;
 	};
 
+
+/***/ },
+/* 165 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports.toPairs = toPairs;
+	exports.isClassMapEqual = isClassMapEqual;
+	exports.parseQuery = parseQuery;
+	function toPairs(obj) {
+	  return Object.keys(obj).map(function (key) {
+	    return [key, obj[key]];
+	  });
+	}
+	
+	function isClassMapEqual(a, b) {
+	  var aKeys = Object.keys(a);
+	  var bKeys = Object.keys(b);
+	
+	  if (aKeys.length !== bKeys.length) {
+	    return false;
+	  }
+	
+	  for (var _iterator = aKeys, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	    var _ref;
+	
+	    if (_isArray) {
+	      if (_i >= _iterator.length) break;
+	      _ref = _iterator[_i++];
+	    } else {
+	      _i = _iterator.next();
+	      if (_i.done) break;
+	      _ref = _i.value;
+	    }
+	
+	    var key = _ref;
+	
+	    if (a[key] !== b[key]) {
+	      return false;
+	    }
+	  }
+	
+	  return true;
+	}
+	
+	function parseQuery(query) {
+	  var widthRules = [];
+	  var heightRules = [];
+	  var pairs = toPairs(query);
+	  var allClassNames = pairs.map(function (_ref2) {
+	    var className = _ref2[0];
+	    return className;
+	  });
+	
+	  for (var _iterator2 = pairs, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+	    var _ref3;
+	
+	    if (_isArray2) {
+	      if (_i2 >= _iterator2.length) break;
+	      _ref3 = _iterator2[_i2++];
+	    } else {
+	      _i2 = _iterator2.next();
+	      if (_i2.done) break;
+	      _ref3 = _i2.value;
+	    }
+	
+	    var _ref10 = _ref3;
+	    var className = _ref10[0];
+	    var rules = _ref10[1];
+	    var minWidth = rules.minWidth;
+	    var maxWidth = rules.maxWidth;
+	    var minHeight = rules.minHeight;
+	    var maxHeight = rules.maxHeight;
+	
+	    if (minWidth || maxWidth) {
+	      widthRules.push([className, { minWidth: minWidth || 0, maxWidth: maxWidth }]);
+	    }
+	
+	    if (minHeight || maxHeight) {
+	      heightRules.push([className, { minHeight: minHeight || 0, maxHeight: maxHeight }]);
+	    }
+	  }
+	
+	  widthRules.sort(function (a, b) {
+	    return a[1].minWidth - b[1].minWidth;
+	  });
+	  heightRules.sort(function (a, b) {
+	    return a[1].minHeight - b[1].minHeight;
+	  });
+	
+	  return function (_ref4) {
+	    var width = _ref4.width;
+	    var height = _ref4.height;
+	
+	    var classMap = {};
+	
+	    for (var _iterator3 = allClassNames, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+	      var _ref5;
+	
+	      if (_isArray3) {
+	        if (_i3 >= _iterator3.length) break;
+	        _ref5 = _iterator3[_i3++];
+	      } else {
+	        _i3 = _iterator3.next();
+	        if (_i3.done) break;
+	        _ref5 = _i3.value;
+	      }
+	
+	      var className = _ref5;
+	
+	      classMap[className] = false;
+	    }
+	
+	    if (width !== null) {
+	      for (var _iterator4 = widthRules, _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
+	        var _ref6;
+	
+	        if (_isArray4) {
+	          if (_i4 >= _iterator4.length) break;
+	          _ref6 = _iterator4[_i4++];
+	        } else {
+	          _i4 = _iterator4.next();
+	          if (_i4.done) break;
+	          _ref6 = _i4.value;
+	        }
+	
+	        var _ref7 = _ref6;
+	        var className = _ref7[0];
+	        var _ref7$ = _ref7[1];
+	        var minWidth = _ref7$.minWidth;
+	        var maxWidth = _ref7$.maxWidth;
+	
+	        if (minWidth <= width) {
+	          if (maxWidth == null) {
+	            classMap[className] = true;
+	            continue;
+	          }
+	
+	          if (width <= maxWidth) {
+	            classMap[className] = true;
+	          }
+	        }
+	      }
+	    }
+	
+	    if (height !== null) {
+	      for (var _iterator5 = heightRules, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : _iterator5[Symbol.iterator]();;) {
+	        var _ref8;
+	
+	        if (_isArray5) {
+	          if (_i5 >= _iterator5.length) break;
+	          _ref8 = _iterator5[_i5++];
+	        } else {
+	          _i5 = _iterator5.next();
+	          if (_i5.done) break;
+	          _ref8 = _i5.value;
+	        }
+	
+	        var _ref9 = _ref8;
+	        var className = _ref9[0];
+	        var _ref9$ = _ref9[1];
+	        var minHeight = _ref9$.minHeight;
+	        var maxHeight = _ref9$.maxHeight;
+	
+	        if (minHeight <= height) {
+	          if (maxHeight == null) {
+	            classMap[className] = true;
+	            continue;
+	          }
+	
+	          if (height <= maxHeight) {
+	            classMap[className] = true;
+	          }
+	        }
+	      }
+	    }
+	
+	    return classMap;
+	  };
+	}
 
 /***/ }
 /******/ ]);
