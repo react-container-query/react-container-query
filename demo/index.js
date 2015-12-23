@@ -23,7 +23,6 @@ const query = {
   }
 };
 
-
 reactMixin(MyComponent.prototype, createContainerQueryMixin(query));
 
 const App = (props) => {
