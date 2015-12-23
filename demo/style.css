@@ -3,10 +3,15 @@
 }
 
 .box {
-  height: 100px;
+  height: 400px;
   background-color: red;
+}
+
+.container.middle .box {
+  background-color: green;
 }
 
 .container.wide .box {
   background-color: blue;
 }
+
