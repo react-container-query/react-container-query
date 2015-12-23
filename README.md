@@ -75,3 +75,7 @@ The CSS doesn't look exactly like the container query syntax, but the idea is to
   background-color: blue;
 }
 ```
+
+## Performance
+
+Internally, it's using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) API to check container element size periodically. You can checkout `demo/perf.html` to test with your own eyes. But generally this is not a concern.
