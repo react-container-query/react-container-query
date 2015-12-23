@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
+import reactMixin from 'react-mixin';
 import ReactDOM from 'react-dom';
-import apply from '../src';
+import createContainerQueryMixin from '../src';
 
 class MyComponent extends Component {
   render() {
-    const className = this.props.classNames.concat(['container']).join(' ');
     return (
-      <div className={className}><div className='box'>the box</div></div>
+      <div ref={this.defineContainer} className='container'>
+        <div className='box'>the box</div>
+      </div>
     );
   }
 }
 
-const MyContainer = apply(MyComponent, {
+const query = {
+  middle: {
+    minWidth: '400px',
+    maxWidth: '599px'
+  },
   wide: {
-    minWidth: '400px'
+    minWidth: '600px',
   }
-});
+};
 
-ReactDOM.render(<MyContainer />, document.getElementById('app'));
+reactMixin(MyComponent.prototype, createContainerQueryMixin(query));
+
+ReactDOM.render(<MyComponent />, document.getElementById('app'));
