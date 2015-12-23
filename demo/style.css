@@ -3,7 +3,7 @@
 }
 
 .box {
-  height: 400px;
+  height: 100px;
   background-color: red;
 }
 
@@ -15,3 +15,15 @@
   background-color: blue;
 }
 
+.container-perf {
+  float: left;
+  width: 50%;
+}
+
+.container-perf.middle .box {
+  background-color: green;
+}
+
+.container-perf.wide .box {
+  background-color: blue;
+}

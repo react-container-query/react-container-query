@@ -1,9 +1,12 @@
 'use strict';
 
 module.exports = {
-  entry: './demo/index.js',
+  entry: {
+    'index': './demo/index.js',
+    'perf': './demo/perf.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: './demo',
   },
   devtool: 'source-map',

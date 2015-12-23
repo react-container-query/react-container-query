@@ -50,15 +50,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactMixin = __webpack_require__(162);
+	var _reactMixin = __webpack_require__(158);
 	
 	var _reactMixin2 = _interopRequireDefault(_reactMixin);
 	
-	var _reactDom = __webpack_require__(158);
+	var _reactDom = __webpack_require__(161);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _src = __webpack_require__(159);
+	var _src = __webpack_require__(162);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -82,11 +82,11 @@
 	  MyComponent.prototype.render = function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { ref: this.defineContainer.bind(this), className: 'container' },
+	      { ref: this.defineContainer.bind(this), className: 'container-perf' },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'box' },
-	        'the box'
+	        'the perf box'
 	      )
 	    );
 	  };
@@ -107,12 +107,16 @@
 	(0, _reactMixin2.default)(MyComponent.prototype, (0, _src2.default)(query));
 	
 	var App = function App(props) {
+	  var elements = [];
+	
+	  for (var i = 0; i < 100; i++) {
+	    elements.push(_react2.default.createElement(MyComponent, { key: i }));
+	  }
+	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(MyComponent, null),
-	    _react2.default.createElement(MyComponent, null),
-	    _react2.default.createElement(MyComponent, null)
+	    elements
 	  );
 	};
 	
@@ -19700,127 +19704,8 @@
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	module.exports = __webpack_require__(3);
-
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports.default = createContainerQueryMixin;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _raf = __webpack_require__(160);
-	
-	var _containerQuery = __webpack_require__(165);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function createContainerQueryMixin(query) {
-	
-	  var getClasses = (0, _containerQuery.parseQuery)(query);
-	
-	  return {
-	    defineContainer: function defineContainer(component) {
-	      this._containerElement = component;
-	    },
-	    componentDidMount: function componentDidMount() {
-	      var _this = this;
-	
-	      this._containerQueryClassMap = {};
-	      this._size = { width: null, height: null };
-	      this._rafId = null;
-	
-	      var checkDimension = function checkDimension() {
-	        var _containerElement = _this._containerElement;
-	        var width = _containerElement.clientWidth;
-	        var height = _containerElement.clientHeight;
-	
-	        var changed = false;
-	
-	        if (_this._size.width !== width) {
-	          changed = true;
-	        }
-	
-	        if (_this._size.height !== height) {
-	          changed = true;
-	        }
-	
-	        _this._size.width = width;
-	        _this._size.height = height;
-	
-	        if (changed) {
-	          _this._updateClasses();
-	        }
-	
-	        _this._rafId = (0, _raf.requestAnimationFrame)(checkDimension);
-	      };
-	
-	      checkDimension();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	      (0, _raf.cancelAnimationFrame)(this._rafId);
-	      this._rafId = null;
-	      this._containerElement = null;
-	    },
-	    _updateClasses: function _updateClasses() {
-	      var classMap = getClasses(this._size);
-	
-	      if ((0, _containerQuery.isClassMapEqual)(this._containerQueryClassMap, classMap)) {
-	        return;
-	      }
-	
-	      this._containerQueryClassMap = classMap;
-	
-	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQueryClassMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-	        var _ref;
-	
-	        if (_isArray) {
-	          if (_i >= _iterator.length) break;
-	          _ref = _iterator[_i++];
-	        } else {
-	          _i = _iterator.next();
-	          if (_i.done) break;
-	          _ref = _i.value;
-	        }
-	
-	        var _ref2 = _ref;
-	        var className = _ref2[0];
-	        var isOn = _ref2[1];
-	
-	        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
-	      }
-	    }
-	  };
-	}
-
-/***/ },
-/* 160 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	// Put requestAnimationFrame polyfill here
-	
-	var requestAnimationFrame = exports.requestAnimationFrame = window.requestAnimationFrame;
-	var cancelAnimationFrame = exports.cancelAnimationFrame = window.cancelAnimationFrame;
-
-/***/ },
-/* 161 */,
-/* 162 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var mixin = __webpack_require__(163);
-	var assign = __webpack_require__(164);
+	var mixin = __webpack_require__(159);
+	var assign = __webpack_require__(160);
 	
 	var mixinProto = mixin({
 	  // lifecycle stuff is as you'd expect
@@ -19973,7 +19858,7 @@
 
 
 /***/ },
-/* 163 */
+/* 159 */
 /***/ function(module, exports) {
 
 	var objToStr = function(x){ return Object.prototype.toString.call(x); };
@@ -20156,7 +20041,7 @@
 
 
 /***/ },
-/* 164 */
+/* 160 */
 /***/ function(module, exports) {
 
 	/* eslint-disable no-unused-vars */
@@ -20201,7 +20086,125 @@
 
 
 /***/ },
-/* 165 */
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(3);
+
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.default = createContainerQueryMixin;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _raf = __webpack_require__(163);
+	
+	var _containerQuery = __webpack_require__(164);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function createContainerQueryMixin(query) {
+	
+	  var getClasses = (0, _containerQuery.parseQuery)(query);
+	
+	  return {
+	    defineContainer: function defineContainer(component) {
+	      this._containerElement = component;
+	    },
+	    componentDidMount: function componentDidMount() {
+	      var _this = this;
+	
+	      this._containerQueryClassMap = {};
+	      this._size = { width: null, height: null };
+	      this._rafId = null;
+	
+	      var checkDimension = function checkDimension() {
+	        var _containerElement = _this._containerElement;
+	        var width = _containerElement.clientWidth;
+	        var height = _containerElement.clientHeight;
+	
+	        var changed = false;
+	
+	        if (_this._size.width !== width) {
+	          changed = true;
+	        }
+	
+	        if (_this._size.height !== height) {
+	          changed = true;
+	        }
+	
+	        _this._size.width = width;
+	        _this._size.height = height;
+	
+	        if (changed) {
+	          _this._updateClasses();
+	        }
+	
+	        _this._rafId = (0, _raf.requestAnimationFrame)(checkDimension);
+	      };
+	
+	      checkDimension();
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	      (0, _raf.cancelAnimationFrame)(this._rafId);
+	      this._rafId = null;
+	      this._containerElement = null;
+	    },
+	    _updateClasses: function _updateClasses() {
+	      var classMap = getClasses(this._size);
+	
+	      if ((0, _containerQuery.isClassMapEqual)(this._containerQueryClassMap, classMap)) {
+	        return;
+	      }
+	
+	      this._containerQueryClassMap = classMap;
+	
+	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQueryClassMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	        var _ref;
+	
+	        if (_isArray) {
+	          if (_i >= _iterator.length) break;
+	          _ref = _iterator[_i++];
+	        } else {
+	          _i = _iterator.next();
+	          if (_i.done) break;
+	          _ref = _i.value;
+	        }
+	
+	        var _ref2 = _ref;
+	        var className = _ref2[0];
+	        var isOn = _ref2[1];
+	
+	        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
+	      }
+	    }
+	  };
+	}
+
+/***/ },
+/* 163 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	// Put requestAnimationFrame polyfill here
+	
+	var requestAnimationFrame = exports.requestAnimationFrame = window.requestAnimationFrame;
+	var cancelAnimationFrame = exports.cancelAnimationFrame = window.cancelAnimationFrame;
+
+/***/ },
+/* 164 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20384,4 +20387,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=perf.bundle.js.map
