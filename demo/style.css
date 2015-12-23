@@ -2,10 +2,11 @@
   padding: 20px;
 }
 
-.container.wide .box {
-  background-color: blue;
+.box {
+  height: 100px;
+  background-color: red;
 }
 
-.container.narrow .box {
-  background-color: red;
+.container.wide .box {
+  background-color: blue;
 }

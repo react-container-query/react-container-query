@@ -36,6 +36,7 @@ export default function apply(ComposedComponent, queries) {
       const checkDimension = () => {
         const width = computedStyles.getPropertyValue('width');
         const height = computedStyles.getPropertyValue('height');
+
         let changed = false;
 
         if (this.__cq.width !== width) {
@@ -68,25 +69,14 @@ export default function apply(ComposedComponent, queries) {
 
     updateClasses() {
       let classNames = [];
-      let defaultClass;
 
       for (const className of Object.keys(queries)) {
         const rules = queries[className];
-
-        if (rules === 'default') {
-          defaultClass = className;
-          continue;
-        }
-
-        const { minWidth, maxWidth, minHeight, maxHeight } = rules;
+        const { minWidth } = rules;
 
         if (minWidth && takeNumber(minWidth) <= takeNumber(this.__cq.width)) {
           classNames.push(className);
         }
-      }
-
-      if (classNames.length === 0 && defaultClass) {
-        classNames.push(defaultClass);
       }
 
       this.setState({ classNames });

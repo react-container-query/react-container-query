@@ -13,9 +13,8 @@ class MyComponent extends Component {
 
 const MyContainer = apply(MyComponent, {
   wide: {
-    minWidth: '400px',
-  },
-  narrow: 'default'
+    minWidth: '400px'
+  }
 });
 
 ReactDOM.render(<MyContainer />, document.getElementById('app'));

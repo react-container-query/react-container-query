@@ -94,8 +94,7 @@
 	var MyContainer = (0, _src2.default)(MyComponent, {
 	  wide: {
 	    minWidth: '400px'
-	  },
-	  narrow: 'default'
+	  }
 	});
 	
 	_reactDom2.default.render(_react2.default.createElement(MyContainer, null), document.getElementById('app'));
@@ -19756,6 +19755,7 @@
 	      var checkDimension = function checkDimension() {
 	        var width = computedStyles.getPropertyValue('width');
 	        var height = computedStyles.getPropertyValue('height');
+	
 	        var changed = false;
 	
 	        if (_this2.__cq.width !== width) {
@@ -19788,7 +19788,6 @@
 	
 	    _class.prototype.updateClasses = function updateClasses() {
 	      var classNames = [];
-	      var defaultClass = undefined;
 	
 	      for (var _iterator = Object.keys(queries), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
 	        var _ref;
@@ -19805,24 +19804,11 @@
 	        var className = _ref;
 	
 	        var rules = queries[className];
-	
-	        if (rules === 'default') {
-	          defaultClass = className;
-	          continue;
-	        }
-	
 	        var minWidth = rules.minWidth;
-	        var maxWidth = rules.maxWidth;
-	        var minHeight = rules.minHeight;
-	        var maxHeight = rules.maxHeight;
 	
 	        if (minWidth && takeNumber(minWidth) <= takeNumber(this.__cq.width)) {
 	          classNames.push(className);
 	        }
-	      }
-	
-	      if (classNames.length === 0 && defaultClass) {
-	        classNames.push(defaultClass);
 	      }
 	
 	      this.setState({ classNames: classNames });
