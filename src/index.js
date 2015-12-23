@@ -1,74 +1,65 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
-import { getComputedStyle } from './getComputedStyle';
-
-function takeNumber(str) {
-  return parseInt(/(\d+)px$/i.exec(str)[1]);
-}
+import { parseQuery, isClassMapEqual, toPairs } from './containerQuery';
 
 export default function createContainerQueryMixin(query) {
 
-  let size = {width: null, height: null};
-  let rafId = null;
-  let containerElement = null;
-
-  function updateClasses() {
-    for (const className of Object.keys(query)) {
-      const rules = query[className];
-      const { minWidth } = rules;
-      let valid = false;
-
-      if (minWidth && takeNumber(minWidth) <= takeNumber(size.width)) {
-        valid = true;
-        containerElement.classList.add(className);
-      }
-
-      if (!valid) {
-        containerElement.classList.remove(className);
-      }
-    }
-  }
+  const getClasses = parseQuery(query);
 
   return {
     defineContainer(component) {
-      containerElement = component;
+      this._containerElement = component;
     },
 
     componentDidMount() {
-      const computedStyles = getComputedStyle(containerElement);
+      this._containerQueryClassMap = {};
+      this._size = {width: null, height: null};
+      this._rafId = null;
 
       const checkDimension = () => {
-        const width = computedStyles.getPropertyValue('width');
-        const height = computedStyles.getPropertyValue('height');
+        const {clientWidth: width, clientHeight: height} = this._containerElement;
 
         let changed = false;
 
-        if (size.width !== width) {
+        if (this._size.width !== width) {
           changed = true;
         }
 
-        if (size.height !== height) {
+        if (this._size.height !== height) {
           changed = true;
         }
 
-        size.width = width;
-        size.height = height;
+        this._size.width = width;
+        this._size.height = height;
 
         if (changed) {
-          updateClasses();
+          this._updateClasses();
         }
 
-        rafId = requestAnimationFrame(checkDimension);
+        this._rafId = requestAnimationFrame(checkDimension);
       };
 
       checkDimension();
     },
 
     componentWillUnmount() {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-      containerElement = null;
-    }
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+      this._containerElement = null;
+    },
+
+    _updateClasses() {
+      const classMap = getClasses(this._size);
+
+      if (isClassMapEqual(this._containerQueryClassMap, classMap)) {
+        return;
+      }
+
+      this._containerQueryClassMap = classMap;
+
+      for (const [className, isOn] of toPairs(this._containerQueryClassMap)) {
+        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
+      }
+    },
   };
 }
