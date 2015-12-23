@@ -76,10 +76,10 @@
 	  }
 	
 	  MyComponent.prototype.render = function render() {
-	    console.log(this.props);
+	    var className = this.props.classNames.concat(['container']).join(' ');
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'container' },
+	      { className: className },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'box' },
@@ -19693,6 +19693,8 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	exports.__esModule = true;
 	exports.default = apply;
 	
@@ -19703,6 +19705,8 @@
 	var _reactDom = __webpack_require__(158);
 	
 	var _raf = __webpack_require__(160);
+	
+	var _getComputedStyle = __webpack_require__(161);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19733,9 +19737,7 @@
 	
 	      var _this = _possibleConstructorReturn(this, _Component.call(this));
 	
-	      _this.state = {
-	        activeClasses: ''
-	      };
+	      _this.state = { classNames: [] };
 	
 	      _this.__cq = {
 	        height: null,
@@ -19749,7 +19751,7 @@
 	      var _this2 = this;
 	
 	      var element = (0, _reactDom.findDOMNode)(this.refs.container);
-	      var computedStyles = getComputedStyle(element);
+	      var computedStyles = (0, _getComputedStyle.getComputedStyle)(element);
 	
 	      var checkDimension = function checkDimension() {
 	        var width = computedStyles.getPropertyValue('width');
@@ -19779,9 +19781,9 @@
 	    };
 	
 	    _class.prototype.render = function render() {
-	      return _react2.default.createElement(ComposedComponent, {
-	        ref: 'container',
-	        className: this.state.activeClasses });
+	      return _react2.default.createElement(ComposedComponent, _extends({}, this.props, {
+	        classNames: this.state.classNames,
+	        ref: 'container' }));
 	    };
 	
 	    _class.prototype.updateClasses = function updateClasses() {
@@ -19823,7 +19825,7 @@
 	        classNames.push(defaultClass);
 	      }
 	
-	      this.setState({ activeClasses: classNames.join(' ') });
+	      this.setState({ classNames: classNames });
 	    };
 	
 	    return _class;
@@ -19837,32 +19839,21 @@
 	"use strict";
 	
 	exports.__esModule = true;
-	// const vendors = ['ms', 'moz', 'webkit', 'o'];
-	// let lastTime = 0;
-	
-	// for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-	//     window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-	//     window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-	//                                || window[vendors[x]+'CancelRequestAnimationFrame'];
-	// }
-	
-	// if (!window.requestAnimationFrame)
-	//     window.requestAnimationFrame = function(callback, element) {
-	//         var currTime = new Date().getTime();
-	//         var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-	//         var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-	//           timeToCall);
-	//         lastTime = currTime + timeToCall;
-	//         return id;
-	//     };
-	
-	// if (!window.cancelAnimationFrame)
-	//     window.cancelAnimationFrame = function(id) {
-	//         clearTimeout(id);
-	//     };
+	// Put requestAnimationFrame polyfill here
 	
 	var requestAnimationFrame = exports.requestAnimationFrame = window.requestAnimationFrame;
 	var cancelAnimationFrame = exports.cancelAnimationFrame = window.cancelAnimationFrame;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	// Put getComputedStyle polyfill here
+	
+	var getComputedStyle = exports.getComputedStyle = window.getComputedStyle;
 
 /***/ }
 /******/ ]);

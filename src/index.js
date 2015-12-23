@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
+import { getComputedStyle } from './getComputedStyle';
 
 function takeNumber(str) {
   return parseInt(/(\d+)px$/i.exec(str)[1]);
@@ -19,9 +20,7 @@ export default function apply(ComposedComponent, queries) {
     constructor() {
       super();
 
-      this.state = {
-        activeClasses: ''
-      };
+      this.state = {classNames: []};
 
       this.__cq = {
         height: null,
@@ -62,9 +61,9 @@ export default function apply(ComposedComponent, queries) {
     }
 
     render() {
-      return <ComposedComponent
-        ref='container'
-        className={this.state.activeClasses}/>;
+      return <ComposedComponent {...this.props}
+        classNames={this.state.classNames}
+        ref='container' />;
     }
 
     updateClasses() {
@@ -90,7 +89,7 @@ export default function apply(ComposedComponent, queries) {
         classNames.push(defaultClass);
       }
 
-      this.setState({ activeClasses: classNames.join(' ') });
+      this.setState({ classNames });
     }
   }
 }
