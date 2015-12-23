@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^3.6.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-mixin": "^3.0.3",
     "webpack": "^1.11.0"
   },
   "peerDependencies": {
