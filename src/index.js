@@ -1,5 +1,5 @@
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
-import { parseQuery, isClassMapEqual, toPairs } from './containerQuery';
+import { parseQuery, isSelectorMapEqual, toPairs } from './containerQuery';
 
 export default function createContainerQueryMixin(query) {
 
@@ -11,7 +11,7 @@ export default function createContainerQueryMixin(query) {
     },
 
     componentDidMount() {
-      this._containerQueryClassMap = {};
+      this._containerQuerySelectorMap = {};
       this._size = {width: null, height: null};
       this._rafId = null;
 
@@ -48,19 +48,19 @@ export default function createContainerQueryMixin(query) {
     },
 
     _updateClasses() {
-      const classMap = getClasses(this._size);
+      const selectorMap = getClasses(this._size);
 
-      if (isClassMapEqual(this._containerQueryClassMap, classMap)) {
+      if (isSelectorMapEqual(this._containerQuerySelectorMap, selectorMap)) {
         return;
       }
 
-      this._containerQueryClassMap = classMap;
+      this._containerQuerySelectorMap = selectorMap;
 
-      for (const [className, isOn] of toPairs(this._containerQueryClassMap)) {
+      for (const [selectorName, isOn] of toPairs(this._containerQuerySelectorMap)) {
         if (isOn) {
-          this._containerElement.setAttribute(className, '');
+          this._containerElement.setAttribute(selectorName, '');
         } else {
-          this._containerElement.removeAttribute(className);
+          this._containerElement.removeAttribute(selectorName);
         }
       }
     }

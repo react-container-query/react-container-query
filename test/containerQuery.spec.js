@@ -1,4 +1,4 @@
-import { toPairs, isClassMapEqual, parseQuery } from '../src/containerQuery';
+import { toPairs, isSelectorMapEqual, parseQuery } from '../src/containerQuery';
 
 describe('containerQuery', function () {
 
@@ -11,20 +11,20 @@ describe('containerQuery', function () {
 
   });
 
-  describe('isClassMapEqual', function () {
+  describe('isSelectorMapEqual', function () {
 
-    it('returns true for same classMap', function () {
-      const result = isClassMapEqual({a: true, b: true}, {a: true, b: true});
+    it('returns true for same selectorMap', function () {
+      const result = isSelectorMapEqual({a: true, b: true}, {a: true, b: true});
       expect(result).toEqual(true);
     });
 
-    it('returns false if classMaps have different keys', function () {
-      const result = isClassMapEqual({a: true, b: true}, {a: true, c: true});
+    it('returns false if selectorMaps have different keys', function () {
+      const result = isSelectorMapEqual({a: true, b: true}, {a: true, c: true});
       expect(result).toEqual(false);
     });
 
-    it('returns false if classMaps have different values', function () {
-      const result = isClassMapEqual({a: true, b: false}, {a: true, b: true});
+    it('returns false if selectorMaps have different values', function () {
+      const result = isSelectorMapEqual({a: true, b: false}, {a: true, b: true});
       expect(result).toEqual(false);
     });
 
@@ -34,7 +34,7 @@ describe('containerQuery', function () {
 
     describe('width only', function () {
 
-      it('returns correct classMap based on maxWidth', function () {
+      it('returns correct selectorMap based on maxWidth', function () {
         const query = {
           a: {maxWidth: 400},
           b: {maxWidth: 600}
@@ -50,7 +50,7 @@ describe('containerQuery', function () {
         expect(result3).toEqual({a: false, b: false});
       });
 
-      it('returns correct classMap based on minWidth', function () {
+      it('returns correct selectorMap based on minWidth', function () {
         const query = {
           a: {minWidth: 400},
           b: {minWidth: 600}
@@ -66,7 +66,7 @@ describe('containerQuery', function () {
         expect(result3).toEqual({a: true, b: true});
       });
 
-      it('returns correct classMap based on minWidth and maxWidth combined', function () {
+      it('returns correct selectorMap based on minWidth and maxWidth combined', function () {
         const query = {
           a: {minWidth: 400, maxWidth: 599},
           b: {minWidth: 600, maxWidth: 700}
@@ -89,7 +89,7 @@ describe('containerQuery', function () {
 
     describe('height only', function () {
 
-      it('returns correct classMap based on maxHeight', function () {
+      it('returns correct selectorMap based on maxHeight', function () {
         const query = {
           a: {maxHeight: 400},
           b: {maxHeight: 600}
@@ -105,7 +105,7 @@ describe('containerQuery', function () {
         expect(result3).toEqual({a: false, b: false});
       });
 
-      it('returns correct classMap based on minHeight', function () {
+      it('returns correct selectorMap based on minHeight', function () {
         const query = {
           a: {minHeight: 400},
           b: {minHeight: 600}
@@ -121,7 +121,7 @@ describe('containerQuery', function () {
         expect(result3).toEqual({a: true, b: true});
       });
 
-      it('returns correct classMap based on minHeight and maxHeight combined', function () {
+      it('returns correct selectorMap based on minHeight and maxHeight combined', function () {
         const query = {
           a: {minHeight: 400, maxHeight: 599},
           b: {minHeight: 600, maxHeight: 700}
@@ -144,7 +144,7 @@ describe('containerQuery', function () {
 
     describe('width and height', function () {
 
-      it('returns correct classMap', function () {
+      it('returns correct selectorMap', function () {
         const query = {
           a: {minWidth: 400, maxWidth: 500, minHeight: 400, maxHeight: 500},
           b: {minWidth: 500, maxWidth: 600, minHeight: 400, maxHeight: 500},

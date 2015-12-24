@@ -1,8 +1,23 @@
+/**
+ * Convert obj to array of key value pairs
+ *
+ * @param {Object} obj A plain JS object
+ *
+ * @return {Array<Pair<string, Object>>}
+ */
 export function toPairs(obj) {
   return Object.keys(obj).map((key) => [key, obj[key]]);
 }
 
-export function isClassMapEqual(a, b) {
+/**
+ * Test if two classMap object are the same
+ *
+ * @param {Object} a A plain JS object, with string as key, boolean as value
+ * @param {Object} b Same as a
+ *
+ * @return {Boolean}
+ */
+export function isSelectorMapEqual(a, b) {
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
 
@@ -19,12 +34,21 @@ export function isClassMapEqual(a, b) {
   return true;
 }
 
+/**
+ * A curried function. Take query defination and size object,
+ * return a selectorMap by testing size against rules in query defination
+ *
+ * @param {Object} query Object contains container query break points
+ * @param {Object} size  With width and height property
+ *
+ * @return {Object} A map of selector to boolean
+ */
 export function parseQuery(query) {
   const rules = [];
 
-  for (const [className, {minWidth, maxWidth, minHeight, maxHeight}] of toPairs(query)) {
+  for (const [selectorName, {minWidth, maxWidth, minHeight, maxHeight}] of toPairs(query)) {
     rules.push([
-      className,
+      selectorName,
       {
         minWidth: minWidth || 0,
         maxWidth: maxWidth || Infinity,
@@ -35,15 +59,15 @@ export function parseQuery(query) {
   }
 
   return function ({width, height}) {
-    const classMap = {};
+    const selectorMap = {};
 
-    for (const [className, {minWidth, maxWidth, minHeight, maxHeight}] of rules) {
-      classMap[className] = (
+    for (const [selectorName, {minWidth, maxWidth, minHeight, maxHeight}] of rules) {
+      selectorMap[selectorName] = (
         minWidth <= width && width <= maxWidth &&
         minHeight <= height && height <= maxHeight
       );
     }
 
-    return classMap;
+    return selectorMap;
   };
 }
