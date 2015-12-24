@@ -32,7 +32,7 @@ export default function createContainerQueryMixin(query) {
         this._size.height = height;
 
         if (changed) {
-          this._updateClasses();
+          this._updateAttributes();
         }
 
         this._rafId = requestAnimationFrame(checkDimension);
@@ -47,7 +47,7 @@ export default function createContainerQueryMixin(query) {
       this._containerElement = null;
     },
 
-    _updateClasses() {
+    _updateAttributes() {
       const selectorMap = getClasses(this._size);
 
       if (isSelectorMapEqual(this._containerQuerySelectorMap, selectorMap)) {
