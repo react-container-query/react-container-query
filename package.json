@@ -11,10 +11,9 @@
   "keywords": [
     "reactjs",
     "react",
-    "mixin",
-    "container",
-    "query",
-    "css",
+    "react mixin",
+    "container query",
+    "element query",
     "responsive"
   ],
   "author": "Daiwei Lu",
