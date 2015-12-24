@@ -1,0 +1,18 @@
+extends: rackt
+parser: babel-eslint
+env:
+  browser: true
+  mocha: true
+  node: true
+plugins:
+  - react
+rules:
+  semi:
+    - 2
+    - always
+  valid-jsdoc: 2
+  array-bracket-spacing: 0
+  object-curly-spacing: 0
+  react/jsx-uses-react: 1
+  react/jsx-no-undef: 2
+  react/wrap-multilines: 2

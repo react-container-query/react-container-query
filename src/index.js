@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
 import { parseQuery, isClassMapEqual, toPairs } from './containerQuery';
 
@@ -64,6 +63,6 @@ export default function createContainerQueryMixin(query) {
           this._containerElement.removeAttribute(className);
         }
       }
-    },
+    }
   };
 }
