@@ -40,6 +40,7 @@ class MyComponent extends Component {
   render() {
     return (
       // IMPORTANT: assign `ref` property here
+      // `defineContainer` is a method provided by `createContainerQueryMixin`
       <div ref={this.defineContainer.bind(this)} className='container'>
         <div className='box'>the box</div>
       </div>
@@ -60,18 +61,18 @@ const query = {
 reactMixin(MyComponent.prototype, createContainerQueryMixin(query));
 ```
 
-The CSS doesn't look exactly like the container query syntax, but the idea is to switch `wide` and `middle` classes on and off based on the width of `.container`. This can be potentially improved by using libraries like css-module to parse customize container query and generate needed CSS and JS code.
+The CSS doesn't look exactly like the container query syntax, but the idea is to switch `wide` and `middle` attribute on and off based on the width of `.container`. This can be potentially improved by using libraries like css-module to parse customize container query and generate needed CSS and JS code.
 
 ```css
 .box {
   background-color: red;
 }
 
-.container.middle .box {
+.container[middle] .box {
   background-color: green;
 }
 
-.container.wide .box {
+.container[wide] .box {
   background-color: blue;
 }
 ```

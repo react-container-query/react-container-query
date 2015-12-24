@@ -20181,7 +20181,11 @@
 	        var className = _ref2[0];
 	        var isOn = _ref2[1];
 	
-	        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
+	        if (isOn) {
+	          this._containerElement.setAttribute(className, '');
+	        } else {
+	          this._containerElement.removeAttribute(className);
+	        }
 	      }
 	    }
 	  };
