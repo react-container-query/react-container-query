@@ -3,7 +3,7 @@
  *
  * @param {Object} obj A plain JS object
  *
- * @return {Array<Pair<string, Object>>}
+ * @return {Array<Pair<string, Object>>} Pairs
  */
 export function toPairs(obj) {
   return Object.keys(obj).map((key) => [key, obj[key]]);
@@ -15,7 +15,7 @@ export function toPairs(obj) {
  * @param {Object} a A plain JS object, with string as key, boolean as value
  * @param {Object} b Same as a
  *
- * @return {Boolean}
+ * @return {Boolean} True is a, b have the same key and mapped value
  */
 export function isSelectorMapEqual(a, b) {
   const aKeys = Object.keys(a);

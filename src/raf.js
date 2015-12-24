@@ -11,13 +11,13 @@ for(let x = 0; x < vendors.length && !_requestAnimationFrame; x++) {
 
 if (!_requestAnimationFrame) {
   _requestAnimationFrame = function (callback) {
-      const currTime = (new Date()).getTime();
-      const timeToCall = Math.max(0, 16 - (currTime - lastTime));
-      const id = window.setTimeout(() => {
-        callback(currTime + timeToCall);
-      }, timeToCall);
-      lastTime = currTime + timeToCall;
-      return id;
+    const currTime = (new Date()).getTime();
+    const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+    const id = window.setTimeout(() => {
+      callback(currTime + timeToCall);
+    }, timeToCall);
+    lastTime = currTime + timeToCall;
+    return id;
   };
 }
 
