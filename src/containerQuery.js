@@ -1,8 +1,23 @@
+/**
+ * Convert obj to array of key value pairs
+ *
+ * @param {Object} obj A plain JS object
+ *
+ * @return {Array<Pair<string, Object>>} Pairs
+ */
 export function toPairs(obj) {
   return Object.keys(obj).map((key) => [key, obj[key]]);
 }
 
-export function isClassMapEqual(a, b) {
+/**
+ * Test if two classMap object are the same
+ *
+ * @param {Object} a A plain JS object, with string as key, boolean as value
+ * @param {Object} b Same as a
+ *
+ * @return {Boolean} True is a, b have the same key and mapped value
+ */
+export function isSelectorMapEqual(a, b) {
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
 
@@ -19,64 +34,40 @@ export function isClassMapEqual(a, b) {
   return true;
 }
 
+/**
+ * A curried function. Take query defination and size object,
+ * return a selectorMap by testing size against rules in query defination
+ *
+ * @param {Object} query Object contains container query break points
+ * @param {Object} size  With width and height property
+ *
+ * @return {Object} A map of selector to boolean
+ */
 export function parseQuery(query) {
-  const widthRules = [];
-  const heightRules = [];
-  const pairs = toPairs(query);
-  const allClassNames = pairs.map(([className]) => className);
+  const rules = [];
 
-  for (const [className, rules] of pairs) {
-    const {minWidth, maxWidth, minHeight, maxHeight} = rules;
-
-    if (minWidth || maxWidth) {
-      widthRules.push([className, {minWidth: minWidth || 0, maxWidth}]);
-    }
-
-    if (minHeight || maxHeight) {
-      heightRules.push([className, {minHeight: minHeight || 0, maxHeight}]);
-    }
+  for (const [selectorName, {minWidth, maxWidth, minHeight, maxHeight}] of toPairs(query)) {
+    rules.push([
+      selectorName,
+      {
+        minWidth: minWidth || 0,
+        maxWidth: maxWidth || Infinity,
+        minHeight: minHeight || 0,
+        maxHeight: maxHeight || Infinity
+      }
+    ]);
   }
 
-  widthRules.sort((a, b) => a[1].minWidth - b[1].minWidth);
-  heightRules.sort((a, b) => a[1].minHeight - b[1].minHeight);
-
   return function ({width, height}) {
-    const classMap = {};
+    const selectorMap = {};
 
-    for (const className of allClassNames) {
-      classMap[className] = false;
+    for (const [selectorName, {minWidth, maxWidth, minHeight, maxHeight}] of rules) {
+      selectorMap[selectorName] = (
+        minWidth <= width && width <= maxWidth &&
+        minHeight <= height && height <= maxHeight
+      );
     }
 
-    if (width !== null) {
-      for (const [className, {minWidth, maxWidth}] of widthRules) {
-        if (minWidth <= width) {
-          if (maxWidth == null) {
-            classMap[className] = true;
-            continue;
-          }
-
-          if (width <= maxWidth) {
-            classMap[className] = true;
-          }
-        }
-      }
-    }
-
-    if (height !== null) {
-      for (const [className, {minHeight, maxHeight}] of heightRules) {
-        if (minHeight <= height) {
-          if (maxHeight == null) {
-            classMap[className] = true;
-            continue;
-          }
-
-          if (height <= maxHeight) {
-            classMap[className] = true;
-          }
-        }
-      }
-    }
-
-    return classMap;
+    return selectorMap;
   };
 }
