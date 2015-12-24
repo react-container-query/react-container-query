@@ -1,6 +1,6 @@
 {
   "name": "react-container-query",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Container Query for React Component",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
