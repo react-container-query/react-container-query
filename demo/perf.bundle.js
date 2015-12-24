@@ -20118,7 +20118,7 @@
 	    componentDidMount: function componentDidMount() {
 	      var _this = this;
 	
-	      this._containerQueryClassMap = {};
+	      this._containerQuerySelectorMap = {};
 	      this._size = { width: null, height: null };
 	      this._rafId = null;
 	
@@ -20141,7 +20141,7 @@
 	        _this._size.height = height;
 	
 	        if (changed) {
-	          _this._updateClasses();
+	          _this._updateAttributes();
 	        }
 	
 	        _this._rafId = (0, _raf.requestAnimationFrame)(checkDimension);
@@ -20154,16 +20154,16 @@
 	      this._rafId = null;
 	      this._containerElement = null;
 	    },
-	    _updateClasses: function _updateClasses() {
-	      var classMap = getClasses(this._size);
+	    _updateAttributes: function _updateAttributes() {
+	      var selectorMap = getClasses(this._size);
 	
-	      if ((0, _containerQuery.isClassMapEqual)(this._containerQueryClassMap, classMap)) {
+	      if ((0, _containerQuery.isSelectorMapEqual)(this._containerQuerySelectorMap, selectorMap)) {
 	        return;
 	      }
 	
-	      this._containerQueryClassMap = classMap;
+	      this._containerQuerySelectorMap = selectorMap;
 	
-	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQueryClassMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQuerySelectorMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
 	        var _ref;
 	
 	        if (_isArray) {
@@ -20176,13 +20176,13 @@
 	        }
 	
 	        var _ref2 = _ref;
-	        var className = _ref2[0];
+	        var selectorName = _ref2[0];
 	        var isOn = _ref2[1];
 	
 	        if (isOn) {
-	          this._containerElement.setAttribute(className, '');
+	          this._containerElement.setAttribute(selectorName, '');
 	        } else {
-	          this._containerElement.removeAttribute(className);
+	          this._containerElement.removeAttribute(selectorName);
 	        }
 	      }
 	    }
@@ -20193,13 +20193,40 @@
 /* 163 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	exports.__esModule = true;
-	// Put requestAnimationFrame polyfill here
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	var lastTime = 0;
+	var _requestAnimationFrame = window.requestAnimationFrame;
+	var _cancelAnimationFrame = window.cancelAnimationFrame;
 	
-	var requestAnimationFrame = exports.requestAnimationFrame = window.requestAnimationFrame;
-	var cancelAnimationFrame = exports.cancelAnimationFrame = window.cancelAnimationFrame;
+	for (var x = 0; x < vendors.length && !_requestAnimationFrame; x++) {
+	  exports.requestAnimationFrame = _requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+	  exports.cancelAnimationFrame = _cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+	}
+	
+	if (!_requestAnimationFrame) {
+	  exports.requestAnimationFrame = _requestAnimationFrame = function (callback) {
+	    var currTime = new Date().getTime();
+	    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+	    var id = window.setTimeout(function () {
+	      callback(currTime + timeToCall);
+	    }, timeToCall);
+	    lastTime = currTime + timeToCall;
+	    return id;
+	  };
+	}
+	
+	if (!_cancelAnimationFrame) {
+	  exports.cancelAnimationFrame = _cancelAnimationFrame = function (id) {
+	    return clearTimeout(id);
+	  };
+	}
+	
+	// Somehow "export requestAnimationFrame" didn't work with babel?
+	exports.requestAnimationFrame = _requestAnimationFrame;
+	exports.cancelAnimationFrame = _cancelAnimationFrame;
 
 /***/ },
 /* 164 */
@@ -20209,15 +20236,30 @@
 	
 	exports.__esModule = true;
 	exports.toPairs = toPairs;
-	exports.isClassMapEqual = isClassMapEqual;
+	exports.isSelectorMapEqual = isSelectorMapEqual;
 	exports.parseQuery = parseQuery;
+	/**
+	 * Convert obj to array of key value pairs
+	 *
+	 * @param {Object} obj A plain JS object
+	 *
+	 * @return {Array<Pair<string, Object>>} Pairs
+	 */
 	function toPairs(obj) {
 	  return Object.keys(obj).map(function (key) {
 	    return [key, obj[key]];
 	  });
 	}
 	
-	function isClassMapEqual(a, b) {
+	/**
+	 * Test if two classMap object are the same
+	 *
+	 * @param {Object} a A plain JS object, with string as key, boolean as value
+	 * @param {Object} b Same as a
+	 *
+	 * @return {Boolean} True is a, b have the same key and mapped value
+	 */
+	function isSelectorMapEqual(a, b) {
 	  var aKeys = Object.keys(a);
 	  var bKeys = Object.keys(b);
 	
@@ -20247,139 +20289,76 @@
 	  return true;
 	}
 	
+	/**
+	 * A curried function. Take query defination and size object,
+	 * return a selectorMap by testing size against rules in query defination
+	 *
+	 * @param {Object} query Object contains container query break points
+	 * @param {Object} size  With width and height property
+	 *
+	 * @return {Object} A map of selector to boolean
+	 */
 	function parseQuery(query) {
-	  var widthRules = [];
-	  var heightRules = [];
-	  var pairs = toPairs(query);
-	  var allClassNames = pairs.map(function (_ref2) {
-	    var className = _ref2[0];
-	    return className;
-	  });
+	  var rules = [];
 	
-	  for (var _iterator2 = pairs, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-	    var _ref3;
+	  for (var _iterator2 = toPairs(query), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+	    var _ref2;
 	
 	    if (_isArray2) {
 	      if (_i2 >= _iterator2.length) break;
-	      _ref3 = _iterator2[_i2++];
+	      _ref2 = _iterator2[_i2++];
 	    } else {
 	      _i2 = _iterator2.next();
 	      if (_i2.done) break;
-	      _ref3 = _i2.value;
+	      _ref2 = _i2.value;
 	    }
 	
-	    var _ref10 = _ref3;
-	    var className = _ref10[0];
-	    var rules = _ref10[1];
-	    var minWidth = rules.minWidth;
-	    var maxWidth = rules.maxWidth;
-	    var minHeight = rules.minHeight;
-	    var maxHeight = rules.maxHeight;
+	    var _ref6 = _ref2;
+	    var selectorName = _ref6[0];
+	    var _ref6$ = _ref6[1];
+	    var minWidth = _ref6$.minWidth;
+	    var maxWidth = _ref6$.maxWidth;
+	    var minHeight = _ref6$.minHeight;
+	    var maxHeight = _ref6$.maxHeight;
 	
-	    if (minWidth || maxWidth) {
-	      widthRules.push([className, { minWidth: minWidth || 0, maxWidth: maxWidth }]);
-	    }
-	
-	    if (minHeight || maxHeight) {
-	      heightRules.push([className, { minHeight: minHeight || 0, maxHeight: maxHeight }]);
-	    }
+	    rules.push([selectorName, {
+	      minWidth: minWidth || 0,
+	      maxWidth: maxWidth || Infinity,
+	      minHeight: minHeight || 0,
+	      maxHeight: maxHeight || Infinity
+	    }]);
 	  }
 	
-	  widthRules.sort(function (a, b) {
-	    return a[1].minWidth - b[1].minWidth;
-	  });
-	  heightRules.sort(function (a, b) {
-	    return a[1].minHeight - b[1].minHeight;
-	  });
+	  return function (_ref3) {
+	    var width = _ref3.width;
+	    var height = _ref3.height;
 	
-	  return function (_ref4) {
-	    var width = _ref4.width;
-	    var height = _ref4.height;
+	    var selectorMap = {};
 	
-	    var classMap = {};
-	
-	    for (var _iterator3 = allClassNames, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-	      var _ref5;
+	    for (var _iterator3 = rules, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+	      var _ref4;
 	
 	      if (_isArray3) {
 	        if (_i3 >= _iterator3.length) break;
-	        _ref5 = _iterator3[_i3++];
+	        _ref4 = _iterator3[_i3++];
 	      } else {
 	        _i3 = _iterator3.next();
 	        if (_i3.done) break;
-	        _ref5 = _i3.value;
+	        _ref4 = _i3.value;
 	      }
 	
-	      var className = _ref5;
+	      var _ref5 = _ref4;
+	      var selectorName = _ref5[0];
+	      var _ref5$ = _ref5[1];
+	      var minWidth = _ref5$.minWidth;
+	      var maxWidth = _ref5$.maxWidth;
+	      var minHeight = _ref5$.minHeight;
+	      var maxHeight = _ref5$.maxHeight;
 	
-	      classMap[className] = false;
+	      selectorMap[selectorName] = minWidth <= width && width <= maxWidth && minHeight <= height && height <= maxHeight;
 	    }
 	
-	    if (width !== null) {
-	      for (var _iterator4 = widthRules, _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
-	        var _ref6;
-	
-	        if (_isArray4) {
-	          if (_i4 >= _iterator4.length) break;
-	          _ref6 = _iterator4[_i4++];
-	        } else {
-	          _i4 = _iterator4.next();
-	          if (_i4.done) break;
-	          _ref6 = _i4.value;
-	        }
-	
-	        var _ref7 = _ref6;
-	        var className = _ref7[0];
-	        var _ref7$ = _ref7[1];
-	        var minWidth = _ref7$.minWidth;
-	        var maxWidth = _ref7$.maxWidth;
-	
-	        if (minWidth <= width) {
-	          if (maxWidth == null) {
-	            classMap[className] = true;
-	            continue;
-	          }
-	
-	          if (width <= maxWidth) {
-	            classMap[className] = true;
-	          }
-	        }
-	      }
-	    }
-	
-	    if (height !== null) {
-	      for (var _iterator5 = heightRules, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : _iterator5[Symbol.iterator]();;) {
-	        var _ref8;
-	
-	        if (_isArray5) {
-	          if (_i5 >= _iterator5.length) break;
-	          _ref8 = _iterator5[_i5++];
-	        } else {
-	          _i5 = _iterator5.next();
-	          if (_i5.done) break;
-	          _ref8 = _i5.value;
-	        }
-	
-	        var _ref9 = _ref8;
-	        var className = _ref9[0];
-	        var _ref9$ = _ref9[1];
-	        var minHeight = _ref9$.minHeight;
-	        var maxHeight = _ref9$.maxHeight;
-	
-	        if (minHeight <= height) {
-	          if (maxHeight == null) {
-	            classMap[className] = true;
-	            continue;
-	          }
-	
-	          if (height <= maxHeight) {
-	            classMap[className] = true;
-	          }
-	        }
-	      }
-	    }
-	
-	    return classMap;
+	    return selectorMap;
 	  };
 	}
 
