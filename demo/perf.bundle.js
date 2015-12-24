@@ -20103,15 +20103,9 @@
 	exports.__esModule = true;
 	exports.default = createContainerQueryMixin;
 	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
 	var _raf = __webpack_require__(163);
 	
 	var _containerQuery = __webpack_require__(164);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function createContainerQueryMixin(query) {
 	
