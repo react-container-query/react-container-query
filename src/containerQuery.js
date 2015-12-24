@@ -20,61 +20,28 @@ export function isClassMapEqual(a, b) {
 }
 
 export function parseQuery(query) {
-  const widthRules = [];
-  const heightRules = [];
-  const pairs = toPairs(query);
-  const allClassNames = pairs.map(([className]) => className);
+  const rules = [];
 
-  for (const [className, rules] of pairs) {
-    const {minWidth, maxWidth, minHeight, maxHeight} = rules;
-
-    if (minWidth || maxWidth) {
-      widthRules.push([className, {minWidth: minWidth || 0, maxWidth}]);
-    }
-
-    if (minHeight || maxHeight) {
-      heightRules.push([className, {minHeight: minHeight || 0, maxHeight}]);
-    }
+  for (const [className, {minWidth, maxWidth, minHeight, maxHeight}] of toPairs(query)) {
+    rules.push([
+      className,
+      {
+        minWidth: minWidth || 0,
+        maxWidth: maxWidth || Infinity,
+        minHeight: minHeight || 0,
+        maxHeight: maxHeight || Infinity
+      }
+    ]);
   }
-
-  widthRules.sort((a, b) => a[1].minWidth - b[1].minWidth);
-  heightRules.sort((a, b) => a[1].minHeight - b[1].minHeight);
 
   return function ({width, height}) {
     const classMap = {};
 
-    for (const className of allClassNames) {
-      classMap[className] = false;
-    }
-
-    if (width !== null) {
-      for (const [className, {minWidth, maxWidth}] of widthRules) {
-        if (minWidth <= width) {
-          if (maxWidth == null) {
-            classMap[className] = true;
-            continue;
-          }
-
-          if (width <= maxWidth) {
-            classMap[className] = true;
-          }
-        }
-      }
-    }
-
-    if (height !== null) {
-      for (const [className, {minHeight, maxHeight}] of heightRules) {
-        if (minHeight <= height) {
-          if (maxHeight == null) {
-            classMap[className] = true;
-            continue;
-          }
-
-          if (height <= maxHeight) {
-            classMap[className] = true;
-          }
-        }
-      }
+    for (const [className, {minWidth, maxWidth, minHeight, maxHeight}] of rules) {
+      classMap[className] = (
+        minWidth <= width && width <= maxWidth &&
+        minHeight <= height && height <= maxHeight
+      );
     }
 
     return classMap;
