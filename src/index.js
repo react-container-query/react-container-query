@@ -58,7 +58,11 @@ export default function createContainerQueryMixin(query) {
       this._containerQueryClassMap = classMap;
 
       for (const [className, isOn] of toPairs(this._containerQueryClassMap)) {
-        this._containerElement.classList[isOn ? 'add' : 'remove'](className);
+        if (isOn) {
+          this._containerElement.setAttribute(className, '');
+        } else {
+          this._containerElement.removeAttribute(className);
+        }
       }
     },
   };
