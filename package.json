@@ -45,7 +45,6 @@
     "karma-sourcemap-loader": "^0.3.6",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.7.0",
-    "object-extend": "^0.5.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-mixin": "^3.0.3",
@@ -68,6 +67,6 @@
     "postversion": "git push && git push --tags",
     "prepublish": "npm run clean && npm run build",
     "watch:test": "karma start --no-single-run",
-    "demo": "webpack"
+    "demo": "webpack --config webpack.config.demo.js"
   }
 }
