@@ -1,5 +1,7 @@
 # React Container Query (proof of concept)
 
+[![npm version](https://badge.fury.io/js/react-container-query.svg)](https://badge.fury.io/js/react-container-query)
+
 ## Proof of Concept
 
 This is only a proof of concept. If you have any idea, you are more than welcome to let me know by creating an issue or PR.
