@@ -1,6 +1,7 @@
 # React Container Query
 
 [![npm version](https://badge.fury.io/js/react-container-query.svg)](https://badge.fury.io/js/react-container-query)
+[![Build Status](https://travis-ci.org/d6u/react-container-query.svg?branch=master)](https://travis-ci.org/d6u/react-container-query)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/react-cq.svg)](https://saucelabs.com/u/react-cq)
 

@@ -1,9 +1,25 @@
 language: node_js
-node_js:
-- '4'
-script:
-- npm run check
+sudo: false
+
 env:
   global:
+    - CXX=g++-4.8
     - secure: jB0l0Ftcm7aWsyrTtyP9ze67G1G769bXzM3SQgUvu/5t4gjEpCvRdX7+kXpnkZ3G0C7HiWKn0zRhdtFb8VSFAmz7uN1SacLVMfjz/0d9GJo7z84XoDcAWowQ37VXy+JjKujbBnSEyTSJNtm2NHTgCp7Me1PdxNT55LHDhaYezxMmyfv/GD1x3QrRdfCFlFocvthexCIVG+weNQqrfBT05m1BOeWGispArUK6rBbjwNHPwK+IDgv6nsUkORs1+AqSIK57sYG6nvfWq2goOZ5NHP9AoeIt4vWSwlejAjcNyK08BO/dqw9AxpTw1hZv3zuUGQw+kjaYDozrJ9RfTYLwRJvfyFXbUpKy6IGAffq3Ve2RMjeEQ0Y40sToZ6WIO8wmrDscLMo8/dirk7/3et2h4wQGliHV2fz+KuhLxi0+JJwh1JjqniYoWb5v6vPu8VOvVT9Bo/H188r7O6T0LgGHOMaf2Au43DU0sbGjWcYODOlAH0jAn+B7mqP3A6qwX3setbpk6Q8mL/LiaUFXQ/MalFgzKlsozrNaVVL36H8kgwjgeE31F4fFZobte2a0BQrZa5Mey5xIGXyW7I5yhXoXCAWk2Ht2NMA83cRMUvzzwEYuTBx7CBmgPdD6q6ETPKCxSXfnYXPughEKL5+95UcxVZoDxei+mtytXnMqRmGWCtU=
     - secure: ZZyfMe7rLxDouRUAyB4LCUE2gvdV2Jy5JvHqxN6tdNNtMyHZVYCyMiFz2gNYpVX4cPYTGn6PxnwYLcnK950cV5mhkClD+Zjyn6RWAMHpb9Na4RngHBJ/MuC7aQt9pgpdv18bEO5vDL0F5VO7JNzYU0pQsZJmVGrm5sLkM6cpVpm5vbIAncwvXhV+0rjCC5i0cTWq/wltGG8/rwo5eOHl71uBtERh5xzL4m70kJqxv4P6iRyaYSA8XR6vSuQ2Gkze8nnWlIbsATrWU+gRLt8eme57DI9vUOdDVskycDJDzrIhJq4PbvHO0w/nPjZpawMVVS15P2sYqXb2/xz1gzyDbBVr+g4nPRhqrZFOaPKb0QX97hkRuySz9ff2HcO/uRZ09q3CiD6p9Rr7ZJj82iYiauxZFewHlf9KT9Qrb9dYa1WBkBc2ZP1yLiwukYCCQt9dew/TwJNlHJ+AbzRMRc/W/aX1vTwXmhNDO7qt43pSryTudcfQQdPDsvKfcPSmN+u0q5STE6d1ZpeZxBxCYdMsCv/fKFhVMyLet7wtXFxAFK8z9Ub5r1zb4Br7aXvVaZnX3HIymVG1nDrOZaZ/80l1A3+xLlrRLbg/oqVcWt3UHk9JxsSoCslpfk2lnPoZt3k9TG7wHJdlLtWR/NiGybuXsy7oCo3cWqAFv7ksLncg3rQ=
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+node_js:
+  - '4'
+branches:
+  only:
+    - master
+before_install:
+  - npm config set spin false
+script:
+  - npm run check
