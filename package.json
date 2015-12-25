@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/d6u/react-container-query",
   "files": [
+    "dist",
     "lib",
     "src"
   ],
