@@ -1,6 +1,6 @@
 {
   "name": "react-container-query",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Container Query for React Component",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu)",
   "main": "./lib/index.js",
