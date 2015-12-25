@@ -1,6 +1,6 @@
 'use strict';
 
-const webpackConfig = require('./webpack.config');
+const webpackConfig = require('./webpack.config.base');
 
 const customLaunchers = {
   sl_chrome: {
