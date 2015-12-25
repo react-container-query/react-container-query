@@ -40,7 +40,7 @@ describe('createContainerQueryMixin', function () {
     });
 
     afterEach(function () {
-      element.remove();
+      document.body.removeChild(element);
     });
 
     it('checks element size', function () {
