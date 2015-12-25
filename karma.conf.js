@@ -47,13 +47,15 @@ const customLaunchers = {
   },
   sl_android_4: {
     base: 'SauceLabs',
-    browserName: 'Android Emulator',
+    browserName: 'android',
+    deviceName: 'Android Emulator',
     platform: 'Linux',
     version: '4.4'
   },
   sl_android_5: {
     base: 'SauceLabs',
-    browserName: 'Android Emulator',
+    browserName: 'android',
+    deviceName: 'Android Emulator',
     platform: 'Linux',
     version: '5.1'
   },
