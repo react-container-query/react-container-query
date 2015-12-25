@@ -7,11 +7,11 @@
   background-color: red;
 }
 
-.container[middle] .box {
+.container[width_between_400_and_599] .box {
   background-color: green;
 }
 
-.container[wide] .box {
+.container[width_larger_than_600] .box {
   background-color: blue;
 }
 
@@ -20,10 +20,10 @@
   width: 50%;
 }
 
-.container-perf[middle] .box {
+.container-perf[width_between_400_and_599] .box {
   background-color: green;
 }
 
-.container-perf[wide] .box {
+.container-perf[width_larger_than_600] .box {
   background-color: blue;
 }

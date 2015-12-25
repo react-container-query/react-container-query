@@ -95,28 +95,18 @@
 	})(_react.Component);
 	
 	var query = {
-	  middle: {
+	  width_between_400_and_599: {
 	    minWidth: 400,
 	    maxWidth: 599
 	  },
-	  wide: {
+	  width_larger_than_600: {
 	    minWidth: 600
 	  }
 	};
 	
 	(0, _reactMixin2.default)(MyComponent.prototype, (0, _src2.default)(query));
 	
-	var App = function App(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(MyComponent, null),
-	    _react2.default.createElement(MyComponent, null),
-	    _react2.default.createElement(MyComponent, null)
-	  );
-	};
-	
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(MyComponent, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
