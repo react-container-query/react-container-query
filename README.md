@@ -1,4 +1,4 @@
-# React Container Query (proof of concept)
+# React Container Query
 
 [![npm version](https://badge.fury.io/js/react-container-query.svg)](https://badge.fury.io/js/react-container-query)
 
