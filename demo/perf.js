@@ -14,11 +14,11 @@ class MyComponent extends Component {
 }
 
 const query = {
-  middle: {
+  width_between_400_and_599: {
     minWidth: 400,
     maxWidth: 599
   },
-  wide: {
+  width_larger_than_600: {
     minWidth: 600,
   }
 };
