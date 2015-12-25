@@ -45,8 +45,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    // browsers: ['Chrome'],
-    browsers: Object.keys(customLaunchers),
+    browsers: process.env.TRAVIS ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
     concurrency: Infinity,
 
