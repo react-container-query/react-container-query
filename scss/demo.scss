@@ -1,0 +1,103 @@
+.demo {
+  &__container {
+    background-color: white;
+    padding: 10px;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  &__logo {
+    width: 30px;
+    height: 30px;
+    background-color: #C1C1C1;
+    margin: 0 auto;
+  }
+
+  &__intro {
+    width: 100%;
+    margin: 10px 10px 0;
+  }
+
+  &__line {
+    background-color: #C1C1C1;
+    height: 6px;
+    & + & {
+      margin-top: 6px;
+    }
+  }
+
+  &__line-1 {
+    width: 70%;
+  }
+
+  &__line-2 {
+    width: 80%;
+  }
+
+  &__line-3 {
+    width: 30%;
+  }
+
+  &__list {
+    margin-top: 10px;
+  }
+
+  &__item {
+    background-color: #C1C1C1;
+    margin-bottom: 10px;
+  }
+
+  &__item-pic {
+    height: 100px;
+    background-color: #FF9500;
+    padding: 10px;
+  }
+
+  &__item-content {
+    height: 100px;
+  }
+
+  &__container[middle] & {
+    &__logo {
+      margin: 0;
+    }
+
+    &__intro {
+      margin: 0;
+      padding-left: 60px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    &__item-pic {
+      width: 100px;
+      float: left;
+    }
+  }
+
+  &__container[wide] & {
+    &__item {
+      float: left;
+      margin-right: 10px;
+    }
+
+    &__item-pic {
+      width: 140px;
+      float: none;
+    }
+
+    &__item--feature {
+      width: auto;
+      float: none;
+
+      .demo__item-pic {
+        float: left;
+        width: 100px;
+      }
+    }
+  }
+}
