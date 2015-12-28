@@ -1,0 +1,42 @@
+.vertical-center-container {
+  &::before {
+    content: '';
+    display: inline-block;
+    height: calc(100vh - #{2 * $page-padding});
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+  }
+}
+
+.vertical-center-child {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.slide {
+  background-color: #FF9500;
+  min-height: 100vh;
+  padding: $page-padding;
+  overflow: hidden;
+
+  &-2 {
+    background-color: #FF5E3A;
+  }
+}
+
+.slide-h1 {
+  color: $bg-dark;
+
+  &--highlight {
+    color: white;
+  }
+}
+
+.slide-content {
+  margin-top: 10px;
+}
+
+.slide-code-block {
+  margin-top: 10px;
+  color: yellow;
+}

@@ -1,6 +1,7 @@
-@import './reset.scss';
+@import 'reset';
 
 $bg-dark: #202020;
+$page-padding: 15px;
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -34,58 +35,11 @@ code {
   line-height: 1.3;
 }
 
-.vertical-center-container {
-  &::before {
-    content: '';
-    display: inline-block;
-    height: calc(100vh - 80px);
-    vertical-align: middle;
-    margin-right: -0.25em; /* Adjusts for spacing */
-  }
+a {
+  color: #007AFF;
+  text-decoration: none;
 }
 
-.vertical-center-child {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.slide {
-  background-color: #FF9500;
-  min-height: 100vh;
-  padding: 15px;
-  overflow: hidden;
-
-  &-2 {
-    background-color: #FF5E3A;
-  }
-}
-
-.slide-h1 {
-  color: $bg-dark;
-
-  &--highlight {
-    color: white;
-  }
-}
-
-.slide-content {
-  margin-top: 10px;
-}
-
-.slide-code-block {
-  margin-top: 10px;
-  color: yellow;
-}
-
-.example {
-  margin-top: 10px;
-}
-
-.example__btn-group {
-
-}
-
-.example__btn {
-}
-
-@import './demo.scss';
+@import 'slide';
+@import 'example';
+@import 'demo';

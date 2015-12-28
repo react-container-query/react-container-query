@@ -26,6 +26,6 @@
     "build:js": "webpack",
     "build": "npm run build:css && npm run build:js",
     "prestart": "npm run build:css",
-    "start": "browser-sync start --server --no-ghost-mode --files='*.js, *.css, *.html' & webpack -w & node-sass --output-style expanded -w scss/index.scss style.css"
+    "start": "browser-sync start --no-notify --server --no-ghost-mode --files='*.js, *.css, *.html' & webpack -w & node-sass --output-style expanded -w scss/index.scss style.css"
   }
 }

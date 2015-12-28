@@ -96,9 +96,9 @@ const Page3 = () => (
 
 const Page4 = () => (
   <Page order="4">
-    <h2>Not Yet Supported in Any Browser</h2>
+    <h2>No Support in Any Browser</h2>
     <div className="slide-content">
-      <p>Unfortunately, container query is not yet supported in any browser. But that's not the end of the story.</p>
+      <p>Unfortunately, container query is not yet supported in any browser. But that's not the end of the story. There are libraries and pollyfill available to help us use the future CSS today.</p>
     </div>
   </Page>
 );
@@ -107,7 +107,8 @@ const Page5 = () => (
   <Page order="5">
     <h2>React Container Query Mixin</h2>
     <div className="slide-content">
-      <p></p>
+      <p>If you are interested in React, you can create component with container query behavior with <a href="https://github.com/d6u/react-container-query" target="_blank">React Container Query Mixin</a>. I have very detailed documentation on github.</p>
+      <p>The demos on this website is built using the mixin.</p>
     </div>
   </Page>
 );
@@ -123,7 +124,7 @@ const Page6 = () => (
 
 const Page7 = () => (
   <Page order="5">
-    <h2>Other Pollyfill</h2>
+    <h2>About this Website</h2>
     <div className="slide-content">
       <p></p>
     </div>

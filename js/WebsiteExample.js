@@ -64,15 +64,16 @@ export default class WebsiteExample extends Component {
   }
 
   render() {
+    const lastBtn = this.props.enableLast ?
+      <button className="example__btn" onClick={() => this._selectLayout(2)}>{'>= 620'}</button> :
+      null;
+
     return (
       <div className="example">
         <div className="example__btn-group">
           <button className="example__btn" onClick={() => this._selectLayout(0)}>{'<= 440'}</button>
           <button className="example__btn" onClick={() => this._selectLayout(1)}>{'> 440 and < 620'}</button>
-          {this.props.enableLast ?
-            <button className="example__btn" onClick={() => this._selectLayout(2)}>{'>= 620'}</button> :
-            null
-          }
+          { lastBtn }
         </div>
         <Demo width={this.state.width} />
       </div>
