@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
-export default class Page extends Component {
-  render() {
-    const classes = classnames('slide', `slide-${this.props.order}`, {
-      'vertical-center-container': this.props.verticalCenterContainer
-    });
+export default function Page({ order, verticalCenterContainer, isHero, children }) {
+  const classes = classnames('page', `page-${order}`, {
+    'vertical-center-container': verticalCenterContainer,
+    'page-hero': isHero
+  });
 
-    return <div className={ classes }>{ this.props.children }</div>;
-  }
-}
+  return <section className={ classes }>{ children }</section>;
+};

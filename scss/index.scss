@@ -1,7 +1,11 @@
 @import 'reset';
 
-$bg-dark: #202020;
 $page-padding: 15px;
+
+$orange: #FF9500;
+$orange-red: #FF5E3A;
+$white: #E4DDCA;
+$black: #202020;
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,6 +14,7 @@ $page-padding: 15px;
 body {
   font-family: 'Poppins', sans-serif;
   color: white;
+  line-height: 1.3;
 }
 
 h1 {
@@ -22,22 +27,29 @@ h2 {
   font-weight: 700;
   font-size: 36px;
   line-height: 1.2;
+  margin-bottom: 20px;
 }
 
 p {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+pre {
+  margin-bottom: 10px;
 }
 
 code {
   font-family: Inconsolata, monospace;
-  font-size: 16px;
-  line-height: 1.3;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #FFF03F;
 }
 
 a {
-  color: #007AFF;
-  text-decoration: none;
+  color: #1669C3;
+  text-decoration: underline;
 }
 
 @import 'slide';

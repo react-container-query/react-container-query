@@ -1,3 +1,42 @@
+.page {
+  background-color: $orange;
+  min-height: 100vh;
+  padding: 30px $page-padding $page-padding;
+  overflow: hidden;
+
+  &.page-hero {
+    padding-top: $page-padding;
+  }
+
+  &-2 {
+    background-color: $orange-red;
+  }
+
+  &-7 {
+    background-color: $white;
+    color: black;
+  }
+}
+
+.page-h1 {
+  color: black;
+
+  &--highlight {
+    color: white;
+  }
+}
+
+.page-list {
+  padding-left: 25px;
+  margin-top: 10px;
+}
+
+.page-list-item {
+  list-style: initial;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
 .vertical-center-container {
   &::before {
     content: '';
@@ -11,32 +50,4 @@
 .vertical-center-child {
   display: inline-block;
   vertical-align: middle;
-}
-
-.slide {
-  background-color: #FF9500;
-  min-height: 100vh;
-  padding: $page-padding;
-  overflow: hidden;
-
-  &-2 {
-    background-color: #FF5E3A;
-  }
-}
-
-.slide-h1 {
-  color: $bg-dark;
-
-  &--highlight {
-    color: white;
-  }
-}
-
-.slide-content {
-  margin-top: 10px;
-}
-
-.slide-code-block {
-  margin-top: 10px;
-  color: yellow;
 }
