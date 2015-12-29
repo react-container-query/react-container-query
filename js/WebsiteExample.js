@@ -17,8 +17,8 @@ function render() {
   const motionStyle = {width: spring(width, [120, 11])};
 
   return (
-    <Motion defaultStyle={{width: 160}} style={ motionStyle }>{(values) => (
-      <div className={classes} ref={this.defineContainer.bind(this)} style={{width: `${values.width}px`}}>
+    <Motion defaultStyle={{width: 160 * scale}} style={ motionStyle }>{(values) => (
+      <div className={classes} ref={this.defineContainer} style={{width: `${values.width}px`}}>
         <div className="demo__logo"></div>
         <div className="demo__intro">
           <div className="demo__line demo__line-1"></div>
