@@ -1,70 +1,89 @@
 import React, { Component } from 'react';
 import { Motion, spring } from 'react-motion';
 import reactMixin from 'react-mixin';
+import classnames from 'classnames';
 import createContainerQueryMixin from 'react-container-query';
 
 const MIM_WIDTH = 100;
 
-class Demo extends Component {
-  render() {
-    const { width } = this.props;
-    const motionStyle = {width: spring(width, [120, 11])};
+function render() {
+  const { width, scale } = this.props;
 
-    return (
-      <Motion defaultStyle={{width: 160}} style={ motionStyle }>{(values) => (
-        <div className="demo__container"
-          ref={this.defineContainer.bind(this)}
-          style={{width: `${values.width}px`}}>
+  const classes = classnames('demo__container', {
+    'demo__container--mobile': scale === 1,
+    'demo__container--desktop': scale === 2
+  });
 
-          <div className="demo__logo"></div>
-          <div className="demo__intro">
-            <div className="demo__line demo__line-1"></div>
-            <div className="demo__line demo__line-2"></div>
-            <div className="demo__line demo__line-3"></div>
-          </div>
-          <ol className="demo__list">
-            <li className="demo__item demo__item--feature">
-              <div className="demo__item-pic">image</div>
-              <div className="demo__item-content"></div>
-            </li>
-            <li className="demo__item">
-              <div className="demo__item-pic">image</div>
-              <div className="demo__item-content"></div>
-            </li>
-            <li className="demo__item">
-              <div className="demo__item-pic">image</div>
-              <div className="demo__item-content"></div>
-            </li>
-            <li className="demo__item">
-              <div className="demo__item-pic">image</div>
-              <div className="demo__item-content"></div>
-            </li>
-            <li className="demo__item">
-              <div className="demo__item-pic">image</div>
-              <div className="demo__item-content"></div>
-            </li>
-          </ol>
+  const motionStyle = {width: spring(width, [120, 11])};
+
+  return (
+    <Motion defaultStyle={{width: 160}} style={ motionStyle }>{(values) => (
+      <div className={classes} ref={this.defineContainer.bind(this)} style={{width: `${values.width}px`}}>
+        <div className="demo__logo"></div>
+        <div className="demo__intro">
+          <div className="demo__line demo__line-1"></div>
+          <div className="demo__line demo__line-2"></div>
+          <div className="demo__line demo__line-3"></div>
         </div>
-      )}</Motion>
-    );
-  }
+        <ol className="demo__list">
+          <li className="demo__item demo__item--feature">
+            <div className="demo__item-pic">image</div>
+            <div className="demo__item-content"></div>
+          </li>
+          <li className="demo__item">
+            <div className="demo__item-pic">image</div>
+            <div className="demo__item-content"></div>
+          </li>
+          <li className="demo__item">
+            <div className="demo__item-pic">image</div>
+            <div className="demo__item-content"></div>
+          </li>
+          <li className="demo__item">
+            <div className="demo__item-pic">image</div>
+            <div className="demo__item-content"></div>
+          </li>
+          <li className="demo__item">
+            <div className="demo__item-pic">image</div>
+            <div className="demo__item-content"></div>
+          </li>
+        </ol>
+      </div>
+    )}</Motion>
+  );
 }
 
-reactMixin(Demo.prototype, createContainerQueryMixin({
-  middle: {
-    minWidth: 500 / 2
-  },
-  wide: {
-    minWidth: 600 / 2
-  },
-}));
+const DemoMobile = React.createClass({
+  mixins: [createContainerQueryMixin({
+    middle: {
+      minWidth: 500 / 2
+    },
+    wide: {
+      minWidth: 600 / 2
+    },
+  })],
 
-const LAYOUTS = [320, 550, 620];
+  render
+});
+
+const DemoDesktop = React.createClass({
+  mixins: [createContainerQueryMixin({
+    middle: {
+      minWidth: 500
+    },
+    wide: {
+      minWidth: 600
+    },
+  })],
+
+  render
+});
+
+const LAYOUTS = [320, 530, 620];
 
 export default class WebsiteExample extends Component {
   constructor() {
     super();
-    this.state = {width: 160};
+    this.state = {width: 320};
   }
 
   render() {
@@ -79,12 +98,13 @@ export default class WebsiteExample extends Component {
           <button className="example__btn" onClick={() => this._layout(1)}>{'> 500 and < 600'}</button>
           { lastBtn }
         </div>
-        <Demo width={this.state.width} />
+        <DemoMobile width={this.state.width / 2} scale={1} />
+        <DemoDesktop width={this.state.width} scale={2} />
       </div>
     );
   }
 
   _layout(id) {
-    this.setState({width: LAYOUTS[id] / 2});
+    this.setState({width: LAYOUTS[id]});
   }
 }
