@@ -7,6 +7,18 @@ $orange-red: #FF5E3A;
 $white: #E4DDCA;
 $black: #202020;
 
+@mixin minWith600px() {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin minWith900px() {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -21,6 +33,14 @@ h1 {
   font-weight: 700;
   font-size: 50px;
   line-height: 1.2;
+
+  @include minWith600px {
+    font-size: 70px;
+  }
+
+  @include minWith900px {
+    font-size: 90px;
+  }
 }
 
 h2 {
@@ -28,12 +48,28 @@ h2 {
   font-size: 36px;
   line-height: 1.2;
   margin-bottom: 20px;
+
+  @include minWith600px {
+    font-size: 50px;
+  }
+
+  @include minWith900px {
+    font-size: 70px;
+  }
 }
 
 p {
   font-size: 20px;
   line-height: 1.4;
   margin-bottom: 10px;
+
+  @include minWith600px {
+    font-size: 25px;
+  }
+
+  @include minWith900px {
+    font-size: 30px;
+  }
 }
 
 pre {
@@ -45,6 +81,14 @@ code {
   font-size: 18px;
   line-height: 1.2;
   color: #FFF03F;
+
+  @include minWith600px {
+    font-size: 22px;
+  }
+
+  @include minWith900px {
+    font-size: 26px;
+  }
 }
 
 a {

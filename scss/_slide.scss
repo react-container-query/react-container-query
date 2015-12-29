@@ -16,6 +16,10 @@
     background-color: $white;
     color: black;
   }
+
+  @include minWith600px {
+    padding: 50px;
+  }
 }
 
 .page-h1 {
@@ -35,6 +39,14 @@
   list-style: initial;
   font-size: 20px;
   line-height: 1.5;
+
+  @include minWith600px {
+    font-size: 25px;
+  }
+
+  @include minWith900px {
+    font-size: 30px;
+  }
 }
 
 .vertical-center-container {
