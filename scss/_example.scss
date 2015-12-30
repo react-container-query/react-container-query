@@ -27,6 +27,12 @@
   .example__btn {
     display: block;
     margin-bottom: 10px;
+    transition: background-color 200ms, color 200ms;
+
+    &.example__btn--active {
+      background-color: #1D62F0;
+      color: white;
+    }
 
     @include minWith600px {
       display: inline-block;

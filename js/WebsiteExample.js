@@ -80,23 +80,30 @@ const DemoDesktop = React.createClass({
 
 const LAYOUTS = [320, 530, 620];
 
+const Button = ({onClick, isActive, children}) => (
+  <button
+    className={classnames('example__btn', {'example__btn--active': isActive})}
+    onClick={onClick}>
+    {children}
+  </button>
+);
+
 export default class WebsiteExample extends Component {
   constructor() {
     super();
-    this.state = {width: 320};
+    this.state = {
+      currentLayout: 0,
+      width: 320
+    };
   }
 
   render() {
-    const lastBtn = this.props.enableLast ?
-      <button className="example__btn" onClick={() => this._layout(2)}>{'>= 600'}</button> :
-      null;
-
     return (
       <div className="example">
         <div className="example__btn-group">
-          <button className="example__btn" onClick={() => this._layout(0)}>{'<= 500'}</button>
-          <button className="example__btn" onClick={() => this._layout(1)}>{'> 500 and < 600'}</button>
-          { lastBtn }
+          <Button onClick={() => this._layout(0)} isActive={this.state.currentLayout === 0}>&lt;= 500</Button>
+          <Button onClick={() => this._layout(1)} isActive={this.state.currentLayout === 1}>&gt; 500 and &lt; 600</Button>
+          {this.props.enableLast ? <Button onClick={() => this._layout(2)} isActive={this.state.currentLayout === 2}>&gt;= 600</Button> : null}
         </div>
         <DemoMobile width={this.state.width / 2} scale={1} />
         <DemoDesktop width={this.state.width} scale={2} />
@@ -105,6 +112,9 @@ export default class WebsiteExample extends Component {
   }
 
   _layout(id) {
-    this.setState({width: LAYOUTS[id]});
+    this.setState({
+      currentLayout: id,
+      width: LAYOUTS[id]
+    });
   }
 }
