@@ -20250,6 +20250,19 @@
 	
 	var LAYOUTS = [320, 530, 620];
 	
+	var Button = function Button(_ref) {
+	  var onClick = _ref.onClick;
+	  var isActive = _ref.isActive;
+	  var children = _ref.children;
+	  return _react2.default.createElement(
+	    'button',
+	    {
+	      className: (0, _classnames2.default)('example__btn', { 'example__btn--active': isActive }),
+	      onClick: onClick },
+	    children
+	  );
+	};
+	
 	var WebsiteExample = (function (_Component) {
 	  _inherits(WebsiteExample, _Component);
 	
@@ -20258,7 +20271,10 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(WebsiteExample).call(this));
 	
-	    _this2.state = { width: 320 };
+	    _this2.state = {
+	      currentLayout: 0,
+	      width: 320
+	    };
 	    return _this2;
 	  }
 	
@@ -20267,14 +20283,6 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      var lastBtn = this.props.enableLast ? _react2.default.createElement(
-	        'button',
-	        { className: 'example__btn', onClick: function onClick() {
-	            return _this3._layout(2);
-	          } },
-	        '>= 600'
-	      ) : null;
-	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'example' },
@@ -20282,20 +20290,26 @@
 	          'div',
 	          { className: 'example__btn-group' },
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'example__btn', onClick: function onClick() {
+	            Button,
+	            { onClick: function onClick() {
 	                return _this3._layout(0);
-	              } },
+	              }, isActive: this.state.currentLayout === 0 },
 	            '<= 500'
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'example__btn', onClick: function onClick() {
+	            Button,
+	            { onClick: function onClick() {
 	                return _this3._layout(1);
-	              } },
+	              }, isActive: this.state.currentLayout === 1 },
 	            '> 500 and < 600'
 	          ),
-	          lastBtn
+	          this.props.enableLast ? _react2.default.createElement(
+	            Button,
+	            { onClick: function onClick() {
+	                return _this3._layout(2);
+	              }, isActive: this.state.currentLayout === 2 },
+	            '>= 600'
+	          ) : null
 	        ),
 	        _react2.default.createElement(DemoMobile, { width: this.state.width / 2, scale: 1 }),
 	        _react2.default.createElement(DemoDesktop, { width: this.state.width, scale: 2 })
@@ -20304,7 +20318,10 @@
 	  }, {
 	    key: '_layout',
 	    value: function _layout(id) {
-	      this.setState({ width: LAYOUTS[id] });
+	      this.setState({
+	        currentLayout: id,
+	        width: LAYOUTS[id]
+	      });
 	    }
 	  }]);
 	

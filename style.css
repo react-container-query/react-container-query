@@ -255,6 +255,18 @@ a {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+  outline: none;
+  transition: all 200ms;
+  box-shadow: 0 4px 0 #cccccc, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  position: relative;
+  top: -4px;
+}
+
+.example__btn.example__btn--active {
+  background-color: #1D62F0;
+  color: white;
+  top: 1px;
+  box-shadow: 0 1px 0 #0a3a9d, 0 1px 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 .demo__container--mobile {
