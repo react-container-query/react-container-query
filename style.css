@@ -176,13 +176,25 @@ a {
 }
 
 .page-list {
-  padding-left: 25px;
+  padding-left: 30px;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
+@media (min-width: 600px) {
+  .page-list {
+    padding-left: 40px;
+  }
+}
+
+@media (min-width: 900px) {
+  .page-list {
+    padding-left: 50px;
+  }
+}
+
 .page-list-item {
-  list-style: initial;
+  list-style: disc;
   font-size: 20px;
   line-height: 1.5;
 }
