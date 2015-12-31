@@ -31,13 +31,21 @@
 }
 
 .page-list {
-  padding-left: 25px;
+  padding-left: 30px;
   margin-top: 10px;
   margin-bottom: 20px;
+
+  @include minWith600px {
+    padding-left: 40px;
+  }
+
+  @include minWith900px {
+    padding-left: 50px;
+  }
 }
 
 .page-list-item {
-  list-style: initial;
+  list-style: disc;
   font-size: 20px;
   line-height: 1.5;
 
