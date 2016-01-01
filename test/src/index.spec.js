@@ -1,5 +1,5 @@
-import createContainerQueryMixin from '../src';
-import { requestAnimationFrame, cancelAnimationFrame } from '../src/raf';
+import createContainerQueryMixin from '../../src';
+import { requestAnimationFrame, cancelAnimationFrame } from '../../src/raf';
 
 describe('createContainerQueryMixin', function () {
 

@@ -1,6 +1,27 @@
 'use strict';
 
+const path = require('path');
 const webpackConfig = require('./webpack.config.base');
+
+const webpackModule = Object.create(webpackConfig.module);
+
+webpackModule.preLoaders = [
+  // transpile all files except testing sources with babel as usual
+  {
+    test: /\.js$/,
+    exclude: [
+      path.resolve('src/'),
+      path.resolve('node_modules/')
+    ],
+    loader: 'babel'
+  },
+  // transpile and instrument only testing sources with isparta
+  {
+    test: /\.js$/,
+    include: path.resolve('src/'),
+    loader: 'isparta'
+  }
+];
 
 const customLaunchers = {
   sl_chrome: {
@@ -90,14 +111,14 @@ module.exports = function (config) {
     basePath: '.',
     frameworks: ['jasmine'],
     files: [
-      'test/**/*.spec.js'
+      'test/index.js'
     ],
     exclude: [
     ],
     preprocessors: {
-      './test/**/*.js': ['webpack', 'sourcemap']
+      'test/index.js': ['webpack', 'sourcemap']
     },
-    reporters: ['spec', 'saucelabs'],
+    reporters: process.env.TRAVIS ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -110,14 +131,25 @@ module.exports = function (config) {
 
     // Webpack preprocessor
     webpack: {
-      module: webpackConfig.module,
       devtool: 'inline-source-map',
+      module: webpackModule,
+      isparta: {
+        embedSource: true,
+        noAutoWrap: true
+      }
     },
 
     // Saucelabs launcher
     sauceLabs: {
       testName: 'react-container-query',
       public: 'public'
+    },
+
+    coverageReporter: {
+      reporters: [
+        {type: 'html', subdir: 'report-html'},
+        {type: 'text'}
+      ]
     }
   });
 };
