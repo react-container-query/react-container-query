@@ -1,4 +1,4 @@
-import { requestAnimationFrame, cancelAnimationFrame } from '../src/raf';
+import { requestAnimationFrame, cancelAnimationFrame } from '../../src/raf';
 
 describe('raf', function () {
 

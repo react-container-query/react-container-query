@@ -3,3 +3,4 @@
 /lib
 *.log
 /dist
+/coverage

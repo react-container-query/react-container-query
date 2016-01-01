@@ -1,4 +1,4 @@
-import { toPairs, isSelectorMapEqual, parseQuery } from '../src/containerQuery';
+import { toPairs, isSelectorMapEqual, parseQuery } from '../../src/containerQuery';
 
 describe('containerQuery', function () {
 
