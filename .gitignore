@@ -1,5 +1,8 @@
-/node_modules
-/style.css
-/index.js
-/script.js*
 .DS_Store
+/node_modules
+/lib
+*.log
+/dist
+/coverage
+/style.css
+/script.js*
