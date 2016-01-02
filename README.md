@@ -125,6 +125,29 @@ The CSS doesn't look exactly like the container query syntax, but the idea is to
 }
 ```
 
+### Lifecycle
+
+React container query mixin also provides lifecycle hooks in case you need to create additional logics depend on state of a component.
+
+#### `containerQueryWillUpdate(stateMap: Object?)`
+
+Will be called with current state map right before container query changes. The state map will look like:
+
+```js
+{
+  state_name_a: true,
+  state_name_b: false
+}
+```
+
+When first mounted, will be called with `null`. When component will unmount, will be called with current state map.
+
+#### `containerQueryDidUpdate(stateMap: Object?)`
+
+Will be called right after container query is changed. `stateMap` has the same structure as in `containerQueryWillUpdate`.
+
+When component will unmount, will be called with `null`.
+
 ## Demo
 
 If you open `demo/index.html` in browser and adjust browser width, which will affect the width of `.container`, you will see `.box` change its color.
