@@ -4,3 +4,7 @@
 *.log
 /dist
 /coverage
+
+# gh-page artifacts
+/script.js*
+/style.css
