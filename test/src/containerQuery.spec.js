@@ -19,6 +19,19 @@ describe('containerQuery', function () {
       expect(result).toEqual(false);
     });
 
+    it('returns true if input are both null', function () {
+      const result = isSelectorMapEqual(null, null);
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if one input is null', function () {
+      const result1 = isSelectorMapEqual(null, {});
+      expect(result1).toEqual(false);
+
+      const result2 = isSelectorMapEqual({}, null);
+      expect(result2).toEqual(false);
+    });
+
   });
 
   describe('parseQuery', function () {

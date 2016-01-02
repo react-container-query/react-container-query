@@ -20,6 +20,11 @@ describe('DataStructure', function () {
       expect(result).not.toBe(input);
     });
 
+    it('returns `null` for `null` input', function () {
+      const result = shallowCopyObj(null);
+      expect(result).toBeNull();
+    });
+
   });
 
 });
