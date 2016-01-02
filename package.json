@@ -23,8 +23,11 @@
   },
   "scripts": {
     "build:css": "node-sass --output-style expanded scss/index.scss style.css",
+    "build:css-prod": "node-sass --output-style compressed scss/index.scss style.css",
     "build:js": "webpack",
+    "build:js-prod": "webpack --config webpack.config.production.js",
     "build": "npm run build:css && npm run build:js",
+    "build-prod": "npm run build:css-prod && npm run build:js-prod",
     "prestart": "npm run build:css",
     "start": "browser-sync start --no-notify --server --no-ghost-mode --files='*.js, *.css, *.html' & webpack -w & node-sass --output-style expanded -w scss/index.scss style.css"
   }
