@@ -17,7 +17,7 @@ function render() {
   const motionStyle = {width: spring(width, [120, 11])};
 
   return (
-    <Motion defaultStyle={{width: 160 * scale}} style={ motionStyle }>{(values) => (
+    <Motion defaultStyle={{width}} style={ motionStyle }>{(values) => (
       <div className={classes} ref={this.defineContainer} style={{width: `${values.width}px`}}>
         <div className="demo__logo"></div>
         <div className="demo__intro">
@@ -89,11 +89,11 @@ const Button = ({onClick, isActive, children}) => (
 );
 
 export default class WebsiteExample extends Component {
-  constructor() {
-    super();
+  constructor({defaultLayout = 0}) {
+    super({defaultLayout});
     this.state = {
-      currentLayout: 0,
-      width: 320
+      currentLayout: defaultLayout,
+      width: LAYOUTS[defaultLayout]
     };
   }
 
