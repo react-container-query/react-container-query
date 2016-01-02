@@ -1,15 +1,6 @@
-import { toPairs, isSelectorMapEqual, parseQuery } from '../../src/containerQuery';
+import { isSelectorMapEqual, parseQuery } from '../../src/containerQuery';
 
 describe('containerQuery', function () {
-
-  describe('toPairs', function () {
-
-    it('converts object to key value pairs', function () {
-      const result = toPairs({a: 1, b: 2});
-      expect(result).toEqual([['a', 1], ['b', 2]]);
-    });
-
-  });
 
   describe('isSelectorMapEqual', function () {
 

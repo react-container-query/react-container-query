@@ -1,5 +1,6 @@
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
-import { parseQuery, isSelectorMapEqual, toPairs } from './containerQuery';
+import { parseQuery, isSelectorMapEqual } from './containerQuery';
+import { toPairs } from './DataStructure';
 
 export default function createContainerQueryMixin(query) {
 

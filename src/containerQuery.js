@@ -1,13 +1,4 @@
-/**
- * Convert obj to array of key value pairs
- *
- * @param {Object} obj A plain JS object
- *
- * @return {Array<Pair<string, Object>>} Pairs
- */
-export function toPairs(obj) {
-  return Object.keys(obj).map((key) => [key, obj[key]]);
-}
+import { toPairs } from './DataStructure';
 
 /**
  * Test if two classMap object are the same
