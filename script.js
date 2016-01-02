@@ -19689,7 +19689,7 @@
 	      _react2.default.createElement(
 	        'h1',
 	        null,
-	        'Limitation of Media Query and What\'s'
+	        'Media Query Breaks Modularity, Use'
 	      ),
 	      _react2.default.createElement(
 	        'h1',
@@ -19707,7 +19707,7 @@
 	    _react2.default.createElement(
 	      'h2',
 	      null,
-	      'Viewport Size Based Styles'
+	      'Viewport Based Styling'
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -19715,7 +19715,7 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'If you have created responsive web site, you likely have used media queries to adjust styles according to the width of viewport.'
+	        'If you have created responsive web site, you likely have used media queries to change styles according to the width of viewport.'
 	      ),
 	      _react2.default.createElement(
 	        'pre',
@@ -19730,7 +19730,7 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'The list item component (the one with image) changes its styles when viewport width equals to 500px. Assuming the padding of the page is 20px on both sides, the 500px viewport width is equivalent to 460px width of the item component. (The value 460px is important, we will mention it later.)'
+	        'The list item component (the one with image) changes its styles when viewport width goes below or above 500px. Assuming the padding of the page is 20px on both sides, the 500px viewport width is equivalent to 460px width of the list item component. (The value 460px is important, we will mention it later.)'
 	      )
 	    )
 	  );
@@ -19751,13 +19751,15 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'This all works fine until we want to apply different style to the same component at the same viewport width. Imagine we want a feature item to be displayed differently when viewport is wider than 600px.'
+	        'This all works fine until we want to apply different style to the same component at the same viewport width.',
+	        _react2.default.createElement('br', null),
+	        'Imagine we want the top item to be displayed differently when viewport is wider than 600px.'
 	      ),
-	      _react2.default.createElement(_WebsiteExample2.default, { enableLast: true }),
+	      _react2.default.createElement(_WebsiteExample2.default, { enableLast: true, defaultLayout: 2 }),
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'Beyond 600px, our featured item stays horizontal but the rest are stacked side by side.'
+	        'Beyond 600px, the top item stays horizontal but the rest items are positioned side by side.'
 	      ),
 	      _react2.default.createElement(
 	        'pre',
@@ -19765,13 +19767,13 @@
 	        _react2.default.createElement(
 	          'code',
 	          null,
-	          '.image {\n  height: 200px;\n}\n\n@media (min-width: 500px) {\n  .image {\n    width: 200px;\n    float: left;\n  }\n}\n\n@media (min-width: 600px) {\n  .feature .image {\n    width: 200px;\n    float: left;\n  }\n\n  .image {\n    width: 280px;\n    float: none;\n  }\n}'
+	          '.image {\n  height: 200px;\n}\n\n@media (min-width: 500px) {\n  .image {\n    width: 200px;\n    float: left;\n  }\n}\n\n@media (min-width: 600px) {\n  .top .image {\n    width: 200px;\n    float: left;\n  }\n\n  .image {\n    width: 280px;\n    float: none;\n  }\n}'
 	        )
 	      ),
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'Pay attention to the ".feature .image" rules, we are repeating the image styles in "(min-width: 500px)" media query. It will quickly become very messy if the code base is large.'
+	        'Pay attention to ".top .image" rules, we are repeating rules in "min-width: 500px" bucket. This is not DRY and CSS rules are not self-contained. It would be messy if the code base has been larger.'
 	      )
 	    )
 	  );
@@ -19806,7 +19808,7 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'This way we only have to control the size of ".container" and not have to worry about positioning ".image" according to viewport width. We write less code and component is more modular.'
+	        'This way we only have to control the size of ".item" and not have to worry about specifying ".image" styles for different viewport width. We write less CSS and the component is more modular.'
 	      )
 	    )
 	  );
@@ -19854,7 +19856,13 @@
 	          { href: 'https://github.com/d6u/react-container-query' },
 	          'React Container Query Mixin'
 	        ),
-	        ' to use container query today. Demos on this page are built using this mixin. You can checkout the documentation to learn the usage.'
+	        ' to use container query today. Demos on this page are built using this mixin. You can checkout ',
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://github.com/d6u/react-container-query' },
+	          'the documentation'
+	        ),
+	        ' to learn more.'
 	      )
 	    )
 	  );
@@ -19875,7 +19883,7 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'There are also other generic polyfill and React implementation available:'
+	        'There are also other generic polyfill and React implementation available. Below is a quick search on Github, not a completed list:'
 	      ),
 	      _react2.default.createElement(
 	        'ul',
@@ -19920,7 +19928,7 @@
 	      _react2.default.createElement(
 	        'p',
 	        null,
-	        'Note: before the idea container query, there is element query. They are the same concept except container query doesn\'t allow queries to change styles of container themselves to avoid infinite loop.'
+	        'Note: before the container query idea, there is element query. They are the essentially the same concept except container query are not allowed to change styles of container itself to avoid infinite loop.'
 	      )
 	    )
 	  );
@@ -20146,7 +20154,7 @@
 	
 	  return _react2.default.createElement(
 	    _reactMotion.Motion,
-	    { defaultStyle: { width: 160 * scale }, style: motionStyle },
+	    { defaultStyle: { width: width }, style: motionStyle },
 	    function (values) {
 	      return _react2.default.createElement(
 	        'div',
@@ -20266,14 +20274,17 @@
 	var WebsiteExample = (function (_Component) {
 	  _inherits(WebsiteExample, _Component);
 	
-	  function WebsiteExample() {
+	  function WebsiteExample(_ref2) {
+	    var _ref2$defaultLayout = _ref2.defaultLayout;
+	    var defaultLayout = _ref2$defaultLayout === undefined ? 0 : _ref2$defaultLayout;
+	
 	    _classCallCheck(this, WebsiteExample);
 	
-	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(WebsiteExample).call(this));
+	    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(WebsiteExample).call(this, { defaultLayout: defaultLayout }));
 	
 	    _this2.state = {
-	      currentLayout: 0,
-	      width: 320
+	      currentLayout: defaultLayout,
+	      width: LAYOUTS[defaultLayout]
 	    };
 	    return _this2;
 	  }
