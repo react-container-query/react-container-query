@@ -12,7 +12,7 @@ export default function createContainerQueryMixin(query) {
     },
 
     componentDidMount() {
-      this._containerQuerySelectorMap = {};
+      this._containerQuerySelectorMap = null;
       this._size = {width: null, height: null};
       this._rafId = null;
 
@@ -46,6 +46,16 @@ export default function createContainerQueryMixin(query) {
       cancelAnimationFrame(this._rafId);
       this._rafId = null;
       this._containerElement = null;
+
+      if (this.containerQueryWillUpdate) {
+        this.containerQueryWillUpdate(shallowCopyObj(this._containerQuerySelectorMap));
+      }
+
+      this._containerQuerySelectorMap = null;
+
+      if (this.containerQueryDidUpdate) {
+        this.containerQueryDidUpdate(shallowCopyObj(this._containerQuerySelectorMap));
+      }
     },
 
     _updateAttributes() {
