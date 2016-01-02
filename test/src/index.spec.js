@@ -154,4 +154,75 @@ describe('createContainerQueryMixin', function () {
 
   });
 
+  describe('lifecycle hooks', function () {
+
+    let _updateAttributes;
+    let ctx;
+
+    beforeEach(function () {
+      _updateAttributes = getMixin()._updateAttributes;
+      ctx = {
+        _size: {
+          width: 300,
+          height: 300
+        },
+        _containerElement: {
+          setAttribute() {},
+          removeAttribute() {}
+        },
+        _containerQuerySelectorMap: {}
+      };
+    });
+
+    it('does not call hooks if no update', function () {
+      ctx.containerQueryWillUpdate = jasmine.createSpy('containerQueryWillUpdate');
+      ctx.containerQueryDidUpdate = jasmine.createSpy('containerQueryDidUpdate');
+
+      ctx._containerQuerySelectorMap = {
+        mobile: true,
+        desktop: false
+      };
+
+      _updateAttributes.call(ctx);
+
+      expect(ctx.containerQueryWillUpdate).not.toHaveBeenCalled();
+      expect(ctx.containerQueryDidUpdate).not.toHaveBeenCalled();
+    });
+
+    it('calls containerQueryWillUpdate with previous containerQuerySelectorMap', function () {
+      ctx.containerQueryWillUpdate = jasmine.createSpy('containerQueryWillUpdate');
+
+      ctx._containerQuerySelectorMap = {
+        mobile: false,
+        desktop: true
+      };
+
+      _updateAttributes.call(ctx);
+
+      expect(ctx.containerQueryWillUpdate.calls.count()).toEqual(1);
+      expect(ctx.containerQueryWillUpdate).toHaveBeenCalledWith({
+        mobile: false,
+        desktop: true
+      });
+    });
+
+    it('calls containerQueryDidUpdate with new containerQuerySelectorMap', function () {
+      ctx.containerQueryDidUpdate = jasmine.createSpy('containerQueryDidUpdate');
+
+      ctx._containerQuerySelectorMap = {
+        mobile: false,
+        desktop: true
+      };
+
+      _updateAttributes.call(ctx);
+
+      expect(ctx.containerQueryDidUpdate.calls.count()).toEqual(1);
+      expect(ctx.containerQueryDidUpdate).toHaveBeenCalledWith({
+        mobile: true,
+        desktop: false
+      });
+    });
+
+  });
+
 });

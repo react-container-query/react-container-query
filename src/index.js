@@ -1,6 +1,6 @@
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
 import { parseQuery, isSelectorMapEqual } from './containerQuery';
-import { toPairs } from './DataStructure';
+import { toPairs, shallowCopyObj } from './DataStructure';
 
 export default function createContainerQueryMixin(query) {
 
@@ -55,6 +55,10 @@ export default function createContainerQueryMixin(query) {
         return;
       }
 
+      if (this.containerQueryWillUpdate) {
+        this.containerQueryWillUpdate(shallowCopyObj(this._containerQuerySelectorMap));
+      }
+
       this._containerQuerySelectorMap = selectorMap;
 
       for (const [selectorName, isOn] of toPairs(this._containerQuerySelectorMap)) {
@@ -63,6 +67,10 @@ export default function createContainerQueryMixin(query) {
         } else {
           this._containerElement.removeAttribute(selectorName);
         }
+      }
+
+      if (this.containerQueryDidUpdate) {
+        this.containerQueryDidUpdate(shallowCopyObj(this._containerQuerySelectorMap));
       }
     }
   };
