@@ -80,13 +80,27 @@ const DemoDesktop = React.createClass({
 
 const LAYOUTS = [320, 530, 620];
 
-const Button = ({onClick, isActive, children}) => (
-  <button
-    className={classnames('example__btn', {'example__btn--active': isActive})}
-    onClick={onClick}>
-    {children}
-  </button>
-);
+class Button extends Component {
+  render() {
+    const {isActive, children} = this.props;
+
+    return (
+      <button
+        className={classnames('example__btn', {'example__btn--active': isActive})}
+        onClick={this._onClick.bind(this)}>
+        {children}
+      </button>
+    );
+  }
+
+  _onClick() {
+    const {onClick} = this.props;
+    onClick();
+    try {
+      ga('send', 'event', 'button', 'click');
+    } catch (e) {}
+  }
+}
 
 export default class WebsiteExample extends Component {
   constructor({defaultLayout = 0}) {
