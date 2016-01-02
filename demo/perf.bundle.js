@@ -20107,6 +20107,8 @@
 	
 	var _containerQuery = __webpack_require__(164);
 	
+	var _DataStructure = __webpack_require__(165);
+	
 	function createContainerQueryMixin(query) {
 	
 	  var getClasses = (0, _containerQuery.parseQuery)(query);
@@ -20118,7 +20120,7 @@
 	    componentDidMount: function componentDidMount() {
 	      var _this = this;
 	
-	      this._containerQuerySelectorMap = {};
+	      this._containerQuerySelectorMap = null;
 	      this._size = { width: null, height: null };
 	      this._rafId = null;
 	
@@ -20153,6 +20155,16 @@
 	      (0, _raf.cancelAnimationFrame)(this._rafId);
 	      this._rafId = null;
 	      this._containerElement = null;
+	
+	      if (this.containerQueryWillUpdate) {
+	        this.containerQueryWillUpdate((0, _DataStructure.shallowCopyObj)(this._containerQuerySelectorMap));
+	      }
+	
+	      this._containerQuerySelectorMap = null;
+	
+	      if (this.containerQueryDidUpdate) {
+	        this.containerQueryDidUpdate((0, _DataStructure.shallowCopyObj)(this._containerQuerySelectorMap));
+	      }
 	    },
 	    _updateAttributes: function _updateAttributes() {
 	      var selectorMap = getClasses(this._size);
@@ -20161,9 +20173,13 @@
 	        return;
 	      }
 	
+	      if (this.containerQueryWillUpdate) {
+	        this.containerQueryWillUpdate((0, _DataStructure.shallowCopyObj)(this._containerQuerySelectorMap));
+	      }
+	
 	      this._containerQuerySelectorMap = selectorMap;
 	
-	      for (var _iterator = (0, _containerQuery.toPairs)(this._containerQuerySelectorMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	      for (var _iterator = (0, _DataStructure.toPairs)(this._containerQuerySelectorMap), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
 	        var _ref;
 	
 	        if (_isArray) {
@@ -20184,6 +20200,10 @@
 	        } else {
 	          this._containerElement.removeAttribute(selectorName);
 	        }
+	      }
+	
+	      if (this.containerQueryDidUpdate) {
+	        this.containerQueryDidUpdate((0, _DataStructure.shallowCopyObj)(this._containerQuerySelectorMap));
 	      }
 	    }
 	  };
@@ -20230,36 +20250,32 @@
 
 /***/ },
 /* 164 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	exports.__esModule = true;
-	exports.toPairs = toPairs;
 	exports.isSelectorMapEqual = isSelectorMapEqual;
 	exports.parseQuery = parseQuery;
-	/**
-	 * Convert obj to array of key value pairs
-	 *
-	 * @param {Object} obj A plain JS object
-	 *
-	 * @return {Array<Pair<string, Object>>} Pairs
-	 */
-	function toPairs(obj) {
-	  return Object.keys(obj).map(function (key) {
-	    return [key, obj[key]];
-	  });
-	}
+	
+	var _DataStructure = __webpack_require__(165);
 	
 	/**
 	 * Test if two classMap object are the same
 	 *
-	 * @param {Object} a A plain JS object, with string as key, boolean as value
-	 * @param {Object} b Same as a
+	 * @param {Object|null} a A plain JS object, with string as key, boolean as value
+	 * @param {Object|null} b Same as a
 	 *
-	 * @return {Boolean} True is a, b have the same key and mapped value
+	 * @return {boolean} True if a and b have the same key and mapped value,
+	 *                   or both are null.
 	 */
 	function isSelectorMapEqual(a, b) {
+	  if (a === b) {
+	    return true;
+	  } else if (a === null || b === null) {
+	    return false;
+	  }
+	
 	  var aKeys = Object.keys(a);
 	  var bKeys = Object.keys(b);
 	
@@ -20301,7 +20317,7 @@
 	function parseQuery(query) {
 	  var rules = [];
 	
-	  for (var _iterator2 = toPairs(query), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+	  for (var _iterator2 = (0, _DataStructure.toPairs)(query), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
 	    var _ref2;
 	
 	    if (_isArray2) {
@@ -20360,6 +20376,62 @@
 	
 	    return selectorMap;
 	  };
+	}
+
+/***/ },
+/* 165 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports.toPairs = toPairs;
+	exports.shallowCopyObj = shallowCopyObj;
+	/**
+	 * Convert obj to array of key value pairs
+	 *
+	 * @param {Object} obj A plain JS object
+	 *
+	 * @return {Array<Pair<string, Object>>} Pairs
+	 */
+	function toPairs(obj) {
+	  return Object.keys(obj).map(function (key) {
+	    return [key, obj[key]];
+	  });
+	}
+	
+	/**
+	 * Create a shallow copy of provided object, will only use Object.keys
+	 * returned key.
+	 *
+	 * @param {Object|null} obj Object to copy
+	 *
+	 * @return {Object|null} A shallow copy of provided object, is input null,
+	 *                       return null.
+	 */
+	function shallowCopyObj(obj) {
+	  if (obj === null) {
+	    return null;
+	  }
+	
+	  var copy = {};
+	  for (var _iterator = Object.keys(obj), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+	    var _ref;
+	
+	    if (_isArray) {
+	      if (_i >= _iterator.length) break;
+	      _ref = _iterator[_i++];
+	    } else {
+	      _i = _iterator.next();
+	      if (_i.done) break;
+	      _ref = _i.value;
+	    }
+	
+	    var key = _ref;
+	
+	    copy[key] = obj[key];
+	  }
+	  return copy;
 	}
 
 /***/ }

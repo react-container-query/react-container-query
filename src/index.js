@@ -1,5 +1,6 @@
 import { requestAnimationFrame, cancelAnimationFrame } from './raf';
-import { parseQuery, isSelectorMapEqual, toPairs } from './containerQuery';
+import { parseQuery, isSelectorMapEqual } from './containerQuery';
+import { toPairs, shallowCopyObj } from './DataStructure';
 
 export default function createContainerQueryMixin(query) {
 
@@ -11,7 +12,7 @@ export default function createContainerQueryMixin(query) {
     },
 
     componentDidMount() {
-      this._containerQuerySelectorMap = {};
+      this._containerQuerySelectorMap = null;
       this._size = {width: null, height: null};
       this._rafId = null;
 
@@ -45,6 +46,16 @@ export default function createContainerQueryMixin(query) {
       cancelAnimationFrame(this._rafId);
       this._rafId = null;
       this._containerElement = null;
+
+      if (this.containerQueryWillUpdate) {
+        this.containerQueryWillUpdate(shallowCopyObj(this._containerQuerySelectorMap));
+      }
+
+      this._containerQuerySelectorMap = null;
+
+      if (this.containerQueryDidUpdate) {
+        this.containerQueryDidUpdate(shallowCopyObj(this._containerQuerySelectorMap));
+      }
     },
 
     _updateAttributes() {
@@ -52,6 +63,10 @@ export default function createContainerQueryMixin(query) {
 
       if (isSelectorMapEqual(this._containerQuerySelectorMap, selectorMap)) {
         return;
+      }
+
+      if (this.containerQueryWillUpdate) {
+        this.containerQueryWillUpdate(shallowCopyObj(this._containerQuerySelectorMap));
       }
 
       this._containerQuerySelectorMap = selectorMap;
@@ -62,6 +77,10 @@ export default function createContainerQueryMixin(query) {
         } else {
           this._containerElement.removeAttribute(selectorName);
         }
+      }
+
+      if (this.containerQueryDidUpdate) {
+        this.containerQueryDidUpdate(shallowCopyObj(this._containerQuerySelectorMap));
       }
     }
   };

@@ -1,23 +1,21 @@
-/**
- * Convert obj to array of key value pairs
- *
- * @param {Object} obj A plain JS object
- *
- * @return {Array<Pair<string, Object>>} Pairs
- */
-export function toPairs(obj) {
-  return Object.keys(obj).map((key) => [key, obj[key]]);
-}
+import { toPairs } from './DataStructure';
 
 /**
  * Test if two classMap object are the same
  *
- * @param {Object} a A plain JS object, with string as key, boolean as value
- * @param {Object} b Same as a
+ * @param {Object|null} a A plain JS object, with string as key, boolean as value
+ * @param {Object|null} b Same as a
  *
- * @return {Boolean} True is a, b have the same key and mapped value
+ * @return {boolean} True if a and b have the same key and mapped value,
+ *                   or both are null.
  */
 export function isSelectorMapEqual(a, b) {
+  if (a === b) {
+    return true;
+  } else if (a === null || b === null) {
+    return false;
+  }
+
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
 

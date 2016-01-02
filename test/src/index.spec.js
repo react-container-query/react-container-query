@@ -46,7 +46,7 @@ describe('createContainerQueryMixin', function () {
     it('checks element size', function () {
       subjectMethod.call(ctx);
 
-      expect(ctx._containerQuerySelectorMap).toEqual({});
+      expect(ctx._containerQuerySelectorMap).toBeNull();
       expect(ctx._size).toEqual({width: 200, height: 200});
       expect(ctx._rafId).not.toBeNull();
       expect(ctx._updateAttributes.calls.count()).toEqual(1);
@@ -85,9 +85,11 @@ describe('createContainerQueryMixin', function () {
 
       subjectMethod.call(ctx);
 
+      expect(ctx._rafId).toBeNull();
+      expect(ctx._containerElement).toBeNull();
+      expect(ctx._containerQuerySelectorMap).toBeNull();
+
       setTimeout(() => {
-        expect(ctx._rafId).toBeNull();
-        expect(ctx._containerElement).toBeNull();
         done();
       }, 200);
     });
@@ -150,6 +152,124 @@ describe('createContainerQueryMixin', function () {
       });
       expect(ctx._containerElement.hasAttribute('mobile')).toEqual(false);
       expect(ctx._containerElement.hasAttribute('desktop')).toEqual(true);
+    });
+
+  });
+
+  describe('lifecycle hooks', function () {
+
+    describe('_updateAttributes', function () {
+
+      let _updateAttributes;
+      let ctx;
+
+      beforeEach(function () {
+        _updateAttributes = getMixin()._updateAttributes;
+        ctx = {
+          _size: {
+            width: 300,
+            height: 300
+          },
+          _containerElement: {
+            setAttribute() {},
+            removeAttribute() {}
+          },
+          _containerQuerySelectorMap: {}
+        };
+      });
+
+      it('does not call hooks if no update', function () {
+        ctx.containerQueryWillUpdate = jasmine.createSpy('containerQueryWillUpdate');
+        ctx.containerQueryDidUpdate = jasmine.createSpy('containerQueryDidUpdate');
+
+        ctx._containerQuerySelectorMap = {
+          mobile: true,
+          desktop: false
+        };
+
+        _updateAttributes.call(ctx);
+
+        expect(ctx.containerQueryWillUpdate).not.toHaveBeenCalled();
+        expect(ctx.containerQueryDidUpdate).not.toHaveBeenCalled();
+      });
+
+      it('calls containerQueryWillUpdate with previous containerQuerySelectorMap', function () {
+        ctx.containerQueryWillUpdate = jasmine.createSpy('containerQueryWillUpdate');
+
+        ctx._containerQuerySelectorMap = {
+          mobile: false,
+          desktop: true
+        };
+
+        _updateAttributes.call(ctx);
+
+        expect(ctx.containerQueryWillUpdate.calls.count()).toEqual(1);
+        expect(ctx.containerQueryWillUpdate).toHaveBeenCalledWith({
+          mobile: false,
+          desktop: true
+        });
+      });
+
+      it('calls containerQueryDidUpdate with new containerQuerySelectorMap', function () {
+        ctx.containerQueryDidUpdate = jasmine.createSpy('containerQueryDidUpdate');
+
+        ctx._containerQuerySelectorMap = {
+          mobile: false,
+          desktop: true
+        };
+
+        _updateAttributes.call(ctx);
+
+        expect(ctx.containerQueryDidUpdate.calls.count()).toEqual(1);
+        expect(ctx.containerQueryDidUpdate).toHaveBeenCalledWith({
+          mobile: true,
+          desktop: false
+        });
+      });
+
+    });
+
+    describe('componentWillUnmount', function () {
+
+      let componentWillUnmount;
+      let ctx;
+
+      beforeEach(function () {
+        componentWillUnmount = getMixin().componentWillUnmount;
+        ctx = {};
+      });
+
+      it('calls containerQueryWillUpdate with current containerQuerySelectorMap before unmount', function () {
+        ctx.containerQueryWillUpdate = jasmine.createSpy('containerQueryWillUpdate');
+
+        ctx._containerQuerySelectorMap = {
+          mobile: false,
+          desktop: true
+        };
+
+        componentWillUnmount.call(ctx);
+
+        expect(ctx.containerQueryWillUpdate.calls.count()).toEqual(1);
+        expect(ctx.containerQueryWillUpdate).toHaveBeenCalledWith({
+          mobile: false,
+          desktop: true
+        });
+      });
+
+      it('calls containerQueryDidUpdate with `null` before unmount', function () {
+        ctx.containerQueryDidUpdate = jasmine.createSpy('containerQueryDidUpdate');
+
+        ctx._containerQuerySelectorMap = {
+          mobile: false,
+          desktop: true
+        };
+
+        componentWillUnmount.call(ctx);
+
+        expect(ctx.containerQueryDidUpdate.calls.count()).toEqual(1);
+        expect(ctx.containerQueryDidUpdate).toHaveBeenCalledWith(null);
+      });
+
     });
 
   });
