@@ -135,8 +135,8 @@ Will be called with current state map right before container query changes. The 
 
 ```js
 {
-  state_name_a: true,
-  state_name_b: false
+  width_between_400_and_599: true,
+  width_larger_than_600: false
 }
 ```
 
