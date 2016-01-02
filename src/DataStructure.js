@@ -13,11 +13,16 @@ export function toPairs(obj) {
  * Create a shallow copy of provided object, will only use Object.keys
  * returned key.
  *
- * @param {Object} obj Object to copy
+ * @param {Object|null} obj Object to copy
  *
- * @return {Object} A shallow copy of provided object
+ * @return {Object|null} A shallow copy of provided object, is input null,
+ *                       return null.
  */
 export function shallowCopyObj(obj) {
+  if (obj === null) {
+    return null;
+  }
+
   const copy = {};
   for (const key of Object.keys(obj)) {
     copy[key] = obj[key];
