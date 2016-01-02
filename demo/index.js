@@ -4,6 +4,15 @@ import ReactDOM from 'react-dom';
 import createContainerQueryMixin from '../src';
 
 class MyComponent extends Component {
+
+  containerQueryWillUpdate(stateMap) {
+    console.log('containerQueryWillUpdate', stateMap);
+  }
+
+  containerQueryDidUpdate(stateMap) {
+    console.log('containerQueryDidUpdate', stateMap);
+  }
+
   render() {
     return (
       <div ref={this.defineContainer.bind(this)} className='container'>
