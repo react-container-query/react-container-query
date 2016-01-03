@@ -61,7 +61,7 @@ h2 {
 p {
   font-size: 20px;
   line-height: 1.4;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   @include minWith600px {
     font-size: 25px;
@@ -73,7 +73,7 @@ p {
 }
 
 pre {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 code {

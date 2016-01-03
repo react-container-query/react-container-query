@@ -31,7 +31,7 @@ const Page1 = (props) => (
         </code>
       </pre>
       <WebsiteExample/>
-      <p>The list item component (the one with image) changes its styles when viewport width goes below or above 500px. Assuming the padding of the page is 20px on both sides, the 500px viewport width is equivalent to 460px width of the list item component. (The value 460px is important, we will mention it later.)</p>
+      <p>The list item component (the one with image) changes its styles when viewport width goes below or above 500px.</p>
     </div>
   </Page>
 );
@@ -40,9 +40,9 @@ const Page2 = () => (
   <Page order="2">
     <h2>Media Query Breaks CSS Modularity</h2>
     <div>
-      <p>This all works fine until we want to apply different style to the same component at the same viewport width.<br/>Imagine we want the top item to be displayed differently when viewport is wider than 600px.</p>
+      <p>In previous example, assuming the page padding is 20px, the list item component changes when its width is 460px (500px - 20px - 20px). 460px should be the breaking point for list item component, but in CSS its style depends on the page's padding. This behavior breaks the modularity of list item component. Everytime we change page's padding we have to change media query for list item component.</p>
+      <p>It is also problematic when we want to apply different styles to the same component at the same viewport width. We want the top item to stay horizontal, with the rest items positioned side by side.</p>
       <WebsiteExample enableLast={true} defaultLayout={2} />
-      <p>Beyond 600px, the top item stays horizontal but the rest items are positioned side by side.</p>
       <pre>
         <code>
 {`.image {
@@ -69,7 +69,7 @@ const Page2 = () => (
 }`}
         </code>
       </pre>
-      <p>Pay attention to ".top .image" rules, we are repeating rules in "min-width: 500px" bucket. This is not DRY and CSS rules are not self-contained. It would be messy if the code base has been larger.</p>
+      <p>Pay attention to ".top .image" rules inside "min-width: 600px", we are repeating rules in "min-width: 500px" bucket. This is not DRY and CSS rules are not self contained. It would be messy if the code base has been larger.</p>
     </div>
   </Page>
 );
@@ -93,7 +93,7 @@ const Page3 = () => (
 }`}
         </code>
       </pre>
-      <p>This way we only have to control the size of ".item" and not have to worry about specifying ".image" styles for different viewport width. We write less CSS and the component is more modular.</p>
+      <p>This way we only have to control the size of ".item" and not have to worry about specifying ".image" styles for different viewport width. The 460px width is exactly what we wanted. No more dependencies on other elements. We write less CSS and the component is modular.</p>
     </div>
   </Page>
 );
