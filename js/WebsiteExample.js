@@ -114,6 +114,7 @@ export default class WebsiteExample extends Component {
   render() {
     return (
       <div className="example">
+        <p>(Tap buttons to view different layouts)</p>
         <div className="example__btn-group">
           <Button onClick={() => this._layout(0)} isActive={this.state.currentLayout === 0}>&lt;= 500</Button>
           <Button onClick={() => this._layout(1)} isActive={this.state.currentLayout === 1}>&gt; 500 and &lt; 600</Button>

@@ -31,7 +31,7 @@ const Page1 = (props) => (
         </code>
       </pre>
       <WebsiteExample/>
-      <p>The list item component (the one with image) changes its styles when viewport width goes below or above 500px.</p>
+      <p>The list item component (one with image) changes its styles when viewport width goes below or above 500px.</p>
     </div>
   </Page>
 );
@@ -40,8 +40,8 @@ const Page2 = () => (
   <Page order="2">
     <h2>Media Query Breaks CSS Modularity</h2>
     <div>
-      <p>In previous example, assuming the page padding is 20px, the list item component changes when its width is 460px (500px - 20px - 20px). 460px should be the breaking point for list item component, but in CSS its style depends on the page's padding. This behavior breaks the modularity of list item component. Everytime we change page's padding we have to change media query for list item component.</p>
-      <p>It is also problematic when we want to apply different styles to the same component at the same viewport width. We want the top item to stay horizontal, with the rest items positioned side by side.</p>
+      <p>In previous example, assuming the page padding is 20px, the list item component changes when its width is 460px (500px - 20px - 20px). 460px should be the breaking point for list item component. But when using media query, its style depends on the padding of the page. Everytime we change page's padding, we have to change media query for list item component. This behavior breaks the modularity of list item component.</p>
+      <p>It is also problematic when we want to apply different styles to the same component at the same viewport width. Above 600px viewport width, we want the top item to stay horizontal and the rest items positioned side by side.</p>
       <WebsiteExample enableLast={true} defaultLayout={2} />
       <pre>
         <code>
@@ -69,7 +69,7 @@ const Page2 = () => (
 }`}
         </code>
       </pre>
-      <p>Pay attention to ".top .image" rules inside "min-width: 600px", we are repeating rules in "min-width: 500px" bucket. This is not DRY and CSS rules are not self contained. It would be messy if the code base has been larger.</p>
+      <p>Pay attention to ".top .image" rules inside "@media (min-width: 600px)", we are repeating the same rules inside "@media (min-width: 500px)". This is not DRY and CSS is not self contained. It would be messy if the code base has been larger.</p>
     </div>
   </Page>
 );
@@ -78,7 +78,7 @@ const Page3 = () => (
   <Page order="3">
     <h2>Container Query to the Rescue</h2>
     <div>
-      <p>Container query is a work in process CSS feature. With it you can apply media query to an element instead of viewport.</p>
+      <p>Container query is a work in process CSS feature. With it you can apply media query to an element instead of viewport. We can write CSS for above examples in this way:</p>
       <pre>
         <code>
 {`.image {
@@ -93,7 +93,7 @@ const Page3 = () => (
 }`}
         </code>
       </pre>
-      <p>This way we only have to control the size of ".item" and not have to worry about specifying ".image" styles for different viewport width. The 460px width is exactly what we wanted. No more dependencies on other elements. We write less CSS and the component is modular.</p>
+      <p>Here we don't have to worry about specifying ".image" styles for different viewport width. The 460px width is exactly what it means. No more dependencies on other elements. We can write less CSS and the component is modular.</p>
     </div>
   </Page>
 );
@@ -120,7 +120,7 @@ const Page6 = () => (
   <Page order="6">
     <h2>Other Polyfills</h2>
     <div>
-      <p>There are also other generic polyfill and React implementation available. Below is a quick search on Github, not a completed list:</p>
+      <p>There are also other generic polyfills and React implementations available. Below is a quick search on Github, not a completed list:</p>
       <ul className="page-list">
         <li className="page-list-item"><a href="https://github.com/walmartreact/container-query" target="_blank">walmartreact/container-query</a></li>
         <li className="page-list-item"><a href="https://github.com/ausi/cq-prolyfill" target="_blank">ausi/cq-prolyfill</a></li>

@@ -1,6 +1,6 @@
 .page {
   background-color: $orange;
-  min-height: 100vh;
+  min-height: 90vh;
   padding: 30px $page-padding $page-padding;
   overflow: hidden;
 
@@ -62,7 +62,7 @@
   &::before {
     content: '';
     display: inline-block;
-    height: calc(100vh - #{2 * $page-padding});
+    height: calc(90vh - #{2 * $page-padding});
     vertical-align: middle;
     margin-right: -0.25em; /* Adjusts for spacing */
   }
