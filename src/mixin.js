@@ -2,7 +2,19 @@ import { requestAnimationFrame, cancelAnimationFrame } from './raf';
 import { parseQuery, isSelectorMapEqual } from './containerQuery';
 import { toPairs, shallowCopyObj } from './DataStructure';
 
-export default function createContainerQueryMixin(query) {
+/**
+ * Create a mixin that can be
+ *
+ * @param {Object} query - Container query definitions
+ * @param {Object} [opts] - Options
+ * @param {boolean} [opts.setAttribute] - When true, mixin will set or unset
+ *                                        attributes on container element
+ *                                        according to current active container
+ *                                        query
+ *
+ * @return {Object} A mixin object that can be applied to a component
+ */
+export default function createContainerQueryMixin(query, {setAttribute = false} = {}) {
 
   const getClasses = parseQuery(query);
 
@@ -71,11 +83,13 @@ export default function createContainerQueryMixin(query) {
 
       this._containerQuerySelectorMap = selectorMap;
 
-      for (const [selectorName, isOn] of toPairs(this._containerQuerySelectorMap)) {
-        if (isOn) {
-          this._containerElement.setAttribute(selectorName, '');
-        } else {
-          this._containerElement.removeAttribute(selectorName);
+      if (setAttribute) {
+        for (const [selectorName, isOn] of toPairs(this._containerQuerySelectorMap)) {
+          if (isOn) {
+            this._containerElement.setAttribute(selectorName, '');
+          } else {
+            this._containerElement.removeAttribute(selectorName);
+          }
         }
       }
 
