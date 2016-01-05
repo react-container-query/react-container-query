@@ -1,4 +1,4 @@
-import createContainerQueryMixin from './mixin';
+import createContainerQueryMixin from './createContainerQueryMixin';
 import applyContainerQuery from './applyContainerQuery';
 
 export {

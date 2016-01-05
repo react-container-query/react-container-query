@@ -1,6 +1,6 @@
 import { createClass, createElement } from 'react';
 import { findDOMNode } from 'react-dom';
-import createContainerQueryMixin from './mixin';
+import createContainerQueryMixin from './createContainerQueryMixin';
 import { shallowCopyObj } from './DataStructure';
 
 /**
