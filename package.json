@@ -15,7 +15,7 @@
     "highlight.js": "^9.0.0",
     "node-sass": "^3.4.2",
     "react": "^0.14.3",
-    "react-container-query": "0.1.0",
+    "react-container-query": "0.2.0",
     "react-dom": "^0.14.3",
     "react-mixin": "^3.0.3",
     "react-motion": "^0.3.1",

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Motion, spring } from 'react-motion';
 import reactMixin from 'react-mixin';
 import classnames from 'classnames';
-import createContainerQueryMixin from 'react-container-query';
+import { createContainerQueryMixin } from 'react-container-query';
 
 const MIM_WIDTH = 100;
 
