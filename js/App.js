@@ -109,9 +109,9 @@ const Page4 = () => (
 
 const Page5 = () => (
   <Page order="5">
-    <h2>React Container Query Mixin</h2>
+    <h2>React Container Query</h2>
     <div>
-      <p>If you work with React, you can create component with <a href="https://github.com/d6u/react-container-query">React Container Query Mixin</a> to use container query today. Demos on this page are built using this mixin. You can checkout <a href="https://github.com/d6u/react-container-query">the documentation</a> to learn more.</p>
+      <p>If you work with React, you can create component with <a href="https://github.com/d6u/react-container-query">React Container Query</a> to use container query today. Demos on this page are built using this module. You can checkout <a href="https://github.com/d6u/react-container-query">the documentation</a> to learn more.</p>
     </div>
   </Page>
 );
@@ -136,7 +136,7 @@ const Page7 = () => (
   <Page order="7">
     <h2>About this Website</h2>
     <div>
-      <p>This page is created by <a href="https://github.com/d6u">d6u</a> using React.js and <a href="https://github.com/d6u/react-container-query">React Container Query Mixin</a>. I'm also on Twitter as <a href="https://twitter.com/daiweilu">daiweilu</a>. Love any feedbacks on this little project. You are welcome to open issue or PR on Github. Happy hacking!</p>
+      <p>This page is created by <a href="https://github.com/d6u">d6u</a> using React.js and <a href="https://github.com/d6u/react-container-query">React Container Query</a>. I started working on this library a few weeks ago. If you like this project, please open issue or PR on Github, tweet this, or just leave a star. I'm on Twitter as <a href="https://twitter.com/daiweilu">daiweilu</a>. Happy hacking!</p>
     </div>
   </Page>
 );
