@@ -60,7 +60,7 @@ const DemoMobile = React.createClass({
     wide: {
       minWidth: 600 / 2
     },
-  })],
+  }, {setAttribute: true})],
 
   render
 });
@@ -73,7 +73,7 @@ const DemoDesktop = React.createClass({
     wide: {
       minWidth: 600
     },
-  })],
+  }, {setAttribute: true})],
 
   render
 });
