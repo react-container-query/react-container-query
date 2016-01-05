@@ -1,13 +1,13 @@
-import createContainerQueryMixin from '../../src';
+import createContainerQueryMixin from '../../src/mixin';
 import { requestAnimationFrame, cancelAnimationFrame } from '../../src/raf';
 
 describe('createContainerQueryMixin', function () {
 
-  function getMixin(maskMethods) {
+  function getMixin(opts) {
     return createContainerQueryMixin({
       mobile: {maxWidth: 399},
       desktop: {minWidth: 400}
-    });
+    }, opts);
   }
 
   describe('defineContainer', function () {
@@ -98,60 +98,107 @@ describe('createContainerQueryMixin', function () {
 
   describe('_updateAttributes', function () {
 
-    let subjectMethod;
-    let ctx;
+    describe('opts.setAttribute = false (default)', function () {
 
-    beforeEach(function () {
-      subjectMethod = getMixin()._updateAttributes;
-      ctx = {
-        _size: {
-          width: 300,
-          height: 300
-        },
-        _containerElement: document.createElement('div'),
-        _containerQuerySelectorMap: {}
-      };
+      let subjectMethod;
+      let ctx;
+
+      beforeEach(function () {
+        subjectMethod = getMixin()._updateAttributes;
+        ctx = {
+          _size: {
+            width: 300,
+            height: 300
+          },
+          _containerElement: document.createElement('div'),
+          _containerQuerySelectorMap: {}
+        };
+      });
+
+      it('does not add attribute to container element', function () {
+        subjectMethod.call(ctx);
+
+        expect(ctx._containerQuerySelectorMap).toEqual({
+          mobile: true,
+          desktop: false
+        });
+        expect(ctx._containerElement.hasAttribute('mobile')).toEqual(false);
+        expect(ctx._containerElement.hasAttribute('desktop')).toEqual(false);
+      });
+
+      it('does not update container element attributes', function () {
+        ctx._containerElement.setAttribute('desktop', '');
+
+        subjectMethod.call(ctx);
+
+        expect(ctx._containerQuerySelectorMap).toEqual({
+          mobile: true,
+          desktop: false
+        });
+        expect(ctx._containerElement.hasAttribute('mobile')).toEqual(false);
+        expect(ctx._containerElement.hasAttribute('desktop')).toEqual(true);
+      });
+
     });
 
-    it('add attribute to container element', function () {
-      subjectMethod.call(ctx);
+    describe('opts.setAttribute = true', function () {
 
-      expect(ctx._containerQuerySelectorMap).toEqual({
-        mobile: true,
-        desktop: false
+      let subjectMethod;
+      let ctx;
+
+      beforeEach(function () {
+        subjectMethod = getMixin({setAttribute: true})._updateAttributes;
+        ctx = {
+          _size: {
+            width: 300,
+            height: 300
+          },
+          _containerElement: document.createElement('div'),
+          _containerQuerySelectorMap: {}
+        };
       });
-      expect(ctx._containerElement.hasAttribute('mobile')).toEqual(true);
-      expect(ctx._containerElement.hasAttribute('desktop')).toEqual(false);
-    });
 
-    it('update container element attributes', function () {
-      ctx._containerElement.setAttribute('desktop', '');
+      it('adds attribute to container element', function () {
+        subjectMethod.call(ctx);
 
-      subjectMethod.call(ctx);
-
-      expect(ctx._containerQuerySelectorMap).toEqual({
-        mobile: true,
-        desktop: false
+        expect(ctx._containerQuerySelectorMap).toEqual({
+          mobile: true,
+          desktop: false
+        });
+        expect(ctx._containerElement.hasAttribute('mobile')).toEqual(true);
+        expect(ctx._containerElement.hasAttribute('desktop')).toEqual(false);
       });
-      expect(ctx._containerElement.hasAttribute('mobile')).toEqual(true);
-      expect(ctx._containerElement.hasAttribute('desktop')).toEqual(false);
-    });
 
-    it('does not change any thing if selectorMap is the same', function () {
-      ctx._containerElement.setAttribute('desktop', '');
-      ctx._containerQuerySelectorMap = {
-        mobile: true,
-        desktop: false
-      };
+      it('updates container element attributes', function () {
+        ctx._containerElement.setAttribute('desktop', '');
 
-      subjectMethod.call(ctx);
+        subjectMethod.call(ctx);
 
-      expect(ctx._containerQuerySelectorMap).toEqual({
-        mobile: true,
-        desktop: false
+        expect(ctx._containerQuerySelectorMap).toEqual({
+          mobile: true,
+          desktop: false
+        });
+        expect(ctx._containerElement.hasAttribute('mobile')).toEqual(true);
+        expect(ctx._containerElement.hasAttribute('desktop')).toEqual(false);
       });
-      expect(ctx._containerElement.hasAttribute('mobile')).toEqual(false);
-      expect(ctx._containerElement.hasAttribute('desktop')).toEqual(true);
+
+      it('does not change any thing if selectorMap is the same', function () {
+        ctx._containerElement.setAttribute('desktop', '');
+        ctx._containerQuerySelectorMap = {
+          mobile: true,
+          desktop: false
+        };
+
+        subjectMethod.call(ctx);
+
+        expect(ctx._containerQuerySelectorMap).toEqual({
+          mobile: true,
+          desktop: false
+        });
+        expect(ctx._containerElement.hasAttribute('mobile')).toEqual(false);
+        expect(ctx._containerElement.hasAttribute('desktop')).toEqual(true);
+      });
+
     });
 
   });
