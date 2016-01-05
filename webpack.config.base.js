@@ -7,13 +7,21 @@ const reactExternal = {
   amd: 'react'
 };
 
+const reactDomExternal = {
+  root: 'ReactDOM',
+  commonjs2: 'react-dom',
+  commonjs: 'react-dom',
+  amd: 'react-dom'
+};
+
 module.exports = {
   externals: {
-    react: reactExternal
+    react: reactExternal,
+    'react-dom': reactDomExternal
   },
 
   output: {
-    library: 'ReactCreateContainerQueryMixin',
+    library: 'ReactContainerQuery',
     libraryTarget: 'umd'
   },
 
