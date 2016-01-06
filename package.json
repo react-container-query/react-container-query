@@ -12,9 +12,9 @@
   "keywords": [
     "reactjs",
     "react",
-    "react mixin",
-    "container query",
-    "element query",
+    "react-component",
+    "container-query",
+    "element-query",
     "responsive"
   ],
   "license": "MIT",
