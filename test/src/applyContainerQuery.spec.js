@@ -37,7 +37,7 @@ describe('applyContainerQuery', function () {
       setTimeout(() => {
         expect(containerNode.className).toBe('mobile');
         done();
-      }, 100);
+      }, 1000);
     });
 
     it('sets container className to desktop', function (done) {
@@ -46,7 +46,7 @@ describe('applyContainerQuery', function () {
       setTimeout(() => {
         expect(containerNode.className).toBe('desktop');
         done();
-      }, 100);
+      }, 1000);
     });
 
   });
@@ -85,7 +85,7 @@ describe('applyContainerQuery', function () {
       setTimeout(() => {
         expect(containerNode.className).toBe('mobile');
         done();
-      }, 100);
+      }, 1000);
     });
 
     it('sets container className to desktop', function (done) {
@@ -94,7 +94,7 @@ describe('applyContainerQuery', function () {
       setTimeout(() => {
         expect(containerNode.className).toBe('desktop');
         done();
-      }, 100);
+      }, 1000);
     });
 
   });
