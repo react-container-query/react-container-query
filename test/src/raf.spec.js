@@ -8,7 +8,7 @@ describe('raf', function () {
       requestAnimationFrame(() => {
         done()
       });
-    }, 100);
+    }, 1000);
 
   });
 
@@ -23,7 +23,7 @@ describe('raf', function () {
 
       setTimeout(() => {
         done();
-      }, 200);
+      }, 1000);
     });
 
   });

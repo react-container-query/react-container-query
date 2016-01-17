@@ -1,7 +1,2 @@
-import createContainerQueryMixin from './createContainerQueryMixin';
-import applyContainerQuery from './applyContainerQuery';
-
-export {
-  createContainerQueryMixin,
-  applyContainerQuery
-};
+export { default as createContainerQueryMixin } from './createContainerQueryMixin';
+export { default as applyContainerQuery } from './applyContainerQuery';
