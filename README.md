@@ -224,7 +224,12 @@ Of course with `applyContainerQuery` function, you can create your own logic for
 
 ## Demo
 
-You can checkout [react-container-query-demo](https://github.com/d6u/react-container-query-demo).
+Checkout CodePen 
+
+- Adjustable Sidebar http://codepen.io/daiweilu/pen/wMrrZM
+- Responsive Component Layout http://codepen.io/daiweilu/pen/XXexrj
+
+You can also checkout [react-container-query-demo](https://github.com/d6u/react-container-query-demo).
 
 ## Performance
 
