@@ -43,6 +43,8 @@ With below CSS, `.box` will be blue when `.container` is wider than 600px, green
 npm install --save-dev react-container-query
 ```
 
+**react-container-query doesn't specify peerDependencies in package.json, but you should have react and react-dom available.**
+
 ### `applyContainerQuery(Component, query, [opts])`
 
 Create [higher order component](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) for container.
@@ -224,7 +226,7 @@ Of course with `applyContainerQuery` function, you can create your own logic for
 
 ## Demo
 
-Checkout CodePen 
+Checkout CodePen
 
 - Adjustable Sidebar http://codepen.io/daiweilu/pen/wMrrZM
 - Responsive Component Layout http://codepen.io/daiweilu/pen/XXexrj
