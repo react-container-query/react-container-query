@@ -57,15 +57,14 @@
   "scripts": {
     "lint": "eslint src webpack.config.*",
     "test": "karma start",
+    "watch:test": "npm test -- --no-single-run",
     "check": "npm run lint && npm test",
     "clean": "rimraf lib",
     "build:lib": "babel src --out-dir lib",
     "build:umd": "webpack src/index.js dist/react-container-query.js --config webpack.config.development.js",
     "build:umd:min": "webpack src/index.js dist/react-container-query.min.js --config webpack.config.production.js",
-    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "build": "npm run clean && npm run build:lib && npm run build:umd && npm run build:umd:min",
     "preversion": "npm run check",
-    "postversion": "git push && git push --tags",
-    "prepublish": "npm run clean && npm run build",
-    "watch:test": "karma start --no-single-run"
+    "postversion": "git push && git push --tags"
   }
 }
