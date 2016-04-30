@@ -22,7 +22,7 @@ export default function applyContainerQuery(
   {propName = 'containerQuery', setAttribute} = {}) {
 
   return createClass({
-
+    propTypes: Container.propTypes,
     displayName: 'ContainerQuery',
     mixins: [createContainerQueryMixin(query, {setAttribute})],
 
