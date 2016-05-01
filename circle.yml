@@ -5,6 +5,10 @@ test:
   override:
     - npm run check
 deployment:
+  codecov:
+    branch: /.*/
+    commands:
+      - bash <(curl -s https://codecov.io/bash)
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     owner: d6u
