@@ -10,17 +10,10 @@ webpackModule.preLoaders = [
   {
     test: /\.js$/,
     exclude: [
-      path.resolve('src/'),
       path.resolve('node_modules/')
     ],
     loader: 'babel'
   },
-  // transpile and instrument only testing sources with isparta
-  {
-    test: /\.js$/,
-    include: path.resolve('src/'),
-    loader: 'isparta'
-  }
 ];
 
 const customLaunchers = {
@@ -133,10 +126,6 @@ module.exports = function (config) {
     webpack: {
       devtool: 'inline-source-map',
       module: webpackModule,
-      isparta: {
-        embedSource: true,
-        noAutoWrap: true
-      }
     },
 
     // Saucelabs launcher
