@@ -118,12 +118,12 @@ module.exports = function (config) {
     preprocessors: {
       'test/index.js': ['webpack', 'sourcemap']
     },
-    reporters: process.env.TRAVIS ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
+    reporters: process.env.CI ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: process.env.TRAVIS ? Object.keys(customLaunchers) : ['Chrome'],
+    browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
     concurrency: Infinity,
 
