@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const customLaunchers = require('./saucelabs-browsers');
 const webpackConfig = require('./webpack.config.base');
 
 const webpackModule = Object.create(webpackConfig.module);
@@ -10,101 +11,28 @@ webpackModule.preLoaders = [
   {
     test: /\.js$/,
     exclude: [
-      path.resolve('src/'),
       path.resolve('node_modules/')
     ],
     loader: 'babel'
   },
-  // transpile and instrument only testing sources with isparta
-  {
-    test: /\.js$/,
-    include: path.resolve('src/'),
-    loader: 'isparta'
-  }
 ];
 
-const customLaunchers = {
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 10',
-    // version: '46.0'
+const coverageReporters = [
+  {
+    type: 'html',
+    subdir: (browser) => `${browser.toLowerCase().replace(/ /g, '-')}-html`
   },
-  sl_firefox: {
-    base: 'SauceLabs',
-    browserName: 'firefox',
-    platform: 'Windows 10',
-    // version: '42.0'
+  {
+    type: 'json',
+    subdir: (browser) => `${browser.toLowerCase().replace(/ /g, '-')}-json`
   },
-  sl_safari_8: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.10',
-    version: '8'
-  },
-  sl_safari_9: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.11',
-    version: '9'
-  },
-  sl_ios_safari_7: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '7.1'
-  },
-  sl_ios_safari_8: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '8.4'
-  },
-  sl_ios_safari_9: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '9.2'
-  },
-  sl_android_4: {
-    base: 'SauceLabs',
-    browserName: 'android',
-    deviceName: 'Android Emulator',
-    platform: 'Linux',
-    version: '4.4'
-  },
-  sl_android_5: {
-    base: 'SauceLabs',
-    browserName: 'android',
-    deviceName: 'Android Emulator',
-    platform: 'Linux',
-    version: '5.1'
-  },
-  sl_ie_9: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 7',
-    version: '9'
-  },
-  sl_ie_10: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8',
-    version: '10'
-  },
-  sl_ie_11: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8.1',
-    version: '11'
-  },
-  sl_ie_edge: {
-    base: 'SauceLabs',
-    browserName: 'MicrosoftEdge',
-    platform: 'Windows 10',
-    // version: '20.10240'
-  }
-};
+];
+
+if (!process.env.CI) {
+  coverageReporters.push({
+    type: 'text'
+  });
+}
 
 module.exports = function (config) {
   config.set({
@@ -133,10 +61,11 @@ module.exports = function (config) {
     webpack: {
       devtool: 'inline-source-map',
       module: webpackModule,
-      isparta: {
-        embedSource: true,
-        noAutoWrap: true
-      }
+    },
+
+    // Coverage
+    coverageReporter: {
+      reporters: coverageReporters
     },
 
     // Saucelabs launcher
@@ -144,12 +73,5 @@ module.exports = function (config) {
       testName: 'react-container-query',
       public: 'public'
     },
-
-    coverageReporter: {
-      reporters: [
-        {type: 'html', subdir: 'report-html'},
-        {type: 'text'}
-      ]
-    }
   });
 };
