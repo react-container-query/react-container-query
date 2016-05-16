@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const customLaunchers = require('./saucelabs-browsers');
+const customLaunchers = require('./browserstack-browsers.json');
 const webpackConfig = require('./webpack.config.base');
 
 const webpackModule = Object.create(webpackConfig.module);
@@ -46,7 +46,7 @@ module.exports = function (config) {
     preprocessors: {
       'test/index.js': ['webpack', 'sourcemap']
     },
-    reporters: process.env.CI ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
+    reporters: ['spec', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -69,9 +69,8 @@ module.exports = function (config) {
     },
 
     // Saucelabs launcher
-    sauceLabs: {
-      testName: 'react-container-query',
-      public: 'public'
+    browserStack: {
+      project: 'react-container-query'
     },
   });
 };
