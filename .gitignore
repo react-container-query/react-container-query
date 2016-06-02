@@ -1,11 +1,12 @@
-.DS_Store
-/node_modules
-/lib
-*.log
-/dist
 /coverage
+/dist
+/node_modules
+/local
+/lib
+/public
+.DS_Store
+*.log
 
 # gh-page artifacts
 /script.js*
 /style.css
-/local
