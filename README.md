@@ -2,9 +2,10 @@
 
 [![npm version](https://badge.fury.io/js/react-container-query.svg)](https://badge.fury.io/js/react-container-query)
 [![Circle CI](https://circleci.com/gh/d6u/react-container-query/tree/master.svg?style=svg)](https://circleci.com/gh/d6u/react-container-query/tree/master)
+[![Build Status](https://saucelabs.com/open_sauce/build_status/react-cq.svg)](https://saucelabs.com/beta/builds/8b89748df1f0408a9311b0d33d545cee)
 [![codecov](https://codecov.io/gh/d6u/react-container-query/branch/master/graph/badge.svg)](https://codecov.io/gh/d6u/react-container-query)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/react-cq.svg)](https://saucelabs.com/u/react-cq)
+[![Build Status](https://saucelabs.com/open_sauce/build_matrix/react-cq.svg)](https://saucelabs.com/beta/builds/8b89748df1f0408a9311b0d33d545cee)
 
 ## Intro
 
