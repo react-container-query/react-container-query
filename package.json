@@ -50,6 +50,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.7.0",
+    "onchange": "2.5.0",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "rimraf": "2.5.2",
@@ -58,6 +59,7 @@
   "scripts": {
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src webpack.config.*",
+    "watch:lint": "npm run lint -s; onchange -v 'src/**/*.js' 'webpack.config.*' -- npm run lint -s",
     "test": "npm run clean && env NODE_ENV=test karma start",
     "watch:test": "npm test -- --no-single-run",
     "coverage": "istanbul-combine -d coverage/summary -p both -r json -r html coverage/*-json/coverage-final.json",
