@@ -1,8 +1,8 @@
 'use strict';
 
 const path = require('path');
-const customLaunchers = require('./saucelabs-browsers');
-const webpackConfig = require('./webpack.config.base');
+const customLaunchers = require('./config/saucelabs-browsers');
+const webpackConfig = require('./config/webpack.config.base');
 
 const webpackModule = Object.create(webpackConfig.module);
 

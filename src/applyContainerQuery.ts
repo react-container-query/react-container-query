@@ -5,7 +5,8 @@ import createContainerQueryMixin, {ContainerQueryDefinition} from './createConta
 
 export default function<P> (
   Component: React.ComponentClass<P>,
-  query: ContainerQueryDefinition) {
+  query: ContainerQueryDefinition,
+  {propName = 'containerQuery'} = {}) {
 
   return React.createClass<P, any>({
     propTypes: Component.propTypes,
@@ -17,12 +18,9 @@ export default function<P> (
     },
 
     render() {
-      const props = assign({
-        containerQuery: this.state.containerQuery,
-        ref: this.defineContainerComponent
-      }, this.props) as P;
-
-      return React.createElement(Component, props);
+      const props: {[key: string]: any} = assign({ref: this.defineContainerComponent}, this.props);
+      props[propName] = this.state ? this.state.containerQuery : {};
+      return React.createElement(Component, props as P);
     }
   });
 }

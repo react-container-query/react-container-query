@@ -1,5 +1,3 @@
-const req = require.context('.', true, /\.spec$/);
-
-for (const key of req.keys()) {
-  req(key);
-}
+import './src/utils.test';
+import './src/ResizeDetectorMixin.test';
+import './src/applyContainerQuery.test';
