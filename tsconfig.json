@@ -1,0 +1,25 @@
+{
+  "compileOnSaveDefinition": false,
+  "compilerOptions": {
+    "declaration": true,
+    "diagnostics": false,
+    "listFiles": false,
+    "jsx": "react",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "lib",
+    "pretty": true,
+    "removeComments": true,
+    "target": "es6",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/index.ts"
+  ]
+}
