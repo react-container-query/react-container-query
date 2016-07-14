@@ -4,14 +4,6 @@ describe('containerQuery', function () {
 
   describe('parsePixels', function () {
 
-    it('throws if value is not a pixel value', function () {
-      function willThrow() {
-        parsePixels('123');
-      };
-
-      expect(willThrow).toThrowError('value must be a pixel');
-    });
-
     it('extracts number value', function () {
       const result = parsePixels('123px');
 

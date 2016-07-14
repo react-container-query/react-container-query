@@ -52,7 +52,7 @@ describe('ResizeDetectorMixin', function () {
 
         ctx.$erd.uninstall(ctx.$container);
         done();
-      }, 10);
+      }, 1000);
     });
 
   });

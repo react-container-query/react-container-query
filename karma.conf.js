@@ -53,7 +53,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: 5, // SanceLabs free account for open source
 
     customLaunchers: customLaunchers,
 

@@ -5,13 +5,11 @@ module.exports = {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Windows 10',
-    // version: '46.0'
   },
   sl_firefox: {
     base: 'SauceLabs',
     browserName: 'firefox',
     platform: 'Windows 10',
-    // version: '42.0'
   },
   sl_safari_8: {
     base: 'SauceLabs',

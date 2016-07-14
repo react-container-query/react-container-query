@@ -1,10 +1,10 @@
 declare module 'element-resize-detector/type' {
   interface ElementResizeDetectorMakerOptions {
-    strategy: string;
+    strategy?: string;
   }
 
   interface ElementResizeDetectorMaker {
-    (options: ElementResizeDetectorMakerOptions): ElementResizeDetector;
+    (options?: ElementResizeDetectorMakerOptions): ElementResizeDetector;
   }
 
   interface ElementResizeDetector {
@@ -21,4 +21,14 @@ declare module 'element-resize-detector' {
   const elementResizeDetectorMaker: ElementResizeDetectorMaker;
 
   export = elementResizeDetectorMaker;
+}
+
+declare module 'element-resize-detector/src/browser-detector' {
+  interface BrowserDetector {
+    isIE(version: number): boolean;
+  }
+
+  const browserDetector: BrowserDetector;
+
+  export = browserDetector;
 }

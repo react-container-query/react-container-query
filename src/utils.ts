@@ -11,14 +11,18 @@ interface Rule {
 }
 
 export interface Dimension {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 export function parsePixels(value: string) {
-  invariant(/px$/.test(value), 'value must be a pixel');
-  const [, digit] = /(\d+)px$/.exec(value);
-  return Number(digit);
+  if (/px$/.test(value)) {
+    const [, digit] = /(\d+)px$/.exec(value);
+    return Number(digit);
+  } else {
+    console.log(`current only pixel value height and width are supported, "${value}" is not a pixel value`)
+    return null;
+  }
 }
 
 export function parseQuery(query: ContainerQueryDefinition) {
@@ -35,6 +39,11 @@ export function parseQuery(query: ContainerQueryDefinition) {
 
   return function (dimension: Dimension) {
     const {width, height} = dimension;
+
+    if (width == null || height == null) {
+      return {};
+    }
+
     const selectorMap: {[key: string]: boolean} = {};
 
     for (const {selectorName, minWidth, maxWidth, minHeight, maxHeight} of rules) {
