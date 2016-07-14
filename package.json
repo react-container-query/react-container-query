@@ -69,18 +69,17 @@
     "yargs": "4.8.0"
   },
   "scripts": {
-    "clean": "rimraf lib dist coverage",
-    "lint": "eslint src webpack.config.*",
-    "watch:lint": "npm run lint -s; onchange -v 'src/**/*.js' 'webpack.config.*' -- npm run lint -s",
-    "test": "npm run clean && env NODE_ENV=test karma start",
-    "watch:test": "npm test -- --no-single-run",
-    "coverage": "istanbul-combine -d coverage/summary -p both -r json -r html coverage/*-json/coverage-final.json",
-    "check": "npm run lint && npm test && npm run coverage",
-    "build:lib": "babel src --out-dir lib",
-    "build:umd": "webpack src/index.js dist/react-container-query.js --config webpack.config.development.js",
-    "build:umd:min": "webpack src/index.js dist/react-container-query.min.js --config webpack.config.production.js",
-    "build:examples": "./scripts/build-examples.sh",
+    "build:lib": "tsc",
+    "build:umd": "webpack lib/index.js dist/react-container-query.js --config config/webpack.config.development.js",
+    "build:umd:min": "webpack lib/index.js dist/react-container-query.min.js --config config/webpack.config.production.js",
     "build": "npm run clean && npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "lint:js": "eslint config/webpack.config.*",
+    "lint:ts": "tslint src/**/*.ts",
+    "lint": "npm run lint:js && npm run lint:ts",
+    "test": "npm run clean && npm run build:lib && env NODE_ENV=test karma start",
+    "combine-coverage-results": "istanbul-combine -d coverage/summary -p both -r json -r html coverage/*-json/coverage-final.json",
+    "check": "npm run lint && npm test && npm run combine-coverage-results",
+    "clean": "rimraf lib dist coverage public",
     "preversion": "npm run check",
     "postversion": "git push && git push --tags"
   }
