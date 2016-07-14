@@ -69,6 +69,7 @@
     "yargs": "4.8.0"
   },
   "scripts": {
+    "setup": "typings install",
     "build:lib": "tsc",
     "build:umd": "webpack lib/index.js dist/react-container-query.js --config config/webpack.config.development.js",
     "build:umd:min": "webpack lib/index.js dist/react-container-query.min.js --config config/webpack.config.production.js",
