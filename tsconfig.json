@@ -10,7 +10,7 @@
     "outDir": "lib",
     "pretty": true,
     "removeComments": true,
-    "target": "es6",
+    "target": "es5",
     "sourceMap": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
