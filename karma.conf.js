@@ -53,7 +53,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: 2,
 
     customLaunchers: customLaunchers,
 
