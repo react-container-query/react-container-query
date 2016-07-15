@@ -4,28 +4,38 @@ import {ElementResizeDetector} from 'element-resize-detector/type';
 import invariant = require('invariant');
 
 export default {
-  componentDidMount() {
-    if (!this.$erd) {
-      this.$erd = elementResizeDetectorMaker(
-        // Scroll strategy is not supported on IE9
-        browserDetector.isIE(9) ? null : {strategy: 'scroll'}
-      );
-    }
-
-    invariant(this.$container, 'container element must be defined, make sure you have defineContainer assign to ref of container element');
-
-    this.$erd.listenTo(this.$container, (element: HTMLElement) => {
-      if (this.componentDidResize) {
-        this.componentDidResize(element);
-      }
-    });
-  },
-
-  componentWillUnmount() {
-    this.$erd.uninstall(this.$container);
-  },
-
   defineContainer(element: HTMLElement) {
-    this.$container = element;
+    if (element) {
+      // Component just mount
+
+      if (!this.$erd) {
+        this.$erd = elementResizeDetectorMaker(
+          // Scroll strategy is not supported on IE9
+          browserDetector.isIE(9) ? null : {strategy: 'scroll'}
+        );
+      }
+
+      if (this.$container) {
+        this.$erd.removeAllListeners(this.$container);
+      }
+
+      this.$container = element;
+
+      this.$erd.listenTo(this.$container, (element: HTMLElement) => {
+        if (this.componentDidResize) {
+          this.componentDidResize(element);
+        }
+      });
+
+    } else {
+      // Component just unmount
+
+      if (this.$erd) {
+        this.$erd.uninstall(this.$container);
+      }
+
+      this.$container = null;
+      this.$erd = null;
+    }
   },
 };

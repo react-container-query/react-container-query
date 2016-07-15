@@ -9,8 +9,8 @@ declare module 'element-resize-detector/type' {
 
   interface ElementResizeDetector {
     listenTo(element: HTMLElement, listener: (element: HTMLElement) => void): void;
-    // removeListener(element, listener)
-    // removeAllListeners(element)
+    removeListener(element: HTMLElement, listener: (element: HTMLElement) => void): void;
+    removeAllListeners(element: HTMLElement): void;
     uninstall(element: HTMLElement): void;
   }
 }
