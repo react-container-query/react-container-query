@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import classnames from 'classnames';
-import {applyContainerQuery} from '../../src';
+import {applyContainerQuery} from '../../lib';
 
 class MyComponent extends Component {
   render() {
