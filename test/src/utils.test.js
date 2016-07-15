@@ -155,6 +155,26 @@ describe('containerQuery', function () {
 
     });
 
+    describe('edge cases', function () {
+
+      it('return {} if either width or height is not defined', function () {
+        const query = {
+          a: {maxWidth: 400},
+          b: {maxWidth: 600}
+        };
+
+        const result1 = parseQuery(query)({width: 300});
+        expect(result1).toEqual({});
+
+        const result2 = parseQuery(query)({height: 0});
+        expect(result2).toEqual({});
+
+        const result3 = parseQuery(query)({});
+        expect(result3).toEqual({});
+      });
+
+    });
+
   });
 
 });

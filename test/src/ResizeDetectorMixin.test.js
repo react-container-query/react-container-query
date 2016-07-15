@@ -1,78 +1,100 @@
-import createContainerQueryMixin from '../../lib/createContainerQueryMixin';
+import ResizeDetectorMixin from '../../lib/ResizeDetectorMixin';
 
 describe('ResizeDetectorMixin', function () {
 
-  function getMixin() {
-    return createContainerQueryMixin({
-      mobile: {maxWidth: 399},
-      desktop: {minWidth: 400}
-    });
-  }
-
   describe('defineContainer', function () {
 
-    it('assigns $container to ctx', function () {
-      const subjectMethod = getMixin().defineContainer;
+    const subjectMethod = ResizeDetectorMixin.defineContainer;
+
+    it('assigns $erd and $container to null when no element', function () {
       const ctx = {};
-      subjectMethod.call(ctx, 'element');
-      expect(ctx.$container).toEqual('element');
+
+      subjectMethod.call(ctx);
+
+      expect(ctx.$erd).toBeNull();
+      expect(ctx.$container).toBeNull();
     });
 
-  });
-
-  describe('componentDidMount', function () {
-
-    let subjectMethod;
-    let ctx;
-    let element;
-
-    beforeEach(function () {
-      subjectMethod = getMixin().componentDidMount;
-      element = document.createElement('div');
-      element.style.width = '200px';
-      element.style.height = '200px';
-      document.body.appendChild(element);
-      ctx = {
-        $container: element,
-        componentDidResize: jasmine.createSpy('componentDidResize')
+    it('invokes uninstall when no element but has $erd', function () {
+      const uninstall = jasmine.createSpy('$erd.uninstall');
+      const ctx = {
+        $erd: {
+          uninstall
+        }
       };
+
+      subjectMethod.call(ctx);
+
+      expect(uninstall).toHaveBeenCalledTimes(1);
     });
 
-    afterEach(function () {
+    it('initialize $erd when has element', function () {
+      const ctx = {};
+      const element = document.createElement('div');
+      document.body.appendChild(element);
+
+      subjectMethod.call(ctx, element);
+
+      expect(ctx.$erd).not.toBe(null);
+
       document.body.removeChild(element);
     });
 
-    it('checks element size', function (done) {
-      subjectMethod.call(ctx);
-
-      expect(ctx.$erd).not.toBeNull();
-
-      setTimeout(() => {
-        expect(ctx.componentDidResize.calls.count()).toEqual(1);
-
-        ctx.$erd.uninstall(ctx.$container);
-        done();
-      }, 1000);
-    });
-
-  });
-
-  describe('componentWillUnmount', function () {
-
-    it('uninstall resize detector', function (done) {
-      const subjectMethod = getMixin().componentWillUnmount;
+    it('removes listeners from previous container', function () {
+      const $container = document.createElement('div');
+      document.body.appendChild($container);
       const ctx = {
-        $container: {},
+        $container,
         $erd: {
-          uninstall: jasmine.createSpy('uninstall')
+          removeAllListeners: jasmine.createSpy('removeAllListeners'),
+          listenTo: jasmine.createSpy('listenTo'),
         },
       };
+      const element = document.createElement('div');
+      document.body.appendChild(element);
 
-      subjectMethod.call(ctx);
+      subjectMethod.call(ctx, element);
 
-      expect(ctx.$erd.uninstall.calls.count()).toEqual(1);
+      expect(ctx.$erd.removeAllListeners).toHaveBeenCalledTimes(1);
+      expect(ctx.$erd.removeAllListeners).toHaveBeenCalledWith($container);
 
-      done();
+      document.body.removeChild($container);
+      document.body.removeChild(element);
+    });
+
+    it('assigns $container', function () {
+      const ctx = {
+        $erd: {
+          removeAllListeners: jasmine.createSpy('removeAllListeners'),
+          listenTo: jasmine.createSpy('listenTo'),
+        },
+      };
+      const element = document.createElement('div');
+      document.body.appendChild(element);
+
+      subjectMethod.call(ctx, element);
+
+      expect(ctx.$container).not.toBeNull();
+
+      document.body.removeChild(element);
+    });
+
+    it('listens to $container size changes', function () {
+      const ctx = {
+        $erd: {
+          removeAllListeners: jasmine.createSpy('removeAllListeners'),
+          listenTo: jasmine.createSpy('listenTo'),
+        },
+      };
+      const element = document.createElement('div');
+      document.body.appendChild(element);
+
+      subjectMethod.call(ctx, element);
+
+      expect(ctx.$erd.listenTo).toHaveBeenCalledTimes(1);
+      expect(ctx.$erd.listenTo).toHaveBeenCalledWith(element, jasmine.any(Function));
+
+      document.body.removeChild(element);
     });
 
   });
