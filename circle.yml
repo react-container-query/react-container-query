@@ -1,8 +1,9 @@
 machine:
   node:
-    version: 5.11.0
+    version: 6.3.0
 test:
   override:
+    - npm run setup
     - npm run check
 deployment:
   codecov:

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { render, findDOMNode } from 'react-dom';
+import React, {Component} from 'react';
+import {render, findDOMNode} from 'react-dom';
 import classnames from 'classnames';
-import applyContainerQuery from '../../src/applyContainerQuery';
+import applyContainerQuery from '../../lib/applyContainerQuery';
 
 describe('applyContainerQuery', function () {
 
@@ -137,6 +137,45 @@ describe('applyContainerQuery', function () {
       const node = renderContainerQuery({other1: 'hello', other2: 'world'});
       expect(node.getAttribute('data-other1')).toBe('hello');
       expect(node.getAttribute('data-other2')).toBe('world');
+    });
+
+  });
+
+  describe('edge cases', function () {
+
+    class Container extends Component {
+      render() {
+        return null;
+      }
+    }
+
+    const ContainerQuery = applyContainerQuery(Container, {
+      mobile: {maxWidth: 399},
+      desktop: {minWidth: 400}
+    });
+
+    let div;
+
+    function renderContainerQuery(props) {
+      return findDOMNode(render(
+        <ContainerQuery other1={props.other1} other2={props.other2} />,
+        div
+      ));
+    }
+
+    beforeEach(function () {
+      div = document.createElement('div');
+      document.body.appendChild(div);
+    });
+
+    afterEach(function () {
+      document.body.removeChild(div);
+    });
+
+    it('should allow wrapped component to return null', function () {
+      const node = renderContainerQuery({other1: 'hello', other2: 'world'});
+
+      expect(node).toBeNull();
     });
 
   });

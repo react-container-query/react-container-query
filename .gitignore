@@ -6,7 +6,4 @@
 /public
 .DS_Store
 *.log
-
-# gh-page artifacts
-/script.js*
-/style.css
+/typings

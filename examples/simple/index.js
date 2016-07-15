@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import classnames from 'classnames';
-import {applyContainerQuery} from '../../src';
+import {applyContainerQuery} from '../../lib';
 
 class MyComponent extends Component {
   render() {
@@ -9,8 +9,8 @@ class MyComponent extends Component {
     // component. It will look like:
     //
     //   {
-    //     width_between_400_and_599: true,
-    //     width_larger_than_600: false
+    //     width-between-400-and-599: true,
+    //     width-larger-than-600: false
     //   }
     return (
       <div className={classnames('container', this.props.containerQuery)}>
@@ -21,11 +21,11 @@ class MyComponent extends Component {
 }
 
 const query = {
-  width_between_400_and_599: {
+  'width-between-400-and-599': {
     minWidth: 400,
     maxWidth: 599
   },
-  width_larger_than_600: {
+  'width-larger-than-600': {
     minWidth: 600,
   }
 };

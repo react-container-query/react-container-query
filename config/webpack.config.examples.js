@@ -3,10 +3,13 @@
 const join = require('path').join;
 
 module.exports = {
-  entry: join(__dirname, '/index.js'),
+  entry: {
+    'simple': join(__dirname, '../examples/simple/index.js')
+  },
 
   output: {
-    filename: join(__dirname, '../../public/examples/simple/index.js'),
+    filename: '[name]/index.js',
+    path: join(__dirname, '../public')
   },
 
   devtool: 'source-map',
@@ -16,7 +19,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
+        loader: 'babel'
       }
     ]
   }
