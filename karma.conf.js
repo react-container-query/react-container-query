@@ -46,14 +46,15 @@ module.exports = function (config) {
     preprocessors: {
       'test/index.js': ['webpack', 'sourcemap']
     },
-    reporters: process.env.CI ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
+    reporters: ['spec', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
-    concurrency: 5, // SanceLabs free account for open source
+    concurrency: 2, // SanceLabs free account for open source
+    browserDisconnectTolerance: 3,
 
     customLaunchers: customLaunchers,
 
