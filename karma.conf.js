@@ -1,8 +1,8 @@
 'use strict';
 
 const path = require('path');
-const customLaunchers = require('./saucelabs-browsers');
-const webpackConfig = require('./webpack.config.base');
+const customLaunchers = require('./config/browserstack-browsers.json');
+const webpackConfig = require('./config/webpack.config.base');
 
 const webpackModule = Object.create(webpackConfig.module);
 
@@ -46,14 +46,14 @@ module.exports = function (config) {
     preprocessors: {
       'test/index.js': ['webpack', 'sourcemap']
     },
-    reporters: process.env.CI ? ['spec', 'saucelabs', 'coverage'] : ['spec', 'coverage'],
+    reporters: ['spec', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: 2, // BrowserStack free account limit for open source
 
     customLaunchers: customLaunchers,
 
@@ -66,12 +66,6 @@ module.exports = function (config) {
     // Coverage
     coverageReporter: {
       reporters: coverageReporters
-    },
-
-    // Saucelabs launcher
-    sauceLabs: {
-      testName: 'react-container-query',
-      public: 'public'
     },
   });
 };

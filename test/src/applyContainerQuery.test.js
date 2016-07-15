@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { render, findDOMNode } from 'react-dom';
+import React, {Component} from 'react';
+import {render, findDOMNode} from 'react-dom';
 import classnames from 'classnames';
-import applyContainerQuery from '../../src/applyContainerQuery';
+import applyContainerQuery from '../../lib/applyContainerQuery';
 
 describe('applyContainerQuery', function () {
 

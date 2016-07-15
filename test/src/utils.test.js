@@ -1,35 +1,13 @@
-import { isSelectorMapEqual, parseQuery } from '../../src/containerQuery';
+import {parsePixels, parseQuery} from '../../lib/utils';
 
 describe('containerQuery', function () {
 
-  describe('isSelectorMapEqual', function () {
+  describe('parsePixels', function () {
 
-    it('returns true for same selectorMap', function () {
-      const result = isSelectorMapEqual({a: true, b: true}, {a: true, b: true});
-      expect(result).toEqual(true);
-    });
+    it('extracts number value', function () {
+      const result = parsePixels('123px');
 
-    it('returns false if selectorMaps have different keys', function () {
-      const result = isSelectorMapEqual({a: true, b: true}, {a: true, c: true});
-      expect(result).toEqual(false);
-    });
-
-    it('returns false if selectorMaps have different values', function () {
-      const result = isSelectorMapEqual({a: true, b: false}, {a: true, b: true});
-      expect(result).toEqual(false);
-    });
-
-    it('returns true if input are both null', function () {
-      const result = isSelectorMapEqual(null, null);
-      expect(result).toEqual(true);
-    });
-
-    it('returns false if one input is null', function () {
-      const result1 = isSelectorMapEqual(null, {});
-      expect(result1).toEqual(false);
-
-      const result2 = isSelectorMapEqual({}, null);
-      expect(result2).toEqual(false);
+      expect(result).toBe(123);
     });
 
   });
