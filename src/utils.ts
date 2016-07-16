@@ -17,7 +17,7 @@ export interface Dimension {
 
 export function parsePixels(value: string) {
   if (/px$/.test(value)) {
-    const [, digit] = /(\d+)px$/.exec(value);
+    const [, digit] = /(\d+(\.\d+)?)px$/.exec(value);
     return Number(digit);
   } else {
     console.log(`current only pixel value height and width are supported, "${value}" is not a pixel value`);

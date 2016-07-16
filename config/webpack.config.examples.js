@@ -4,7 +4,8 @@ const join = require('path').join;
 
 module.exports = {
   entry: {
-    'simple': join(__dirname, '../examples/simple/index.js')
+    'simple': join(__dirname, '../examples/simple/index.js'),
+    'toggle-sizes': join(__dirname, '../examples/toggle-sizes/index.js')
   },
 
   output: {

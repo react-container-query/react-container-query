@@ -1,0 +1,195 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>toggle sizes</title>
+  <style>
+    /* Reset */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #FF5E3A;
+      padding: 20px;
+    }
+
+    /* Main */
+
+    .demo__container {
+      background-color: white;
+      padding: 10px 10px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo__logo {
+      background-color: #C1C1C1;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+    }
+
+    .demo__intro {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .demo__line {
+      height: 6px;
+      background-color: #C1C1C1;
+      margin-bottom: 6px;
+    }
+    .demo__line:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo__line-1 {
+      width: 70%;
+    }
+
+    .demo__line-2 {
+      width: 80%;
+    }
+
+    .demo__line-3 {
+      width: 30%;
+    }
+
+    .demo__item {
+      margin-bottom: 10px;
+    }
+
+    .demo__item-pic {
+      height: 100px;
+      padding: 10px;
+      background-color: #FF9500;
+      font-size: 16px;
+    }
+
+    .demo__item-content {
+      height: 100px;
+      background-color: #C1C1C1;
+    }
+
+    .demo__container.middle .demo__logo {
+      margin: 0;
+      float: left;
+    }
+    .demo__container.middle .demo__intro {
+      margin: 0 0 10px 40px;
+    }
+    .demo__container.middle .demo__item {
+      height: 100px;
+    }
+    .demo__container.middle .demo__item-pic {
+      width: 100px;
+      float: left;
+    }
+
+    .demo__container.wide .demo__list {
+      margin-right: -10px;
+    }
+    .demo__container.wide .demo__item {
+      margin-right: 10px;
+      width: calc(50% - 10px);
+      float: left;
+      height: auto;
+    }
+    .demo__container.wide .demo__item--feature {
+      height: 100px;
+      width: calc(100% - 10px);
+    }
+    .demo__container.wide .demo__item--feature .demo__item-pic {
+      width: 100px;
+      float: left;
+    }
+    .demo__container.wide .demo__item-pic {
+      float: none;
+      width: 100%;
+    }
+
+    .example__btn {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      user-select: none;
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      outline: none;
+      transition: all 200ms;
+      box-shadow: 0 4px 0 #ccc, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+      position: relative;
+      top: -4px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .example__btn--active {
+      background-color: #1D62F0;
+      color: white;
+      top: 1px;
+      box-shadow: 0 1px 0 #0a3a9d, 0 1px 1px 1px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="index.js"></script>
+</body>
+</html>

@@ -10,6 +10,12 @@ describe('containerQuery', function () {
       expect(result).toBe(123);
     });
 
+    it('extracts decimal places', function () {
+      const result = parsePixels('123.123px');
+
+      expect(result).toBe(123.123);
+    });
+
   });
 
   describe('parseQuery', function () {

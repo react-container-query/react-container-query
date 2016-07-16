@@ -1,0 +1,15 @@
+{
+  "name": "toggle-sizes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu/)",
+  "license": "MIT",
+  "devDependencies": {
+    "react-motion": "0.4.4"
+  }
+}
