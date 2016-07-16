@@ -14,6 +14,5 @@ deployment:
     tag: /v[0-9]+(\.[0-9]+)*/
     owner: d6u
     commands:
-      - npm run build
       - echo -e "$NPM_USER\n$NPM_PASS\n$NPM_EMAIL" | npm login
-      - npm publish
+      - scripts/publish.sh
