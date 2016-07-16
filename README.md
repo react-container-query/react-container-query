@@ -100,7 +100,7 @@ Checkout CodePen
 - Adjustable Sidebar http://codepen.io/daiweilu/pen/wMrrZM
 - Responsive Component Layout http://codepen.io/daiweilu/pen/XXexrj
 
-You can also checkout [react-container-query-demo](https://github.com/d6u/react-container-query-demo).
+You can also checkout [examples](./examples).
 
 ## Performance
 
