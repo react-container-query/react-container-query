@@ -4,13 +4,13 @@ import assign = require('lodash/assign');
 import createContainerQueryMixin, {ContainerQueryDefinition} from './createContainerQueryMixin';
 
 export default function<P> (
-  Component: React.ComponentClass<P>,
+  WrappedComponent: React.ComponentClass<P>,
   query: ContainerQueryDefinition,
   {propName = 'containerQuery'} = {}) {
 
   return React.createClass<P, any>({
-    propTypes: Component.propTypes,
-    displayName: 'ContainerQuery(' + getDisplayName(Component) + ')',
+    propTypes: WrappedComponent.propTypes,
+    displayName: `ContainerQuery(${getDisplayName<P>(WrappedComponent)})`,
     mixins: [createContainerQueryMixin(query)],
 
     defineContainerComponent(ref: React.Component<any, any>) {
@@ -20,11 +20,11 @@ export default function<P> (
     render() {
       const props: {[key: string]: any} = assign({ref: this.defineContainerComponent}, this.props);
       props[propName] = this.state ? this.state.containerQuery : {};
-      return React.createElement(Component, props as P);
+      return React.createElement(WrappedComponent, props as P);
     }
   });
 }
 
-function getDisplayName(WrappedComponent: React.ComponentClass<any>) {
+function getDisplayName<P>(WrappedComponent: React.ComponentClass<P>) {
   return WrappedComponent.displayName || 'Component';
 }
