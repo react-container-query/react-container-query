@@ -2,22 +2,17 @@
 
 ## Start developing
 
-**Lint on file change**
+_react-container-query is written using TypeScript._
+
+_Only support MacOS for now, PRs for Windows are welcome._
 
 ```sh
-$ npm run watch:lint
+$ scripts/dev.sh
 ```
 
-**Test on file change**
+## To lint and test
 
 ```sh
-$ npm run watch:test
+$ npm run lint
+$ npm test
 ```
-
-**Build examples**
-
-```sh
-$ npm run build:examples
-```
-
-Open `public/examples/simple/index.html` in the browser.
