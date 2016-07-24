@@ -141,6 +141,36 @@ describe('applyContainerQuery', function () {
 
   });
 
+  describe('displayName', function () {
+
+    it('calculates displayName from wrapped component', function () {
+      class Container extends Component {
+        render() {
+          return <div></div>;
+        }
+      }
+
+      Container.displayName = 'ABC';
+
+      const ContainerQuery = applyContainerQuery(Container, {});
+
+      expect(ContainerQuery.displayName).toBe('ContainerQuery(ABC)');
+    });
+
+    it('uses default displayName if wrapped component has no displayName', function () {
+      class Container extends Component {
+        render() {
+          return <div></div>;
+        }
+      }
+
+      const ContainerQuery = applyContainerQuery(Container, {});
+
+      expect(ContainerQuery.displayName).toBe('ContainerQuery(Component)');
+    });
+
+  });
+
   describe('edge cases', function () {
 
     class Container extends Component {
