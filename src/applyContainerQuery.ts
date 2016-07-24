@@ -10,7 +10,7 @@ export default function<P> (
 
   return React.createClass<P, any>({
     propTypes: Component.propTypes,
-    displayName: 'ContainerQuery(' + getDisplayName(WrappedComponent) + ')',
+    displayName: 'ContainerQuery(' + getDisplayName(Component) + ')',
     mixins: [createContainerQueryMixin(query)],
 
     defineContainerComponent(ref: React.Component<any, any>) {
@@ -25,6 +25,6 @@ export default function<P> (
   });
 }
 
-function getDisplayName(WrappedComponent: React.ComponentClass<P>) {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+function getDisplayName(WrappedComponent: React.ComponentClass<any>) {
+  return WrappedComponent.displayName || 'Component';
 }
