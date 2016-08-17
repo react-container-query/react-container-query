@@ -20,6 +20,10 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
+    "typings/index.d.ts",
+    "typings-custom/element-resize-detector.d.ts",
+    "typings-custom/invariant.d.ts",
+    "typings-custom/lodash.d.ts",
     "src/index.ts"
   ]
 }
