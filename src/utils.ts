@@ -19,10 +19,11 @@ export function parsePixels(value: string) {
   if (/px$/.test(value)) {
     const [, digit] = /(\d+(\.\d+)?)px$/.exec(value);
     return Number(digit);
-  } else {
-    console.log(`current only pixel value height and width are supported, "${value}" is not a pixel value`);
-    return null;
   }
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`current only pixel value height and width are supported, "${value}" is not a pixel value`);
+  }
+  return null;
 }
 
 export function parseQuery(query: ContainerQueryDefinition) {
