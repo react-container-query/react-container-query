@@ -9,7 +9,6 @@ export default function<P> (
   {propName = 'containerQuery'} = {}) {
 
   return React.createClass<P, any>({
-    propTypes: WrappedComponent.propTypes,
     displayName: `ContainerQuery(${getDisplayName<P>(WrappedComponent)})`,
     mixins: [createContainerQueryMixin(query)],
 
