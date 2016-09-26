@@ -1,6 +1,5 @@
 import assign = require('lodash/assign');
 import isEqual = require('lodash/isEqual');
-import invariant = require('invariant');
 import ResizeDetectorMixin from './ResizeDetectorMixin';
 import {parseQuery, parsePixels} from './utils';
 

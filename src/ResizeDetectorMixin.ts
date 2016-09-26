@@ -1,7 +1,6 @@
 import elementResizeDetectorMaker = require('element-resize-detector');
 import browserDetector = require('element-resize-detector/src/browser-detector');
 import {ElementResizeDetector} from 'element-resize-detector/type';
-import invariant = require('invariant');
 
 export default {
   defineContainer(element: HTMLElement) {

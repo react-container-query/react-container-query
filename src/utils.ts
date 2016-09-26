@@ -1,4 +1,3 @@
-import invariant = require('invariant');
 import toPairs = require('lodash/toPairs');
 import {ContainerQueryDefinition} from './createContainerQueryMixin';
 
