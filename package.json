@@ -28,7 +28,7 @@
     "src"
   ],
   "dependencies": {
-    "element-resize-detector": "1.1.5",
+    "element-resize-detector": "1.1.8",
     "lodash": "4.16.2"
   },
   "devDependencies": {
