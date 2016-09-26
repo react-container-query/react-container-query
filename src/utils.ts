@@ -10,18 +10,24 @@ interface Rule {
 }
 
 export interface Dimension {
-  width?: number;
-  height?: number;
+  width: number | null | undefined;
+  height: number | null | undefined;
 }
 
-export function parsePixels(value: string) {
+export function parsePixels(value: string | null | undefined) {
+  if (value == null) {
+    return null;
+  }
+
   if (/px$/.test(value)) {
-    const [, digit] = /(\d+(\.\d+)?)px$/.exec(value);
+    const [, digit] = /(\d+(\.\d+)?)px$/.exec(value)!;
     return Number(digit);
   }
+
   if (process.env.NODE_ENV !== 'production') {
     console.log(`current only pixel value height and width are supported, "${value}" is not a pixel value`);
   }
+
   return null;
 }
 
