@@ -1,10 +1,10 @@
 declare module 'element-resize-detector/type' {
   interface ElementResizeDetectorMakerOptions {
-    strategy?: string;
+    strategy: string;
   }
 
   interface ElementResizeDetectorMaker {
-    (options?: ElementResizeDetectorMakerOptions): ElementResizeDetector;
+    (options: ElementResizeDetectorMakerOptions | null | undefined): ElementResizeDetector;
   }
 
   interface ElementResizeDetector {

@@ -28,6 +28,9 @@
     "src"
   ],
   "dependencies": {
+    "@types/lodash": "4.14.36",
+    "@types/react": "0.14.37",
+    "@types/react-dom": "0.14.17",
     "element-resize-detector": "1.1.8",
     "lodash": "4.16.2"
   },
@@ -42,9 +45,9 @@
     "babel-preset-react": "6.11.1",
     "browser-sync": "2.16.0",
     "classnames": "2.2.5",
-    "eslint": "2.13.1",
+    "eslint": "3.6.0",
     "eslint-config-rackt": "1.1.1",
-    "eslint-plugin-react": "5.2.2",
+    "eslint-plugin-react": "6.3.0",
     "gulp": "3.9.1",
     "gulp-debug": "2.1.2",
     "gulp-watch": "4.3.9",
@@ -63,14 +66,12 @@
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "rimraf": "2.5.4",
-    "tslint": "3.13.0",
-    "typescript": "1.8.10",
-    "typings": "1.3.1",
+    "tslint": "3.15.1",
+    "typescript": "2.0.3",
     "webpack": "1.13.2",
     "yargs": "5.0.0"
   },
   "scripts": {
-    "setup": "typings install",
     "build:lib": "tsc",
     "build:umd": "webpack lib/index.js dist/react-container-query.js --config config/webpack.config.development.js",
     "build:umd:min": "webpack lib/index.js dist/react-container-query.min.js --config config/webpack.config.production.js",

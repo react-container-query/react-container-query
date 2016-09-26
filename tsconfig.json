@@ -17,13 +17,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true
   },
   "include": [
-    "typings/index.d.ts",
     "typings-custom/element-resize-detector.d.ts",
-    "typings-custom/invariant.d.ts",
-    "typings-custom/lodash.d.ts",
     "typings-custom/process.env.NODE_ENV.d.ts",
     "src/index.ts"
   ]
