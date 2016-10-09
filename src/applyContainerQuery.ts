@@ -17,9 +17,11 @@ export default function<P> (
     },
 
     render() {
-      const props: {[key: string]: any} = assign({ref: this.defineContainerComponent}, this.props);
+      const props: {[key: string]: any} = assign({}, this.props);
       props[propName] = this.state ? this.state.containerQuery : {};
-      return React.createElement(WrappedComponent, props as P);
+      return React.createElement('div', {
+        ref: this.defineContainerComponent
+      }, React.createElement(WrappedComponent, props as P));
     }
   });
 }
