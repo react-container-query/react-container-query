@@ -64,6 +64,7 @@
     "karma-webpack": "1.8.0",
     "onchange": "3.0.2",
     "react": "15.3.2",
+    "react-addons-test-utils": "^15.3.2",
     "react-dom": "15.3.2",
     "rimraf": "2.5.4",
     "tslint": "3.15.1",
