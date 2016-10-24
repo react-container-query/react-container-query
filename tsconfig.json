@@ -1,28 +1,28 @@
 {
-  "compileOnSaveDefinition": false,
+  "compileOnSave": false,
+  "enableAutoDiscovery": false,
   "compilerOptions": {
     "declaration": true,
-    "diagnostics": false,
-    "listFiles": false,
-    "jsx": "react",
+    "declarationDir": "lib",
     "module": "commonjs",
     "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noResolve": false,
     "outDir": "lib",
     "pretty": true,
-    "removeComments": true,
-    "target": "es5",
     "sourceMap": true,
-    "experimentalDecorators": true,
+    "target": "es5",
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
     "strictNullChecks": true
   },
   "include": [
-    "typings-custom/element-resize-detector.d.ts",
-    "typings-custom/process.env.NODE_ENV.d.ts",
-    "src/index.ts"
+    "typings-custom/*.d.ts",
+    "src/*.ts"
   ]
 }

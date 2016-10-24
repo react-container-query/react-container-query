@@ -3,8 +3,6 @@
   "version": "0.6.0",
   "description": "Container Query for React Component",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu)",
-  "main": "./lib/index.js",
-  "jsnext:main": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/d6u/react-container-query.git"
@@ -22,17 +20,19 @@
     "url": "https://github.com/d6u/react-container-query/issues"
   },
   "homepage": "https://github.com/d6u/react-container-query",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
     "dist",
     "lib",
     "src"
   ],
   "dependencies": {
-    "@types/lodash": "4.14.36",
-    "@types/react": "0.14.37",
-    "@types/react-dom": "0.14.17",
-    "element-resize-detector": "1.1.8",
-    "lodash": "4.16.2"
+    "@types/lodash": "4.*",
+    "@types/react": "0.14.*",
+    "container-query-toolkit": "0.0.2",
+    "lodash": "4.*",
+    "resize-observer-lite": "0.0.1"
   },
   "devDependencies": {
     "babel-cli": "6.14.0",
@@ -63,8 +63,8 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
     "onchange": "3.0.2",
-    "react": "15.3.2",
-    "react-dom": "15.3.2",
+    "react": "15.*",
+    "react-dom": "15.*",
     "rimraf": "2.5.4",
     "tslint": "3.15.1",
     "typescript": "2.0.3",
