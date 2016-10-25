@@ -28,8 +28,10 @@
     "src"
   ],
   "dependencies": {
+    "@types/classnames": "0.0.31",
     "@types/lodash": "4.*",
     "@types/react": "0.14.*",
+    "classnames": "2.*",
     "container-query-toolkit": "0.0.2",
     "lodash": "4.*",
     "resize-observer-lite": "0.0.1"
@@ -44,7 +46,6 @@
     "babel-preset-es2015-loose": "8.0.0",
     "babel-preset-react": "6.11.1",
     "browser-sync": "2.16.0",
-    "classnames": "2.2.5",
     "eslint": "3.6.0",
     "eslint-config-rackt": "1.1.1",
     "eslint-plugin-react": "6.3.0",

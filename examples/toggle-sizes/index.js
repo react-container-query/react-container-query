@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Motion, spring} from 'react-motion';
 import classnames from 'classnames';
-import {applyContainerQuery} from '../../lib';
+import ContainerQuery from '../../lib';
 
 class Button extends Component {
   render() {
@@ -16,33 +16,6 @@ class Button extends Component {
   }
 }
 
-class Demo extends Component {
-  render() {
-    const items = [0,1,2,3,4].map((n) => (
-      <li className={classnames('demo__item', {'demo__item--feature': n === 0})}>
-        <div className='demo__item-pic'></div>
-        <div className='demo__item-content'></div>
-      </li>
-    ));
-
-    const width = this.props.width;
-
-    return (
-      <Motion defaultStyle={{width}} style={{width: spring(width, [120, 11])}}>{(values) => (
-        <div className={classnames('demo__container', this.props.containerQuery)} style={{width: `${values.width}px`}}>
-          <div className='demo__logo'></div>
-          <div className='demo__intro'>
-            <div className='demo__line demo__line-1'></div>
-            <div className='demo__line demo__line-2'></div>
-            <div className='demo__line demo__line-3'></div>
-          </div>
-          <ol className='demo__list'>{items}</ol>
-        </div>
-      )}</Motion>
-    );
-  }
-}
-
 const query = {
   middle: {
     minWidth: 250
@@ -52,7 +25,35 @@ const query = {
   },
 };
 
-const Container = applyContainerQuery(Demo, query);
+const Demo = (props) => {
+  const items = [0,1,2,3,4].map((n) => (
+    <li className={classnames('demo__item', {'demo__item--feature': n === 0})} key={n}>
+      <div className='demo__item-pic'></div>
+      <div className='demo__item-content'></div>
+    </li>
+  ));
+
+  const width = props.width;
+
+  return (
+    <Motion defaultStyle={{width}} style={{width: spring(width, [120, 11])}}>{(values) => (
+      <ContainerQuery query={query} className='demo__container' style={{width: `${values.width}px`}}>
+        {() => [
+          // You can return an array of JSX elements to work around a JSX
+          // limitation that a block of JSX elements must be wrapped within
+          // a single JSX element wrapper.
+          <div className='demo__logo'></div>,
+          <div className='demo__intro'>
+            <div className='demo__line demo__line-1'></div>
+            <div className='demo__line demo__line-2'></div>
+            <div className='demo__line demo__line-3'></div>
+          </div>,
+          <ol className='demo__list'>{items}</ol>
+        ]}
+      </ContainerQuery>
+    )}</Motion>
+  );
+}
 
 const LAYOUTS = [160, 265, 310];
 
@@ -70,7 +71,7 @@ class App extends Component {
           <Button onClick={() => this.selectLayout(1)} isActive={this.state.layout === 1}>250 &lt; width &lt; 300</Button>
           <Button onClick={() => this.selectLayout(2)} isActive={this.state.layout === 2}>300 &lt; width</Button>
         </div>
-        <Container width={LAYOUTS[this.state.layout]}/>
+        <Demo width={LAYOUTS[this.state.layout]}/>
       </div>
     );
   }
