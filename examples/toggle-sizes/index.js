@@ -38,18 +38,13 @@ const Demo = (props) => {
   return (
     <Motion defaultStyle={{width}} style={{width: spring(width, [120, 11])}}>{(values) => (
       <ContainerQuery query={query} className='demo__container' style={{width: `${values.width}px`}}>
-        {() => [
-          // You can return an array of JSX elements to work around a JSX
-          // limitation that a block of JSX elements must be wrapped within
-          // a single JSX element wrapper.
-          <div className='demo__logo'></div>,
-          <div className='demo__intro'>
-            <div className='demo__line demo__line-1'></div>
-            <div className='demo__line demo__line-2'></div>
-            <div className='demo__line demo__line-3'></div>
-          </div>,
-          <ol className='demo__list'>{items}</ol>
-        ]}
+        <div className='demo__logo'></div>
+        <div className='demo__intro'>
+          <div className='demo__line demo__line-1'></div>
+          <div className='demo__line demo__line-2'></div>
+          <div className='demo__line demo__line-3'></div>
+        </div>
+        <ol className='demo__list'>{items}</ol>
       </ContainerQuery>
     )}</Motion>
   );
