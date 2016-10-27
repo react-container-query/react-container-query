@@ -128,4 +128,4 @@ You can also check out [examples director](./examples).
 
 ## Performance
 
-react-container-query is using [element-resize-detector](https://www.npmjs.com/package/element-resize-detector) on currently mainstream browsers and [ResizeObserver](https://developers.google.com/web/updates/2016/10/resizeobserver) cutting edge browsers. It's completely event based, so no excessive code runs if no changes on element sizes.
+react-container-query is using [element-resize-detector](https://www.npmjs.com/package/element-resize-detector) in mainstream browsers and [ResizeObserver](https://developers.google.com/web/updates/2016/10/resizeobserver) in cutting edge browsers. It's completely event based, so no excessive code runs if no changes on element sizes.
