@@ -22,7 +22,6 @@
     "strictNullChecks": true
   },
   "include": [
-    "typings-custom/*.d.ts",
-    "src/*.ts"
+    "src/index.ts"
   ]
 }

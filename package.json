@@ -73,18 +73,19 @@
     "yargs": "5.0.0"
   },
   "scripts": {
+    "clean": "rimraf lib dist coverage public",
     "build:lib": "tsc",
     "build:umd": "webpack lib/index.js dist/react-container-query.js --config config/webpack.config.development.js",
     "build:umd:min": "webpack lib/index.js dist/react-container-query.min.js --config config/webpack.config.production.js",
-    "build": "npm run clean && npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "lint:js": "eslint config/webpack.config.*",
     "lint:ts": "tslint src/**/*.ts",
     "lint": "npm run lint:js && npm run lint:ts",
-    "test": "npm run clean && npm run build:lib && env NODE_ENV=test karma start",
+    "unit-test": "env NODE_ENV=test karma start",
+    "pretest": "npm run clean && npm run build",
+    "test": "npm run lint && npm run unit-test",
     "combine-coverage-results": "istanbul-combine -d coverage/summary -p both -r json -r html coverage/*-json/coverage-final.json",
-    "check": "npm run lint && npm test && npm run combine-coverage-results",
-    "clean": "rimraf lib dist coverage public",
-    "preversion": "npm run check",
-    "postversion": "git push && git push --tags"
+    "ci": "npm test && npm run combine-coverage-results",
+    "preversion": "npm run clean && npm run build"
   }
 }
