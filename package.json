@@ -59,7 +59,7 @@
     "karma-chrome-launcher": "2.0.0",
     "karma-coverage": "1.1.1",
     "karma-jasmine": "1.0.2",
-    "karma-sauce-launcher": "1.0.0",
+    "karma-sauce-launcher": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
@@ -68,8 +68,8 @@
     "react-dom": "15.*",
     "rimraf": "2.5.4",
     "tslint": "3.15.1",
-    "typescript": "2.0.3",
-    "webpack": "1.13.2",
+    "typescript": "2.0.6",
+    "webpack": "1.13.3",
     "yargs": "5.0.0"
   },
   "scripts": {
