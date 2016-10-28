@@ -46,14 +46,14 @@ module.exports = {
   },
   sl_android_4: {
     base: 'SauceLabs',
-    browserName: 'Browser',
+    browserName: 'browser',
     deviceName: 'Android Emulator',
     platform: 'Android',
     version: '4.4'
   },
   sl_android_5: {
     base: 'SauceLabs',
-    browserName: 'Browser',
+    browserName: 'browser',
     deviceName: 'Android Emulator',
     platform: 'Android',
     version: '5.1'
