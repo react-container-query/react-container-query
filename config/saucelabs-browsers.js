@@ -44,19 +44,26 @@ module.exports = {
   //   platform: 'iOS',
   //   version: '10.0'
   // },
-  sl_android_4: {
+  // sl_android_4: {
+  //   base: 'SauceLabs',
+  //   browserName: 'chrome',
+  //   deviceName: 'Android Emulator',
+  //   platform: 'Android',
+  //   version: '4.4'
+  // },
+  // sl_android_5: {
+  //   base: 'SauceLabs',
+  //   browserName: 'chrome',
+  //   deviceName: 'Android Emulator',
+  //   platform: 'Android',
+  //   version: '5.1'
+  // },
+  sl_android_6: {
     base: 'SauceLabs',
     browserName: 'chrome',
-    deviceName: 'Android Emulator',
+    deviceName: 'Samsung Galaxy S7 Device',
     platform: 'Android',
-    version: '4.4'
-  },
-  sl_android_5: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    deviceName: 'Android Emulator',
-    platform: 'Android',
-    version: '5.1'
+    version: '6.0'
   },
   // sl_ie_edge: {
   //   base: 'SauceLabs',
