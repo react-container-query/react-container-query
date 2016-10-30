@@ -1,9 +1,9 @@
 machine:
   node:
-    version: 6.6.0
+    version: 6.9.1
 test:
   override:
-    - npm run check
+    - npm run ci
 deployment:
   codecov:
     branch: /.*/
