@@ -28,15 +28,15 @@
     "src"
   ],
   "dependencies": {
-    "@types/classnames": "0.0.31",
-    "@types/lodash": "4.*",
-    "@types/react": "0.14.*",
     "classnames": "2.*",
     "container-query-toolkit": "0.0.2",
     "lodash": "4.*",
     "resize-observer-lite": "0.0.1"
   },
   "devDependencies": {
+    "@types/classnames": "0.0.31",
+    "@types/lodash": "4.*",
+    "@types/react": "0.14.*",
     "babel-cli": "6.18.0",
     "babel-core": "6.18.0",
     "babel-eslint": "7.1.0",
