@@ -34,7 +34,7 @@
     "@types/react-dom": "0.14.19",
     "container-query-toolkit": "0.0.2",
     "lodash": "4.*",
-    "resize-observer-lite": "0.2.0"
+    "resize-observer-lite": "0.2.1"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",

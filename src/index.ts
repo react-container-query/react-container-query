@@ -14,11 +14,9 @@ import matchQueries from 'container-query-toolkit/lib/matchQueries';
 
 export default class ContainerQuery extends React.Component<Props, State> {
   private rol: ResizeObserverLite | null = null;
-  private $el: Element | null = null;
 
   constructor(props: Props) {
     super(props);
-    this.$el = null;
     this.state = {
       params: {}
     };
@@ -39,33 +37,24 @@ export default class ContainerQuery extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.$el = ReactDOM.findDOMNode(this);
+    this.rol = new ResizeObserverLite((size) => {
+      const params = matchQueries(this.props.query)(size);
 
-    if (this.$el) {
-      this.rol = new ResizeObserverLite((size) => {
-        const params = matchQueries(this.props.query)(size);
+      if (!isEqual(this.state.params, params)) {
+        this.setState({params});
+      }
+    });
 
-        if (!isEqual(this.state.params, params)) {
-          this.setState({params});
-        }
-      });
-
-      this.rol.observe(this.$el);
-    }
+    this.rol.observe(ReactDOM.findDOMNode(this));
   }
 
   componentDidUpdate() {
-    const $el = ReactDOM.findDOMNode(this);
-    if ($el && this.$el !== $el) {
-      this.rol!.observe($el);
-      this.$el = $el;
-    }
+    this.rol!.observe(ReactDOM.findDOMNode(this));
   }
 
   componentWillUnmount() {
     this.rol!.disconnect();
     this.rol = null;
-    this.$el = null;
   }
 }
 
