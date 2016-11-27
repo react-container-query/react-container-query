@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
+import classnames from 'classnames';
 import ContainerQuery from '../../lib';
 
 const query = {
@@ -13,9 +14,9 @@ const query = {
 };
 
 const MyComponent = () => (
-  <ContainerQuery query={query} className='container'>
-    {() => (
-      <div className='box'>the box</div>
+  <ContainerQuery query={query}>
+    {(params) => (
+      <div className={classnames('box', params)}>the box</div>
     )}
   </ContainerQuery>
 );

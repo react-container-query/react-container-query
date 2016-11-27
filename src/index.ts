@@ -1,9 +1,8 @@
 import React = require('react');
-import omit = require('lodash/omit');
+import ReactDOM = require('react-dom');
 import isEqual = require('lodash/isEqual');
 import ResizeObserverLite from 'resize-observer-lite';
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
-import classnames = require('classnames');
 
 /**
  * <ContainerQuery tagName='div' query={query}>
@@ -15,62 +14,63 @@ import classnames = require('classnames');
 
 export default class ContainerQuery extends React.Component<Props, State> {
   private rol: ResizeObserverLite | null = null;
+  private $el: Element | null = null;
 
   constructor(props: Props) {
     super(props);
+    this.$el = null;
     this.state = {
       params: {}
     };
   }
 
-  componentDidMount() {
-    this.rol = new ResizeObserverLite((size) => {
-      const params = matchQueries(this.props.query)(size);
-
-      if (!isEqual(this.state.params, params)) {
-        this.setState({params});
-      }
-    });
-
-    this.rol.observe((<any> this.refs).container as HTMLElement);
-  }
-
   render() {
-    let children: JSX.Element | JSX.Element[] | null = null;
+    let children: JSX.Element | null = null;
 
     if (this.props.children) {
       if (typeof this.props.children === 'function') {
         children = (this.props.children as ChildFunction)(this.state.params);
       } else {
-        children = this.props.children as JSX.Element | JSX.Element[];
+        children = this.props.children as JSX.Element;
       }
     }
 
-    const props = omit(this.props, ['children', 'tagName', 'query']) as any;
+    return children || null;
+  }
 
-    props.ref = 'container';
-    props.className = classnames(this.props.className, this.state.params);
+  componentDidMount() {
+    this.$el = ReactDOM.findDOMNode(this);
 
-    if (children) {
-      if (Array.isArray(children)) {
-        return React.createElement(this.props.tagName || 'div', props, ...children);
-      } else {
-        return React.createElement(this.props.tagName || 'div', props, children);
-      }
-    } else {
-      return React.createElement(this.props.tagName || 'div', props);
+    if (this.$el) {
+      this.rol = new ResizeObserverLite((size) => {
+        const params = matchQueries(this.props.query)(size);
+
+        if (!isEqual(this.state.params, params)) {
+          this.setState({params});
+        }
+      });
+
+      this.rol.observe(this.$el);
+    }
+  }
+
+  componentDidUpdate() {
+    const $el = ReactDOM.findDOMNode(this);
+    if ($el && this.$el !== $el) {
+      this.rol!.observe($el);
+      this.$el = $el;
     }
   }
 
   componentWillUnmount() {
     this.rol!.disconnect();
     this.rol = null;
+    this.$el = null;
   }
 }
 
-export interface Props extends React.HTMLProps<ContainerQuery> {
-  children?: ChildFunction | JSX.Element | JSX.Element[];
-  tagName?: string;
+export interface Props extends React.HTMLProps<ContainerQuery> {  
+  children?: ChildFunction | JSX.Element;
   query: {[key: string]: ContainerQueries};
 }
 
@@ -79,7 +79,7 @@ export interface State {
 }
 
 export interface ChildFunction {
-  (params: Params): JSX.Element | JSX.Element[] | null;
+  (params: Params): JSX.Element | null;
 }
 
 export interface Params {

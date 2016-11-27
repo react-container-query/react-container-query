@@ -1,5 +1,5 @@
 {
-  "name": "toggle-sizes",
+  "name": "simple",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu/)",
   "license": "MIT",
   "devDependencies": {
-    "classnames": "2.2.5",
-    "react-motion": "0.4.4"
+    "classnames": "2.2.5"
   }
 }
