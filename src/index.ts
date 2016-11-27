@@ -58,7 +58,7 @@ export default class ContainerQuery extends React.Component<Props, State> {
   }
 }
 
-export interface Props extends React.HTMLProps<ContainerQuery> {  
+export interface Props extends React.HTMLProps<ContainerQuery> {
   children?: ChildFunction | JSX.Element;
   query: {[key: string]: ContainerQueries};
 }
