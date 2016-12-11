@@ -28,9 +28,8 @@
     "src"
   ],
   "dependencies": {
-    "@types/classnames": "0.0.31",
     "@types/lodash": "4.*",
-    "@types/react": "0.14.*",
+    "@types/react": "0.14.55",
     "@types/react-dom": "0.14.19",
     "container-query-toolkit": "0.0.2",
     "lodash": "4.*",
@@ -67,8 +66,8 @@
     "react": "15.*",
     "react-dom": "15.*",
     "rimraf": "2.5.4",
-    "tslint": "3.15.1",
-    "typescript": "2.0.6",
+    "tslint": "4.0.2",
+    "typescript": "2.1.4",
     "webpack": "1.13.3",
     "yargs": "6.3.0"
   },

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import classnames from 'classnames';
-import ContainerQuery from '../../lib';
+import {ContainerQuery} from '../../lib';
 
 const query = {
   'width-between-400-and-599': {
