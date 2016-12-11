@@ -58,7 +58,7 @@ export function applyContainerQuery<P extends {containerQuery: Params}>(
 
     private cqCore: ContainerQueryCore | null = null;
 
-    constructor(props) {
+    constructor(props: P) {
       super(props);
       this.state = {
         params: {}
