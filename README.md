@@ -19,12 +19,13 @@ npm i -D react-container-query
 
 ## API
 
-### `<ContainerQuery query={} tagName='div'>`
+### `<ContainerQuery query={query}>`
 
 ```jsx
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import ContainerQuery from 'react-container-query';
+import {ContainerQuery} from 'react-container-query';
+import classnames from 'classnames';
 
 const query = {
   'width-between-400-and-599': {
@@ -45,9 +46,9 @@ function MyComponent() {
    * }
    */
   return (
-    <ContainerQuery query={query} className='container'>
+    <ContainerQuery query={query}>
       {(params) => (
-        <div className='box'>the box</div>
+        <div className={classnames(params)}>the box</div>
       )}
     </ContainerQuery>
   );
@@ -55,39 +56,64 @@ function MyComponent() {
 
 /**
  * This will generate following HTML:
- * <div class="container width-between-400-and-599">
- *   <div class="box">the box</div>
- * </div>
+ * <div class="width-between-400-and-599"></div>
  */
 
 render(<MyComponent/>, document.getElementById('app'));
 ```
 
-react-container-query exports a single `ContainerQuery` component.
-
 #### properties
 
 - `props.children`
 
-    Can be a function to return a single or an array of React elements. The function will be invoked with `params`, which is a key-value pair where keys are class names, values are booleans to indicate if that class name's constraints are all satisfied.
+    Must be a function to return a single or an array of React elements. The function will be invoked with `params`, which is a key-value pair where keys are class names, values are booleans to indicate if that class name's constraints are all satisfied.
 
-    You can also pass normal React elements without using any function. E.g.
+- `props.query`
 
-    ```jsx
-    <ContainerQuery query={query} className='container'>
-      <div className='box'>the box</div>
-    </ContainerQuery>
-    ```
+    "query" is key-value pairs where keys are the class names that will be applied to container element when all constraints are met. The values are the constraints.
 
-    This implies that your child elements don't need to use the `params` to render anything special.
+### `applyContainerQuery(Component, query) -> ReactComponent`
 
-- `props.query`: "query" is key-value pairs where keys are the class names that will be applied to container element when all constraints are met. The values are the constraints.
+```jsx
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {applyContainerQuery} from 'react-container-query';
+import classnames from 'classnames';
 
-- `props.query[className]`: the constraint must have at least one of the four attributes, which are `minWidth`, `maxWidth`, `minHeight`, and `maxHeight`. Values are the number of pixels without the unit, i.e. number type.
+const query = {
+  'width-between-400-and-599': {
+    minWidth: 400,
+    maxWidth: 599
+  },
+  'width-larger-than-600': {
+    minWidth: 600,
+  }
+};
 
-- `props.tagName`: defaults to `div` tag.
+class Container extends Component {
+  render() {
+    /**
+     * `this.props.containerQuery` will look like
+     * {
+     *   'width-between-400-and-599': true,
+     *   'width-larger-than-600': false
+     * }
+     */
+    return <div className={classnames(this.props.containerQuery)}>the box</div>;
+  }
+}
 
-Other properties are preserved and passed to underlying React element created, e.g. `className`, if specified, will be applied to the element created.
+const App = applyContainerQuery(Container, query)
+
+/**
+ * This will generate following HTML:
+ * <div class="width-between-400-and-599"></div>
+ */
+
+render(<App/>, document.getElementById('app'));
+```
+
+This is a very similar to `<ContainerQuery/>`, except it's higher order component style. You don't have to use them together.
 
 ## Why
 
