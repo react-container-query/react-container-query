@@ -28,14 +28,14 @@
     "src"
   ],
   "dependencies": {
-    "@types/lodash": "4.*",
-    "@types/react": "0.14.55",
-    "@types/react-dom": "0.14.19",
     "container-query-toolkit": "0.0.2",
     "lodash": "4.*",
     "resize-observer-lite": "0.2.1"
   },
   "devDependencies": {
+    "@types/lodash": "4.*",
+    "@types/react": "0.14.55",
+    "@types/react-dom": "0.14.19",
     "babel-cli": "6.18.0",
     "babel-core": "6.18.0",
     "babel-eslint": "7.1.0",
