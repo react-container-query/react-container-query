@@ -21,10 +21,6 @@ export class ContainerQuery extends React.Component<Props, State> {
     };
   }
 
-  render() {
-    return this.props.children(this.state.params);
-  }
-
   componentDidMount() {
     this.cqCore = new ContainerQueryCore(this.props.query, (params) => {
       this.setState({params});
@@ -40,6 +36,10 @@ export class ContainerQuery extends React.Component<Props, State> {
   componentWillUnmount() {
     this.cqCore!.disconnect();
     this.cqCore = null;
+  }
+
+  render() {
+    return this.props.children(this.state.params);
   }
 }
 
@@ -65,10 +65,6 @@ export function applyContainerQuery<P extends {containerQuery: Params}>(
       };
     }
 
-    render() {
-      return <Component containerQuery={this.state.params}/>;
-    }
-
     componentDidMount() {
       this.cqCore = new ContainerQueryCore(query, (params) => {
         this.setState({params});
@@ -84,6 +80,10 @@ export function applyContainerQuery<P extends {containerQuery: Params}>(
     componentWillUnmount() {
       this.cqCore!.disconnect();
       this.cqCore = null;
+    }
+
+    render() {
+      return <Component {...this.props} containerQuery={this.state.params}/>;
     }
   };
 
