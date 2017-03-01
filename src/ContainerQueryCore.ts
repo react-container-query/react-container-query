@@ -12,9 +12,13 @@ export default class ContainerQueryCore {
       const result = matchQueries(query)(size);
       if (!isEqual(this.result, result)) {
         callback(result);
-        this.result = result;
+        this.storeParams(result);
       }
     });
+  }
+
+  storeParams(params: Params) {
+    this.result = params;
   }
 
   observe(element: Element) {

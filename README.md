@@ -19,7 +19,7 @@ npm i -D react-container-query
 
 ## API
 
-### `<ContainerQuery query={query}>`
+### `<ContainerQuery query={query} values={{width, height}}>`
 
 ```jsx
 import React, {Component} from 'react';
@@ -72,7 +72,12 @@ render(<MyComponent/>, document.getElementById('app'));
 
     "query" is key-value pairs where keys are the class names that will be applied to container element when all constraints are met. The values are the constraints.
 
-### `applyContainerQuery(Component, query) -> ReactComponent`
+- `props.values`
+
+    "values" is an object with optional `width` and/or `height` keys used as
+    defaults to support server side rendering.
+
+### `applyContainerQuery(Component, query, values) -> ReactComponent`
 
 ```jsx
 import React, {Component} from 'react';
@@ -142,6 +147,8 @@ With below CSS, `.box` will be blue when `.container` is wider than 600px, green
   }
 }
 ```
+
+_Note: This library does *not* provide these CSS features._
 
 ## Demo
 
