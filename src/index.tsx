@@ -48,7 +48,7 @@ export class ContainerQuery extends React.Component<Props, State> {
 }
 
 /**
- * applyContainerQuery(BoxComponent, query);
+ * applyContainerQuery(BoxComponent, query, initialSize);
  */
 
 export function applyContainerQuery<P extends {containerQuery: Params}>(
