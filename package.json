@@ -28,7 +28,7 @@
     "src"
   ],
   "dependencies": {
-    "container-query-toolkit": "0.0.2",
+    "container-query-toolkit": "0.1.1",
     "lodash": "4.*",
     "resize-observer-lite": "0.2.1"
   },

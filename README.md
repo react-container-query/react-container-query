@@ -19,7 +19,7 @@ npm i -D react-container-query
 
 ## API
 
-### `<ContainerQuery query={query} values={{width, height}}>`
+### `<ContainerQuery query={query} initialSize?={{width?, height?}}>`
 
 ```jsx
 import React, {Component} from 'react';
@@ -66,18 +66,17 @@ render(<MyComponent/>, document.getElementById('app'));
 
 - `props.children`
 
-    Must be a function to return a single or an array of React elements. The function will be invoked with `params`, which is a key-value pair where keys are class names, values are booleans to indicate if that class name's constraints are all satisfied.
+  Must be a function to return a single or an array of React elements. The function will be invoked with `params`, which is a key-value pair where keys are class names, values are booleans to indicate if that class name's constraints are all satisfied.
 
 - `props.query`
 
-    "query" is key-value pairs where keys are the class names that will be applied to container element when all constraints are met. The values are the constraints.
+  "query" is key-value pairs where keys are the class names that will be applied to container element when all constraints are met. The values are the constraints.
 
-- `props.values`
+- `props.initialSize?` (optional)
 
-    "values" is an object with optional `width` and/or `height` keys used as
-    defaults to support server side rendering.
+  `initialSize` is an object with optional `width` or `height` property. Because the limitation on how size is computed based on underlying element, in the initial rendering pass, we don't have the size info (because element must be in the DOM have a valid size). At this time `initialSize` will be used as the size of the element.
 
-### `applyContainerQuery(Component, query, values) -> ReactComponent`
+### `applyContainerQuery(Component, query, initialSize?) -> ReactComponent`
 
 ```jsx
 import React, {Component} from 'react';
