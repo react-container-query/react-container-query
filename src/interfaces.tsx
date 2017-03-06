@@ -1,6 +1,12 @@
 export interface Props {
   children: ChildFunction;
   query: Query;
+  initialSize?: Size;
+}
+
+export interface Size {
+  width?: number;
+  height?: number;
 }
 
 export interface State {

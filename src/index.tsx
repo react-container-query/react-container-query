@@ -1,12 +1,13 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
-import {Props, State, Params, Query} from './interfaces';
+import matchQueries from 'container-query-toolkit/lib/matchQueries';
+import {Props, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
 
 /**
- * <ContainerQuery query={query}>
+ * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
  *   {(params) => {
- *     <div className={classname(params.class)}></div>
+ *     <div className={classname(params)}></div>
  *   }}
  * </ContainerQuery>
  */
@@ -16,8 +17,11 @@ export class ContainerQuery extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+
     this.state = {
-      params: {}
+      params: props.initialSize
+        ? matchQueries(props.query)(props.initialSize)
+        : {},
     };
   }
 
@@ -44,12 +48,13 @@ export class ContainerQuery extends React.Component<Props, State> {
 }
 
 /**
- * applyContainerQuery(BoxComponent, query);
+ * applyContainerQuery(BoxComponent, query, initialSize);
  */
 
 export function applyContainerQuery<P extends {containerQuery: Params}>(
   Component: React.ComponentClass<P>,
-  query: Query
+  query: Query,
+  initialSize?: Size
 ): React.ComponentClass<P> {
   class ContainerQuery extends React.Component<P, State> {
     static displayName: string = Component.displayName
@@ -60,8 +65,11 @@ export function applyContainerQuery<P extends {containerQuery: Params}>(
 
     constructor(props: P) {
       super(props);
+
       this.state = {
-        params: {}
+        params: initialSize
+          ? matchQueries(query)(initialSize)
+          : {},
       };
     }
 

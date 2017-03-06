@@ -39,12 +39,12 @@ module.exports = function (config) {
     basePath: '.',
     frameworks: ['jasmine'],
     files: [
-      'test/index.js'
+      'test/client/index.js'
     ],
     exclude: [
     ],
     preprocessors: {
-      'test/index.js': ['webpack', 'sourcemap']
+      'test/client/index.js': ['webpack', 'sourcemap']
     },
     reporters: process.env.CI ? ['spec', 'coverage', 'saucelabs'] : ['spec', 'coverage'],
     port: 9876,

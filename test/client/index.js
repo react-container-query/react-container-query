@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render, findDOMNode} from 'react-dom';
-import {ContainerQuery, applyContainerQuery} from '../lib/index';
+import {ContainerQuery, applyContainerQuery} from '../../lib/index';
 
 describe('ContainerQuery', function () {
 
