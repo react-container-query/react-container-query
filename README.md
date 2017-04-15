@@ -156,7 +156,7 @@ Checkout CodePen
 - Adjustable Sidebar http://codepen.io/daiweilu/pen/wMrrZM
 - Responsive Component Layout http://codepen.io/daiweilu/pen/XXexrj
 
-You can also check out [examples director](./examples).
+You can also check out [examples directory](./examples).
 
 ## Performance
 
