@@ -52,7 +52,7 @@ export class ContainerQuery extends React.Component<Props, State> {
  */
 
 export function applyContainerQuery<P extends {containerQuery: Params}>(
-  Component: React.ComponentClass<P>,
+  Component: React.ComponentClass<P> | React.StatelessComponent<P>,
   query: Query,
   initialSize?: Size
 ): React.ComponentClass<P> {
