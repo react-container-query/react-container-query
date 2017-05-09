@@ -51,19 +51,25 @@ export class ContainerQuery extends React.Component<Props, State> {
  * applyContainerQuery(BoxComponent, query, initialSize);
  */
 
-export function applyContainerQuery<P extends {containerQuery: Params}>(
-  Component: React.ComponentClass<P> | React.StatelessComponent<P>,
+export type Component<T> = React.ComponentClass<T> | React.StatelessComponent<T>;
+
+export interface QueryProps {
+  containerQuery: Params;
+};
+
+export function applyContainerQuery<T>(
+  Component: Component<T & QueryProps>,
   query: Query,
   initialSize?: Size
-): React.ComponentClass<P> {
-  class ContainerQuery extends React.Component<P, State> {
+): React.ComponentClass<T> {
+  return class ContainerQuery extends React.Component<T, State> {
     static displayName: string = Component.displayName
       ? `ContainerQuery(${Component.displayName})`
       : 'ContainerQuery';
 
-    private cqCore: ContainerQueryCore | null = null;
+    private cqCore?: ContainerQueryCore;
 
-    constructor(props: P) {
+    constructor(props: T) {
       super(props);
 
       this.state = {
@@ -87,13 +93,16 @@ export function applyContainerQuery<P extends {containerQuery: Params}>(
 
     componentWillUnmount() {
       this.cqCore!.disconnect();
-      this.cqCore = null;
+      this.cqCore = undefined;
     }
 
     render() {
-      return <Component {...this.props} containerQuery={this.state.params}/>;
+      return (
+        <Component
+          {...this.props}
+          containerQuery={this.state.params}
+        />
+      );
     }
   };
-
-  return ContainerQuery;
 }
