@@ -340,4 +340,20 @@ describe('applyContainerQuery', function () {
     }, 100);
   });
 
+  it('accept stateless component', function (done) {
+    let _params;
+
+    const Container = applyContainerQuery(function (props) {
+      _params = props.containerQuery;
+      return <div style={{width: '200px'}}></div>;
+    }, query);
+
+    render(<Container/>, $div);
+
+    setTimeout(() => {
+      expect(_params).toEqual({mobile: true, desktop: false});
+      done();
+    }, 100);
+  });
+
 });

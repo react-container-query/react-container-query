@@ -67,7 +67,7 @@ export function applyContainerQuery<T>(
       ? `ContainerQuery(${Component.displayName})`
       : 'ContainerQuery';
 
-    private cqCore?: ContainerQueryCore;
+    private cqCore: ContainerQueryCore | null = null;
 
     constructor(props: T) {
       super(props);
@@ -93,7 +93,7 @@ export function applyContainerQuery<T>(
 
     componentWillUnmount() {
       this.cqCore!.disconnect();
-      this.cqCore = undefined;
+      this.cqCore = null;
     }
 
     render() {
