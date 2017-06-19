@@ -154,7 +154,7 @@ _Note: This library does *not* provide these CSS features._
 Checkout CodePen
 
 - Adjustable Sidebar http://codepen.io/daiweilu/pen/wMrrZM
-- Responsive Component Layout https://codepen.io/BackS/pen/eRNqrg
+- Responsive Component Layout https://codepen.io/daiweilu/pen/EXWRqx
 
 You can also check out [examples directory](./examples).
 
