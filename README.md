@@ -15,8 +15,6 @@
 npm i -D react-container-query
 ```
 
-**react-container-query doesn't specify "peerDependencies" in package.json, but you should have "react" and "react-dom" available.**
-
 ## API
 
 ### `<ContainerQuery query={query} initialSize?={{width?, height?}}>`
