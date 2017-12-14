@@ -55,11 +55,12 @@ export type Component<T> = React.ComponentClass<T> | React.StatelessComponent<T>
 
 export interface QueryProps {
   containerQuery: Params;
+  query?: Query;
 };
 
 export function applyContainerQuery<T>(
   Component: Component<T & QueryProps>,
-  query: Query,
+  query?: Query,
   initialSize?: Size
 ): React.ComponentClass<T> {
   return class ContainerQuery extends React.Component<T, State> {
@@ -74,13 +75,13 @@ export function applyContainerQuery<T>(
 
       this.state = {
         params: initialSize
-          ? matchQueries(query)(initialSize)
+          ? matchQueries(query || props.query)(initialSize)
           : {},
       };
     }
 
     componentDidMount() {
-      this.cqCore = new ContainerQueryCore(query, (params) => {
+      this.cqCore = new ContainerQueryCore(query || this.props.query, (params) => {
         this.setState({params});
       });
 
@@ -97,9 +98,10 @@ export function applyContainerQuery<T>(
     }
 
     render() {
+      const { query, ...rest } = this.props;
       return (
         <Component
-          {...this.props}
+          {...rest}
           containerQuery={this.state.params}
         />
       );

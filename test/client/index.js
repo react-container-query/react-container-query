@@ -356,4 +356,20 @@ describe('applyContainerQuery', function () {
     }, 100);
   });
 
+  it('accepts query as prop', function (done) {
+    let _params;
+
+    const Container = applyContainerQuery(function (props) {
+      _params = props.containerQuery;
+      return <div style={{width: '200px'}}></div>;
+    });
+
+    render(<Container query={query}/>, $div);
+
+    setTimeout(() => {
+      expect(_params).toEqual({mobile: true, desktop: false});
+      done();
+    }, 100);
+  });
+
 });
