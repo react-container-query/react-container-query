@@ -1,7 +1,7 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
-import {Props, State, Params, Query, Size} from './interfaces';
+import {Props, EnhancedProps, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
 
 /**
@@ -55,8 +55,7 @@ export type Component<T> = React.ComponentClass<T> | React.StatelessComponent<T>
 
 export interface QueryProps {
   containerQuery: Params;
-  query?: Query;
-};
+}
 
 export function applyContainerQuery<T>(
   Component: Component<T & QueryProps>,
@@ -70,20 +69,22 @@ export function applyContainerQuery<T>(
 
     private cqCore: ContainerQueryCore | null = null;
 
-    constructor(props: T) {
+    constructor(props: T & EnhancedProps) {
       super(props);
 
       this.state = {
         params: initialSize
-          ? matchQueries(query || props.query)(initialSize)
+          ? matchQueries(props.transformQuery && props.transformQuery(query) || query)(initialSize)
           : {},
       };
     }
 
     componentDidMount() {
-      this.cqCore = new ContainerQueryCore(query || this.props.query, (params) => {
-        this.setState({params});
-      });
+      const { transformQuery } = this.props;
+      this.cqCore = new ContainerQueryCore(
+        transformQuery && transformQuery(query) || query,
+        (params) => { this.setState({params}); }
+      );
 
       this.cqCore.observe(ReactDOM.findDOMNode(this));
     }
@@ -98,7 +99,7 @@ export function applyContainerQuery<T>(
     }
 
     render() {
-      const { query, ...rest } = this.props;
+      const { query: _query, ...rest } = this.props;
       return (
         <Component
           {...rest}

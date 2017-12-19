@@ -188,6 +188,11 @@ describe('applyContainerQuery', function () {
     desktop: {minWidth: 400}
   };
 
+  const extraQuery = {
+    tablet: { minWidth: 700 },
+    desktop: { maxWidth: 1200 }
+  };
+
   let $div;
 
   beforeEach(function () {
@@ -356,18 +361,34 @@ describe('applyContainerQuery', function () {
     }, 100);
   });
 
-  it('accepts query as prop', function (done) {
+  it('accepts transformQuery prop', function (done) {
     let _params;
 
     const Container = applyContainerQuery(function (props) {
       _params = props.containerQuery;
       return <div style={{width: '200px'}}></div>;
-    });
+    }, {});
 
-    render(<Container query={query}/>, $div);
+    render(<Container transformQuery={() => extraQuery}/>, $div);
 
     setTimeout(() => {
-      expect(_params).toEqual({mobile: true, desktop: false});
+      expect(_params).toEqual({tablet: false, desktop: true});
+      done();
+    }, 100);
+  });
+
+  it('extends base query', function (done) {
+    let _params;
+
+    const Container = applyContainerQuery(function (props) {
+      _params = props.containerQuery;
+      return <div style={{width: '200px'}}></div>;
+    }, query);
+
+    render(<Container transformQuery={(baseQuery) => ({ ...baseQuery, ...extraQuery })}/>, $div);
+
+    setTimeout(() => {
+      expect(_params).toEqual({mobile: true, tablet: false, desktop: true});
       done();
     }, 100);
   });
