@@ -6,14 +6,15 @@ const webpackConfig = require('./config/webpack.config.base');
 
 const webpackModule = Object.create(webpackConfig.module);
 
-webpackModule.preLoaders = [
+webpackModule.rules = [
   // transpile all files except testing sources with babel as usual
   {
     test: /\.js$/,
     exclude: [
       path.resolve('node_modules/')
     ],
-    loader: 'babel'
+    loader: 'babel-loader',
+    enforce: 'pre',
   },
 ];
 
