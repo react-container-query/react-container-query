@@ -1,5 +1,6 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
+import isEqual = require('lodash/isEqual');
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
 import {Props, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
@@ -26,11 +27,17 @@ export class ContainerQuery extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.cqCore = new ContainerQueryCore(this.props.query, (params) => {
-      this.setState({params});
-    });
+    this._startObserving(this.props.query);
+  }
 
-    this.cqCore.observe(ReactDOM.findDOMNode(this));
+  componentWillReceiveProps(nextProps: Props) {
+    // componentWillReceiveProps and componentDidMount can potentially run out of order,
+    // so we need to consider the case where cqCore is not initialized yet.
+    if (this.cqCore && !isEqual(this.props.query, nextProps.query)) {
+      this.cqCore.disconnect();
+      this.cqCore = null;
+      this._startObserving(nextProps.query);
+    }
   }
 
   componentDidUpdate() {
@@ -44,6 +51,14 @@ export class ContainerQuery extends React.Component<Props, State> {
 
   render() {
     return this.props.children(this.state.params);
+  }
+
+  _startObserving(query: Query) {
+    this.cqCore = new ContainerQueryCore(query, (params) => {
+      this.setState({ params });
+    });
+
+    this.cqCore.observe(ReactDOM.findDOMNode(this));
   }
 }
 
