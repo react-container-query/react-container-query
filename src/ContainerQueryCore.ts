@@ -1,7 +1,7 @@
-import isEqual = require('lodash/isEqual');
 import ResizeObserverLite from 'resize-observer-lite';
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
 import {Params, Query} from './interfaces';
+import isShallowEqual from './isShallowEqual';
 
 export default class ContainerQueryCore {
   private rol: ResizeObserverLite;
@@ -10,7 +10,7 @@ export default class ContainerQueryCore {
   constructor(query: Query, callback: (params: Params) => void) {
     this.rol = new ResizeObserverLite((size) => {
       const result = matchQueries(query)(size);
-      if (!isEqual(this.result, result)) {
+      if (!isShallowEqual(this.result, result)) {
         callback(result);
         this.result = result;
       }
