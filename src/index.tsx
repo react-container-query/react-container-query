@@ -1,9 +1,9 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
-import isEqual = require('lodash/isEqual');
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
 import {Props, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
+import isShallowEqual from './isShallowEqual';
 
 /**
  * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
@@ -33,7 +33,7 @@ export class ContainerQuery extends React.Component<Props, State> {
   componentWillReceiveProps(nextProps: Props) {
     // componentWillReceiveProps and componentDidMount can potentially run out of order,
     // so we need to consider the case where cqCore is not initialized yet.
-    if (this.cqCore && !isEqual(this.props.query, nextProps.query)) {
+    if (this.cqCore && !isQueriesEqual(this.props.query, nextProps.query)) {
       this.cqCore.disconnect();
       this.cqCore = null;
       this._startObserving(nextProps.query);
@@ -120,4 +120,24 @@ export function applyContainerQuery<T>(
       );
     }
   };
+}
+
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function isQueriesEqual(queryA: Query, queryB: Query): boolean {
+  const keysA = Object.keys(queryA);
+  const keysB = Object.keys(queryB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  for (let i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(queryB, keysA[i]) || 
+      !isShallowEqual(queryA[keysA[i]], queryB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
 }
