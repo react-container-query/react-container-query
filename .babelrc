@@ -5,7 +5,7 @@
     },
     "test": {
       "presets": ["react", "es2015"],
-      "plugins": [["__coverage__", {"ignore": "test/"}]]
+      "plugins": [["__coverage__", {"ignore": "test/"}], ["transform-object-rest-spread", { "useBuiltIns": true }]]
     }
   }
 }

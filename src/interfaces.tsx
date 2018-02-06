@@ -2,6 +2,11 @@ export interface Props {
   children: ChildFunction;
   query: Query;
   initialSize?: Size;
+  transformQuery: Function;
+}
+
+export interface EnhancedProps {
+  transformQuery: Function;
 }
 
 export interface Size {
