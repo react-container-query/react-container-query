@@ -12,7 +12,7 @@
 ## Installation
 
 ```sh
-npm i -D react-container-query
+npm i react-container-query
 ```
 
 ## Disclaimer
