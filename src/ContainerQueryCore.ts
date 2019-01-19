@@ -6,14 +6,17 @@ import isShallowEqual from './isShallowEqual';
 export default class ContainerQueryCore {
   private rol: ResizeObserverLite;
   private result: Params = {};
+  private requestID: number | null = null;
 
   constructor(query: Query, callback: (params: Params) => void) {
     this.rol = new ResizeObserverLite((size) => {
-      const result = matchQueries(query)(size);
-      if (!isShallowEqual(this.result, result)) {
-        callback(result);
-        this.result = result;
-      }
+      this.requestID = window.requestAnimationFrame(() => {
+        const result = matchQueries(query)(size);
+        if (!isShallowEqual(this.result, result)) {
+          callback(result);
+          this.result = result;
+        }
+      });
     });
   }
 
@@ -22,6 +25,7 @@ export default class ContainerQueryCore {
   }
 
   disconnect() {
+    this.requestID !== null && window.cancelAnimationFrame(this.requestID);
     this.rol.disconnect();
   }
 }

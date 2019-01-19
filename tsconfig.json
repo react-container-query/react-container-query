@@ -4,6 +4,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "lib",
+    "lib": ["dom", "es5"],
     "module": "commonjs",
     "noImplicitAny": true,
     "noImplicitThis": true,
