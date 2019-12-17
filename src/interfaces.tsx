@@ -14,7 +14,7 @@ export interface State {
 }
 
 export interface ChildFunction {
-  (params: Params): JSX.Element | null;
+  (params: Params, ref: any): JSX.Element | null;
 }
 
 export interface Query {

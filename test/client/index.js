@@ -37,9 +37,9 @@ describe('ContainerQuery', function () {
   it('sets mobile to true when width is small', function (done) {
     let _params;
 
-    const node = renderContainer((params) => {
+    const node = renderContainer((params, ref) => {
       _params = params;
-      return <div style={{width: '200px'}}></div>;
+      return <div ref={ref} style={{width: '200px'}}></div>;
     });
 
     setTimeout(() => {
@@ -51,9 +51,9 @@ describe('ContainerQuery', function () {
   it('changes className to "desktop" when width becomes large', function (done) {
     let _params;
 
-    const node = renderContainer((params) => {
+    const node = renderContainer((params, ref) => {
       _params = params;
-      return <div style={{width: '200px'}}></div>;
+      return <div ref={ref} style={{width: '200px'}}></div>;
     });
 
     setTimeout(() => {

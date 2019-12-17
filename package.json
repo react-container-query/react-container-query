@@ -1,6 +1,6 @@
 {
   "name": "react-container-query",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Container Query for React Component",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu)",
   "repository": {
@@ -32,8 +32,8 @@
     "resize-observer-lite": "0.2.3"
   },
   "devDependencies": {
-    "@types/react": "16.0.36",
-    "@types/react-dom": "16.0.3",
+    "@types/react": "16.8.0",
+    "@types/react-dom": "16.8.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.1",
@@ -63,17 +63,17 @@
     "karma-webpack": "2.0.9",
     "mocha": "5.0.0",
     "onchange": "3.3.0",
-    "react": "16.*",
-    "react-dom": "16.*",
     "rimraf": "2.6.2",
     "tslint": "5.9.1",
-    "typescript": "2.7.1",
+    "typescript": "3.7.3",
     "webpack": "3.10.0",
-    "yargs": "11.0.0"
+    "yargs": "11.0.0",
+    "react": "16.8.0",
+    "react-dom": "16.8.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
-    "react-dom": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "scripts": {
     "clean": "rimraf lib dist coverage public",

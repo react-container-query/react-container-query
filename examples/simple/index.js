@@ -15,8 +15,8 @@ const query = {
 
 const MyComponent = () => (
   <ContainerQuery query={query}>
-    {(params) => (
-      <div className={classnames('box', params)}>the box</div>
+    {(params, ref) => (
+      <div ref={ref} className={classnames('box', params)}>the box</div>
     )}
   </ContainerQuery>
 );

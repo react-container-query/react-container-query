@@ -46,11 +46,14 @@ function MyComponent() {
    *   'width-between-400-and-599': true,
    *   'width-larger-than-600': false
    * }
+   *
+   * `ref` indicates the DOM element to measure.
+   * It will usually be the first top-level DOM element returned by the render function.
    */
   return (
     <ContainerQuery query={query}>
-      {(params) => (
-        <div className={classnames(params)}>the box</div>
+      {(params, ref) => (
+        <div className={classnames(params)} ref={ref}>the box</div>
       )}
     </ContainerQuery>
   );

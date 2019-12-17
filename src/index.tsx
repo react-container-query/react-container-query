@@ -1,9 +1,9 @@
 import React = require('react');
+import { useEffect, useRef, useState } from 'react';
 import ReactDOM = require('react-dom');
 import matchQueries from 'container-query-toolkit/lib/matchQueries';
-import {Props, State, Params, Query, Size} from './interfaces';
+import { Props, State, Params, Query, Size } from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
-import isShallowEqual from './isShallowEqual';
 
 /**
  * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
@@ -13,53 +13,38 @@ import isShallowEqual from './isShallowEqual';
  * </ContainerQuery>
  */
 
-export class ContainerQuery extends React.Component<Props, State> {
-  private cqCore: ContainerQueryCore | null = null;
+export const ContainerQuery: React.FunctionComponent<Props> = ({
+  children: renderContents,
+  query,
+  initialSize,
+}) => {
+  const [params, setParams]: [any, any] = useState(initialSize ? matchQueries(query)(initialSize) : {});
+  const [prevQuery, setPrevQuery]: [any, any] = useState(null);
+  const elementRef: any = useRef(null);
+  const cqCoreRef: any = useRef(null);
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      params: props.initialSize
-        ? matchQueries(props.query)(props.initialSize)
-        : {},
-    };
-  }
-
-  componentDidMount() {
-    this._startObserving(this.props.query);
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
-    // componentWillReceiveProps and componentDidMount can potentially run out of order,
-    // so we need to consider the case where cqCore is not initialized yet.
-    if (this.cqCore && !isQueriesEqual(this.props.query, nextProps.query)) {
-      this.cqCore.disconnect();
-      this.cqCore = null;
-      this._startObserving(nextProps.query);
-    }
-  }
-
-  componentDidUpdate() {
-    this.cqCore!.observe(ReactDOM.findDOMNode(this));
-  }
-
-  componentWillUnmount() {
-    this.cqCore!.disconnect();
-    this.cqCore = null;
-  }
-
-  render() {
-    return this.props.children(this.state.params);
-  }
-
-  _startObserving(query: Query) {
-    this.cqCore = new ContainerQueryCore(query, (params) => {
-      this.setState({ params });
+  useEffect(() => {
+    cqCoreRef.current = new ContainerQueryCore(query, (params: any) => {
+      if (elementRef.current) {
+        setParams(params);
+      }
     });
 
-    this.cqCore.observe(ReactDOM.findDOMNode(this));
-  }
+    return () => {
+      cqCoreRef.current = null;
+    };
+  }, [elementRef, query]);
+
+  useEffect(() => {
+    if (elementRef.current && query !== prevQuery) {
+      cqCoreRef.current.observe(elementRef.current);
+      setPrevQuery(query);
+    }
+
+    return () => {};
+  }, [elementRef, prevQuery, query]);
+
+  return renderContents(params, elementRef)
 }
 
 /**
@@ -99,11 +84,11 @@ export function applyContainerQuery<T>(
         this.setState({params});
       });
 
-      this.cqCore.observe(ReactDOM.findDOMNode(this));
+      this.cqCore.observe(ReactDOM.findDOMNode(this) as Element);
     }
 
     componentDidUpdate() {
-      this.cqCore!.observe(ReactDOM.findDOMNode(this));
+      this.cqCore!.observe(ReactDOM.findDOMNode(this) as Element);
     }
 
     componentWillUnmount() {
@@ -120,24 +105,4 @@ export function applyContainerQuery<T>(
       );
     }
   };
-}
-
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function isQueriesEqual(queryA: Query, queryB: Query): boolean {
-  const keysA = Object.keys(queryA);
-  const keysB = Object.keys(queryB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  for (let i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(queryB, keysA[i]) ||
-      !isShallowEqual(queryA[keysA[i]], queryB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
 }

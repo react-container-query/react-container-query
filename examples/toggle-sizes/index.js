@@ -38,8 +38,8 @@ const Demo = (props) => {
   return (
     <Motion defaultStyle={{width}} style={{width: spring(width, [120, 11])}}>{(values) => (
       <ContainerQuery query={query}>
-        {(params) => (
-          <div className={classnames('demo__container', params)} style={{width: `${values.width}px`}}>
+        {(params, ref) => (
+          <div ref={ref} className={classnames('demo__container', params)} style={{width: `${values.width}px`}}>
             <div className='demo__logo'></div>
             <div className='demo__intro'>
               <div className='demo__line demo__line-1'></div>
