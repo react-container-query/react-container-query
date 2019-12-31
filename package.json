@@ -1,6 +1,6 @@
 {
-  "name": "@pixelbandito/react-container-query",
-  "version": "1.0.0-alpha.2",
+  "name": "@cision/react-container-query",
+  "version": "1.0.0-alpha.3",
   "description": "Container Query for React Component",
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu) (Forked by Chris Garcia <pixelbandito@gmail.com>)",
   "repository": {
@@ -17,9 +17,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/d6u/react-container-query/issues"
+    "url": "https://github.com/pixelbandito/react-container-query/issues"
   },
-  "homepage": "https://github.com/d6u/react-container-query",
+  "homepage": "https://github.com/pixelbandito/react-container-query",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -91,8 +91,5 @@
     "combine-coverage-results": "istanbul-combine -d coverage/summary -p both -r json -r html coverage/*-json/coverage-final.json",
     "ci": "npm test && npm run combine-coverage-results",
     "preversion": "npm run clean && npm run build"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
