@@ -30,7 +30,7 @@ export class ContainerQuery extends React.Component<Props, State> {
     this._startObserving(this.props.query);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     // componentWillReceiveProps and componentDidMount can potentially run out of order,
     // so we need to consider the case where cqCore is not initialized yet.
     if (this.cqCore && !isQueriesEqual(this.props.query, nextProps.query)) {
@@ -133,7 +133,7 @@ function isQueriesEqual(queryA: Query, queryB: Query): boolean {
   }
 
   for (let i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(queryB, keysA[i]) ||
+    if (!hasOwnProperty.call(queryB, keysA[i]) || 
       !isShallowEqual(queryA[keysA[i]], queryB[keysA[i]])) {
       return false;
     }
