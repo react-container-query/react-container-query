@@ -1,6 +1,0 @@
-machine:
-  node:
-    version: 9.3.0
-test:
-  override:
-    - npm run ci
