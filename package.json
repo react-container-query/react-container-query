@@ -5,7 +5,7 @@
   "author": "Daiwei Lu <daiweilu123@gmail.com> (http://daiwei.lu)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/d6u/react-container-query.git"
+    "url": "git+https://github.com/react-container-query/react-container-query.git"
   },
   "keywords": [
     "reactjs",
@@ -17,9 +17,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/d6u/react-container-query/issues"
+    "url": "https://github.com/react-container-query/react-container-query/issues"
   },
-  "homepage": "https://github.com/d6u/react-container-query",
+  "homepage": "https://github.com/react-container-query/react-container-query",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
