@@ -4,6 +4,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "lib",
+    "lib": ["es6"],
     "module": "commonjs",
     "noImplicitAny": true,
     "noImplicitThis": true,
