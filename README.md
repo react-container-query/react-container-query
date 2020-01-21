@@ -3,9 +3,9 @@
 **True modularity in styling responsive component.**
 
 [![npm version](https://badge.fury.io/js/react-container-query.svg)](https://badge.fury.io/js/react-container-query)
-[![Circle CI](https://circleci.com/gh/d6u/react-container-query/tree/master.svg?style=svg)](https://circleci.com/gh/d6u/react-container-query/tree/master)
+[![Circle CI](https://circleci.com/gh/react-container-query/react-container-query/tree/master.svg?style=svg)](https://circleci.com/gh/react-container-query/react-container-query/tree/master)
 [![Build Status](https://saucelabs.com/buildstatus/react-cq)](https://saucelabs.com/beta/builds/de7d8039f4e5417399ec27c39036c1b8)
-[![codecov](https://codecov.io/gh/d6u/react-container-query/branch/master/graph/badge.svg)](https://codecov.io/gh/d6u/react-container-query)
+[![codecov](https://codecov.io/gh/react-container-query/react-container-query/branch/master/graph/badge.svg)](https://codecov.io/gh/react-container-query/react-container-query)
 
 [![Build Status](https://saucelabs.com/browser-matrix/react-cq.svg)](https://saucelabs.com/beta/builds/de7d8039f4e5417399ec27c39036c1b8)
 
