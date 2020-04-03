@@ -3,9 +3,9 @@
 export NODE_ENV=test
 
 rm -rf lib coverage
-tsc
+./node_modules/.bin/tsc
 
-tsc -w &
-karma start --no-single-run &
+./node_modules/.bin/tsc -w &
+./node_modules/.bin/karma start --no-single-run &
 
 wait
