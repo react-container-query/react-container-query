@@ -40,7 +40,7 @@ export class ContainerQuery extends React.Component<Props, State> {
     }
   }
 
-  UNSAFE_componentDidUpdate() {
+  componentDidUpdate() {
     this.cqCore!.observe(ReactDOM.findDOMNode(this));
   }
 
@@ -102,7 +102,7 @@ export function applyContainerQuery<T>(
       this.cqCore.observe(ReactDOM.findDOMNode(this));
     }
 
-    UNSAFE_componentDidUpdate() {
+    componentDidUpdate() {
       this.cqCore!.observe(ReactDOM.findDOMNode(this));
     }
 
