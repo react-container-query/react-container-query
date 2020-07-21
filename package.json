@@ -43,7 +43,7 @@
     "babel-preset-es2015-loose": "8.0.0",
     "babel-preset-react": "6.24.1",
     "browser-sync": "2.23.6",
-    "eslint": "4.17.0",
+    "eslint": "4.18.2",
     "eslint-config-rackt": "1.1.1",
     "eslint-plugin-react": "7.6.1",
     "expect": "22.1.0",
