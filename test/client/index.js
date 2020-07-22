@@ -179,6 +179,44 @@ describe('ContainerQuery', function () {
     }, 100);
   });
 
+  it('sets params when mounted after resize events', function (done) {
+    class TestApp extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          renderChild: false
+        };
+      }
+
+      componentDidMount() {
+        setTimeout(() => {
+          this.setState({
+            renderChild: true
+          });
+        }, 200);
+      }
+
+      render() {
+        return (
+          <div style={{width: '200px'}}>
+            {this.state.renderChild && (
+              <ContainerQuery query={query}>
+                {(params) => <p>{JSON.stringify(params)}</p>}
+              </ContainerQuery>
+            )}
+          </div>
+        );
+      }
+    }
+
+    const node = findDOMNode(render(<div><TestApp/></div>, $div));
+
+    setTimeout(() => {
+      expect(node.children[0].innerHTML).toBe('<p>{"mobile":true,"desktop":false}</p>');
+      done();
+    }, 200);
+  });
+
 });
 
 describe('applyContainerQuery', function () {
