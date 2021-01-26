@@ -13,6 +13,41 @@ import isShallowEqual from './isShallowEqual';
  * </ContainerQuery>
  */
 
+export const useContainerQuery = (query: Query, initialSize: Size) => {
+  // setup a ref callback
+  // (end user) attach that ref callback to the element you want
+  // @ts-ignore
+  const [params, setParams] = React.useState(() => {
+    if (!initialSize) {
+      return {};
+    }
+    return matchQueries(query)(initialSize);
+  });
+  // @ts-ignore
+  const [containerRef, setContainerRef] = React.useState(null);
+  // @ts-ignore
+  const refCallback = React.useCallback((node) => {
+    setContainerRef(node); // on unmount, node would be null triggering cleanup
+  }, []);
+  // @ts-ignore
+  React.useEffect(() => {
+    if (containerRef) {
+      let cqCore: ContainerQueryCore | null = new ContainerQueryCore(
+        query,
+        (params) => {
+          setParams(params);
+        }
+      );
+      cqCore.observe(containerRef);
+      return () => {
+        cqCore!.disconnect();
+        cqCore = null;
+      };
+    }
+  }, [query, containerRef]);
+  return [params, refCallback];
+};
+
 export class ContainerQuery extends React.Component<Props, State> {
   private cqCore: ContainerQueryCore | null = null;
 
