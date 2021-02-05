@@ -253,16 +253,15 @@ var ReactDOM = __webpack_require__(6);
 var matchQueries_1 = __webpack_require__(0);
 var ContainerQueryCore_1 = __webpack_require__(7);
 var isShallowEqual_1 = __webpack_require__(3);
-/**
- * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
- *   {(params) => {
- *     <div className={classname(params)}></div>
- *   }}
- * </ContainerQuery>
- */
+/*
+* const MyComponent = () => {
+*   const [params, containerRef] = useContainerQuery(query);
+*   return <div ref={containerRef} className={classnames(params)}>the box</div>;
+* };
+*/
 exports.useContainerQuery = function (query, initialSize) {
     // setup a ref callback
-    // (end user) attach that ref callback to the element you want
+    // (end user) attaches that ref callback to a container element
     // @ts-ignore
     var _a = React.useState(function () {
         if (!initialSize) {
@@ -278,7 +277,7 @@ exports.useContainerQuery = function (query, initialSize) {
         setContainerRef = _b[1];
     // @ts-ignore
     var refCallback = React.useCallback(function (node) {
-        setContainerRef(node); // on unmount, node would be null triggering cleanup
+        setContainerRef(node); // on unmount, node would be set to null triggering cleanup
     }, []);
     // @ts-ignore
     React.useEffect(function () {
@@ -295,6 +294,13 @@ exports.useContainerQuery = function (query, initialSize) {
     }, [query, containerRef]);
     return [params, refCallback];
 };
+/**
+ * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
+ *   {(params) => {
+ *     <div className={classname(params)}></div>
+ *   }}
+ * </ContainerQuery>
+ */
 var ContainerQuery = /** @class */function (_super) {
     __extends(ContainerQuery, _super);
     function ContainerQuery(props) {
