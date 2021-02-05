@@ -21,6 +21,68 @@ I am providing code in this repository to you under an open source license. Beca
 
 ## API
 
+### useContainerQuery(query, initialSize?)
+
+> Compare the hook style code with the original example from https://github.com/react-container-query/react-container-query#containerquery-queryquery-initialsizewidth-height 
+
+#### Hook Example 1 - Queries against a native DOM element as the container
+
+- Native DOM element refers to `div`, `span`, etc.
+
+```jsx
+import React from 'react';
+import { useContainerQuery } from 'react-container-query';
+
+const query = {
+  'width-between-400-and-599': {
+    minWidth: 400,
+    maxWidth: 599,
+  },
+  'width-larger-than-600': {
+    minWidth: 600,
+  },
+};
+
+const MyComponent = () => {
+  const [params, containerRef] = useContainerQuery(query);
+  return <div ref={containerRef} className={classnames(params)}>the box</div>;
+};
+```
+
+#### Hook Example 2 - Usage for a React component as the container - React.forwardRef
+
+- If the container element we want to measure is a React component, and since we can't measure the size of React component itself, we can use `React.forwardRef`. 
+- The container React component must then forward the `ref` and set it on the actual native DOM element it renders (e.g, `div`, `span`, etc) - as seen in th example below
+
+
+```jsx
+import React from 'react';
+import { useContainerQuery } from 'react-container-query';
+
+const query = {
+  'width-between-400-and-599': {
+    minWidth: 400,
+    maxWidth: 599,
+  },
+  'width-larger-than-600': {
+    minWidth: 600,
+  },
+};
+
+const MyCustomWrapper = React.forwardRef((props, ref) => {
+  // MyCustomWrapper really renders a div which wraps the children. 
+  // Setting the ref on it allows container query to measure its size.
+  return <div ref={ref}>{props.children}</div>
+});
+
+const MyComponent = () => {
+  const [params, containerRef] = useContainerQuery(query);
+  return <MyCustomWrapper ref={containerRef} className={classnames(params)}>the box</div>;
+};
+```
+
+- In this example, `<MyCustomWrapper />` would forward the `containerRef` and set it on the `div` element it is using to wrap the children.
+
 ### `<ContainerQuery query={query} initialSize?={{width?, height?}}>`
 
 ```jsx

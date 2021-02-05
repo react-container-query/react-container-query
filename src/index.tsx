@@ -5,17 +5,16 @@ import {Props, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
 import isShallowEqual from './isShallowEqual';
 
-/**
- * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
- *   {(params) => {
- *     <div className={classname(params)}></div>
- *   }}
- * </ContainerQuery>
- */
+/*
+* const MyComponent = () => {
+*   const [params, containerRef] = useContainerQuery(query);
+*   return <div ref={containerRef} className={classnames(params)}>the box</div>;
+* };
+*/
 
 export const useContainerQuery = (query: Query, initialSize: Size) => {
   // setup a ref callback
-  // (end user) attach that ref callback to the element you want
+  // (end user) attaches that ref callback to a container element
   // @ts-ignore
   const [params, setParams] = React.useState(() => {
     if (!initialSize) {
@@ -27,7 +26,7 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
   const [containerRef, setContainerRef] = React.useState(null);
   // @ts-ignore
   const refCallback = React.useCallback((node) => {
-    setContainerRef(node); // on unmount, node would be null triggering cleanup
+    setContainerRef(node); // on unmount, node would be set to null triggering cleanup
   }, []);
   // @ts-ignore
   React.useEffect(() => {
@@ -47,6 +46,15 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
   }, [query, containerRef]);
   return [params, refCallback];
 };
+
+/**
+ * <ContainerQuery query={query} initialSize={{width: 123, height: 456}}>
+ *   {(params) => {
+ *     <div className={classname(params)}></div>
+ *   }}
+ * </ContainerQuery>
+ */
+
 
 export class ContainerQuery extends React.Component<Props, State> {
   private cqCore: ContainerQueryCore | null = null;
