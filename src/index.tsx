@@ -40,6 +40,7 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
       console.error('observing', containerRef);
       cqCore.observe(containerRef);
       return () => {
+        console.error('disconnected');
         cqCore!.disconnect();
         cqCore = null;
       };

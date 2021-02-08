@@ -285,8 +285,10 @@ exports.useContainerQuery = function (query, initialSize) {
             var cqCore_1 = new ContainerQueryCore_1.default(query, function (params) {
                 setParams(params);
             });
+            console.error('observing', containerRef);
             cqCore_1.observe(containerRef);
             return function () {
+                console.error('disconnected');
                 cqCore_1.disconnect();
                 cqCore_1 = null;
             };
@@ -420,12 +422,15 @@ var ContainerQueryCore = /** @class */function () {
     function ContainerQueryCore(query, callback) {
         var _this = this;
         this.result = {};
+        console.error('setup cqcore');
         this.rol = new resize_observer_lite_1.default(function (size) {
-            var result = matchQueries_1.default(query)(size);
-            if (!isShallowEqual_1.default(_this.result, result)) {
-                callback(result);
-                _this.result = result;
-            }
+            window.requestAnimationFrame(function () {
+                var result = matchQueries_1.default(query)(size);
+                if (!isShallowEqual_1.default(_this.result, result)) {
+                    callback(result);
+                    _this.result = result;
+                }
+            });
         });
     }
     ContainerQueryCore.prototype.observe = function (element) {

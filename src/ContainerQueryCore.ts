@@ -9,11 +9,13 @@ export default class ContainerQueryCore {
 
   constructor(query: Query, callback: (params: Params) => void) {
     this.rol = new ResizeObserverLite((size) => {
-      const result = matchQueries(query)(size);
-      if (!isShallowEqual(this.result, result)) {
-        callback(result);
-        this.result = result;
-      }
+      window.requestAnimationFrame(() => {
+        const result = matchQueries(query)(size);
+        if (!isShallowEqual(this.result, result)) {
+          callback(result);
+          this.result = result;
+        }
+      });
     });
   }
 
