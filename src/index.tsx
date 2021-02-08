@@ -37,10 +37,8 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
           setParams(params);
         }
       );
-      console.error('observing', containerRef);
       cqCore.observe(containerRef);
       return () => {
-        console.error('disconnected');
         cqCore!.disconnect();
         cqCore = null;
       };
