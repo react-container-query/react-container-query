@@ -10,7 +10,7 @@ import isShallowEqual from './isShallowEqual';
 *   const [params, containerRef] = useContainerQuery(query);
 *   return <div ref={containerRef} className={classnames(params)}>the box</div>;
 * };
-* SEE: https://github.com/react-container-query/react-container-query/issues/92 for full code explanation
+* SEE: https://github.com/react-container-query/react-container-query/issues/92 for full code explaination
 */
 
 export const useContainerQuery = (query: Query, initialSize: Size) => {
