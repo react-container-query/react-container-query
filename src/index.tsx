@@ -10,6 +10,7 @@ import isShallowEqual from './isShallowEqual';
 *   const [params, containerRef] = useContainerQuery(query);
 *   return <div ref={containerRef} className={classnames(params)}>the box</div>;
 * };
+* SEE: https://github.com/react-container-query/react-container-query/issues/92 for full code explanation
 */
 
 export const useContainerQuery = (query: Query, initialSize: Size) => {
@@ -27,7 +28,7 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
   // @ts-ignore
   const refCallback = React.useCallback((node) => {
     setContainerRef(node); // on unmount, node would be set to null triggering cleanup
-  }, []);
+  }, [setContainerRef]);
   // @ts-ignore
   React.useEffect(() => {
     if (containerRef) {
@@ -43,7 +44,7 @@ export const useContainerQuery = (query: Query, initialSize: Size) => {
         cqCore = null;
       };
     }
-  }, [query, containerRef]);
+  }, [query, containerRef, setParams]);
   return [params, refCallback];
 };
 
