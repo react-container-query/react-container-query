@@ -5,13 +5,12 @@ import {Props, State, Params, Query, Size} from './interfaces';
 import ContainerQueryCore from './ContainerQueryCore';
 import isShallowEqual from './isShallowEqual';
 
-/*
-* const MyComponent = () => {
-*   const [params, containerRef] = useContainerQuery(query);
-*   return <div ref={containerRef} className={classnames(params)}>the box</div>;
-* };
-* SEE: https://github.com/react-container-query/react-container-query/issues/92 for full code explaination
-*/
+/**
+ * const MyComponent = () => {
+ *   const [params, containerRef] = useContainerQuery(query);
+ *   return <div ref={containerRef} className={classnames(params)}>the box</div>;
+ * };
+ */
 
 export const useContainerQuery = (query: Query, initialSize: Size) => {
   // setup a ref callback
