@@ -52,7 +52,7 @@
     "gulp-watch": "5.0.0",
     "istanbul-combine": "^0.3.0",
     "jasmine-core": "2.9.1",
-    "karma": "2.0.0",
+    "karma": "6.3.14",
     "karma-babel-preprocessor": "7.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.1",
