@@ -2,17 +2,20 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:12.14
+    executor: node/default # use the default executor defined within the orb
+    # docker:
+    #   # specify the version you desire here
+    #   - image: circleci/node:12.14
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+    #   # Specify service dependencies here if necessary
+    #   # CircleCI maintains a library of pre-built images
+    #   # documented at https://circleci.com/docs/2.0/circleci-images/
+    #   # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
