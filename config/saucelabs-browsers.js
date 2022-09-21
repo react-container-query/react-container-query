@@ -11,17 +11,11 @@ module.exports = {
     browserName: 'firefox',
     platform: 'Windows 10',
   },
-  sl_safari_10: {
+  sl_safari_13: {
     base: 'SauceLabs',
     browserName: 'safari',
-    platform: 'OS X 10.12',
-    version: '10'
-  },
-  sl_safari_11: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.13',
-    version: '11'
+    platform: 'OS X 10.15',
+    version: '13'
   },
   sl_ios_safari_10: {
     base: 'SauceLabs',
