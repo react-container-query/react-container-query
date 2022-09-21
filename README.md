@@ -17,7 +17,7 @@ npm i -D react-container-query
 
 ## Disclaimer
 
-I am providing code in this repository to you under an open source license. Because this is my personal repository, the license you receive to my code is from me and not from my employer (Facebook).
+This code in this repository is provided under an open source license. It's provided by the individuals who contribute to the project in their personal capacity, not by any of their employers.
 
 ## API
 
