@@ -60,7 +60,7 @@
     "karma-sauce-launcher": "1.2.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.32",
-    "karma-webpack": "2.0.9",
+    "karma-webpack": "2.0.13",
     "mocha": "10.0.0",
     "onchange": "3.3.0",
     "react": "16.*",
