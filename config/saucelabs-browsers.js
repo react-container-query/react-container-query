@@ -11,31 +11,18 @@ module.exports = {
     browserName: 'firefox',
     platform: 'Windows 10',
   },
-  sl_safari_10: {
+  sl_safari_13: {
     base: 'SauceLabs',
     browserName: 'safari',
-    platform: 'OS X 10.12',
-    version: '10'
+    platform: 'OS X 10.15',
+    version: '13'
   },
-  sl_safari_11: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.13',
-    version: '11'
-  },
-  sl_ios_safari_10: {
+  sl_ios_safari_16: {
     base: 'SauceLabs',
     browserName: 'safari',
     deviceName: 'iPhone Simulator',
     platform: 'iOS',
-    version: '10.3'
-  },
-  sl_ios_safari_11: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    deviceName: 'iPhone Simulator',
-    platform: 'iOS',
-    version: '11.0'
+    version: '16.1'
   },
   // Disable Android testing because I don't know how to get it to work with
   // SauceLabs
